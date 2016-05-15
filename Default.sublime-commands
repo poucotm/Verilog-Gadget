@@ -1,0 +1,18 @@
+[
+    {
+        "caption": "Verilog Gadget: Instantiate Module",
+        "command": "verilog_gadget_module_inst"
+    },
+    {
+        "caption": "Verilog Gadget: Generate Testbench",
+        "command": "verilog_gadget_tb_gen"
+    },
+    {
+        "caption": "Verilog Gadget: Insert Template",
+        "command": "verilog_gadget_template"
+    },
+    {
+        "caption": "Verilog Gadget: Insert Header",
+        "command": "verilog_gadget_insert_header"
+    }
+ ]
