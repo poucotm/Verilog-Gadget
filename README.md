@@ -80,3 +80,32 @@ Use Command Palette (ctrl+shift+p) to run
 		// Create : {DATE} {TIME}
 		// -----------------------------------------------------------------------------
 ```
+
+* Verilog Gadget: Repeat Code
+	- Select codes to be repeated it includes Python's format symbol like {}
+	- Run repeat code command (default key map : ctrl+f12)
+	- Type a range in the input panel (e.g. 0 - 10 or 0 - 10, 2 or 10 - 0,-1 ...)
+	- Codes will be repeated with incremental or decremental numbers
+	- In order to repeat line by line, the codes should include start of next line
+	- Python's format supports variable formats : binary, hex, leading zeros, ...
+	- To use '{' as is, you should type twice as '{{'
+```
+	e.g)
+		case (abc)
+			5'b{:05b} : def <= {:3d};
+
+		--> select `	5'b{:05b} : def <= {:3d};`, run command and type the range 0-10
+		case (abc)
+			5'b{:05b} : def <= {:3d};
+			5'b00000 : def <=   0;
+			5'b00001 : def <=   1;
+			5'b00010 : def <=   2;
+			5'b00011 : def <=   3;
+			5'b00100 : def <=   4;
+			5'b00101 : def <=   5;
+			5'b00110 : def <=   6;
+			5'b00111 : def <=   7;
+			5'b01000 : def <=   8;
+			5'b01001 : def <=   9;
+			5'b01010 : def <=  10;
+```

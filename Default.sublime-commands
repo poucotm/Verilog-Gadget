@@ -14,5 +14,9 @@
     {
         "caption": "Verilog Gadget: Insert Header",
         "command": "verilog_gadget_insert_header"
+    },
+    {
+        "caption": "Verilog Gadget: Repeat Code",
+        "command": "verilog_gadget_repeat_code"
     }
  ]

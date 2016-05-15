@@ -1,0 +1,3 @@
+[
+    { "keys": ["ctrl+f12"], "command": "verilog_gadget_repeat_code" }
+]

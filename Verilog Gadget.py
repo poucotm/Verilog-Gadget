@@ -410,3 +410,58 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 				fname = os.path.split(fname)[1]
 				text = re.sub("{FILE}", fname, text) # {FILE}
 		self.view.insert(edit, 0, text)
+
+############################################################################
+# VerilogGadgetRepeatCodeCommand
+
+class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
+
+	def run(self, edit):
+		selr = self.view.sel()[0]
+		self.text = self.view.substr(selr)
+		self.view.window().show_input_panel("type range (start) - (end), (step) e.g. 0-12 or 0-30,3 or 10-0", "", self.on_done, None, None)
+
+	def on_done(self, user_input):
+		frm_err = 0
+		_range = re.compile("\d+").findall(user_input)
+		_step  = re.compile("(?<=,)\s*[-\d]+").findall(user_input)
+		try:
+			if len(_range) >= 2:
+				st_n = int(_range[0])
+				ed_n = int(_range[1])
+				if st_n <= ed_n:
+					ed_n = ed_n + 1
+					sp_n = 1
+				else:
+					ed_n = ed_n - 1
+					sp_n = -1
+				if len(_step) > 0:
+					sp_n = int(_step[0])
+			else:
+				frm_err = 1
+		except:
+			frm_err = 1
+
+		if len(range(st_n, ed_n, sp_n)) < 1 or frm_err == 1:
+			sublime.message_dialog("Verilog Gadget (!)\n\nRpeat Code : Range format error (" + user_input + ")")
+			return
+
+		tup_l = re.compile("(?<!{)\s*{\s*(?!{)").findall(self.text)
+		tup_n = len(tup_l)
+		repeat_str = ""
+		for i in range(st_n, ed_n, sp_n):
+			prm_l = []
+			for j in range(tup_n):
+				prm_l.append(i)
+			repeat_str = repeat_str + self.text.format(*prm_l)
+		self.view.run_command("verilog_gadget_insert_sub", {"args":{'text': repeat_str}})
+
+############################################################################
+# VerilogGadgetInsertSubCommand
+
+class VerilogGadgetInsertSubCommand(sublime_plugin.TextCommand):
+
+	def run(self, edit, args):
+		text = args['text']
+		selr = self.view.sel()[0]
+		self.view.insert(edit, selr.end(), text)
