@@ -5,8 +5,9 @@ Use Command Palette (ctrl+shift+p) to run
 
 * Verilog Gadget: Instantiate Module
 	- Parse module ports in currently open file
-	- Generate it's instance text
+	- Generate its instance text
 	- Copy generated text to clipboard
+	- Paste the text on where you want
 	- Support Verilog-1995, Verilog-2001 style ports and parameters
 ```
 	e.g)
@@ -14,13 +15,13 @@ Use Command Palette (ctrl+shift+p) to run
 		endmodule
 
 		--> generate
-		test inst_test #(.WIDTH(WIDTH))(.a(a), b(b));
+		test #(.WIDTH(WIDTH)) inst_test (.a(a), .b(b));
 ```
 
 * Verilog Gadget: Generate Testbench
 	- Parse module ports in currently open file
-	- Generate a simple testbench with it's instance and signals
-	- Testbench is generated as systemverilog
+	- Generate a simple testbench with its instance and signals
+	- Testbench will be generated as a systemverilog file
 	- Support Verilog-1995, Verilog-2001 style ports and parameters
 ```
 	e.g)
@@ -39,7 +40,7 @@ Use Command Palette (ctrl+shift+p) to run
 			logic [WIDTH - 1:0] a;
 			logic [WIDTH - 1:0] b;
 
-			test inst_test #(.WIDTH(WIDTH))(.a(a), b(b));
+			test #(.WIDTH(WIDTH)) inst_test (.a(a), .b(b));
 
 			initial begin
 			...
@@ -47,7 +48,7 @@ Use Command Palette (ctrl+shift+p) to run
 ```
 
 * Verilog Gadget: Insert Template
-	- Insert user template text from the file specified in settings
+	- Insert user-template text from the file specified in settings
 	- Multiple templates are possible
 ```
 	e.g)
@@ -60,11 +61,11 @@ Use Command Palette (ctrl+shift+p) to run
 ```
 
 * Verilog Gadget: Insert Header
-	- Insert header description
-	- Replace {DATE} with current date
-	- Replace {YEAR} with this year
-	- Replace {TIME} with the time
-	- Replace {FILE} with current file name
+	- Insert header-description from the file specified in settings
+	- {DATE} will be replaced with current date
+	- {YEAR} will be replaced with this year
+	- {TIME} will be replaced with current time
+	- {FILE} will be replaced with current file name
 ```
 	e.g)
 		In settings :
@@ -81,20 +82,22 @@ Use Command Palette (ctrl+shift+p) to run
 		// -----------------------------------------------------------------------------
 ```
 
-* Verilog Gadget: Repeat Code
-	- Select codes to be repeated it includes Python's format symbol like {}
-	- Run repeat code command (default key map : ctrl+f12)
-	- Type a range in the input panel (e.g. 0 - 10 or 0 - 10, 2 or 10 - 0,-1 ...)
-	- Codes will be repeated with incremental or decremental numbers
+* Verilog Gadget: Repeat Code with Numbers
+	- Select codes to be repeated, it may include Python's format symbol like {...}
+	- Run 'Repeat Code' command (default key map : ctrl+f12)
+	- Type a range in the input panel as the following : [start number]~[end number],[step]
+	`(e.g. 0 ~ 10 or 0 ~ 10, 2 or 10 ~ 0, -1 ...)`
+	- The codes will be repeated with incremental or decremental numbers
 	- In order to repeat line by line, the codes should include start of next line
-	- Python's format supports variable formats : binary, hex, leading zeros, ...
+	- Python's format symbol supports variable formats : binary, hex, leading zeros, ...
 	- To use '{' as is, you should type twice as '{{'
+	- Refer to Python's format symbol here, [https://www.python.org/dev/peps/pep-3101/](https://www.python.org/dev/peps/pep-3101/)
 ```
 	e.g)
 		case (abc)
 			5'b{:05b} : def <= {:3d};
 
-		--> select `	5'b{:05b} : def <= {:3d};`, run command and type the range 0-10
+		--> select `	5'b{:05b} : def <= {:3d};`, run the command and type the range 0~10
 		case (abc)
 			5'b{:05b} : def <= {:3d};
 			5'b00000 : def <=   0;
