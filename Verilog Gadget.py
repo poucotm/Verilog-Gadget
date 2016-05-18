@@ -18,35 +18,43 @@ def plugin_loaded():
 # set of functions
 
 def removeCommentLineSpace(string):
-	string = re.sub(re.compile("/\*.*?\*/", re.DOTALL), "", string)	# remove all occurance streamed comments (/*COMMENT */) from string
-	string = re.sub(re.compile("//.*?\n"), "", string)						# remove all occurance singleline comments (//COMMENT\n ) from string
-	string = re.sub(re.compile("\s*[\n]"), "", string)						# remove lines
-	string = re.sub(re.compile("\s+"), " ", string)							# remove consecutive spaces and tabs
+	string = re.sub(re.compile("/\*.*?\*/", re.DOTALL), "", string) # remove all occurance streamed comments (/*COMMENT */) from string
+	string = re.sub(re.compile("//.*?\n"), "", string)              # remove all occurance singleline comments (//COMMENT\n ) from string
+	string = re.sub(re.compile("\s*[\n]"), " ", string)             # remove lines (replace with a space, for easy parsing)
+	string = re.sub(re.compile(";"), "; ", string)                  # insert a space ahead of ; (for easy parsing)
+	string = re.sub(re.compile("\["), " [", string)                 # insert a space behind of [ (for easy parsing)
+	string = re.sub(re.compile("\s+"), " ", string)                 # remove consecutive spaces and tabs
 	return string
 
 def parseParam(string, prefix, param_list):
-	_type = ""
-	print (string)
+	_type  = ""
+	_param = False
 	try:
 		for _str in string.split(","):
 			pname = re.compile("\w+(?=\s\=)|\w+(?=\=)").findall(_str)[0]	# assume non-consecutive space
-			print (pname)
 			pval  = re.compile("(?<=\=\s)\S.*\S*(?=\s)?|(?<=\=)\S.*\S*(?=\s)?").findall(_str)[0] # assume non-consecutive space
-
-			print (pval)
-			_left = re.compile("parameter[^\=]+").findall(_str)
+			_left = re.compile("(?<!\S)parameter(?!\S)[^\=]+").findall(_str)
 			if len(_left) > 0:
-				_tmp = re.compile("\w+").findall(_left[0])
-				if len(_tmp) > 2:
-					_type = _tmp[1]
-			param_list.append([prefix, _type, pname, pval])
+				_tmp = re.compile("\w+|\[.*\]").findall(_left[0])
+				if len(_tmp) >= 2:
+					if len(_tmp) > 2:
+						_type = _tmp[1]
+					elif len(_tmp) == 2:
+						_type = ""
+					param_list.append([prefix, _type, pname, pval])
+					_param = True
+				else:
+					_param = False
+			else:
+				if _param == True:
+					param_list.append([prefix, _type, pname, pval]) # use previous type
 	except:
 		pass
 
 def parseModuleParamPort(text, call_from):
 	# module ~ endmodule
 	try:
-		text_s    = re.compile("module.+endmodule").findall(text)[0] # only for 1st module
+		text_s    = re.compile("(?<!\S)module(?!\S).+(?<!\S)endmodule(?!\S)").findall(text)[0] # only for 1st module
 		module_rx = re.compile("module[^;]+;") # module ... ;
 		module_s  = module_rx.findall(text_s)[0]
 		param_rx  = re.compile("\#\s*\(.*\)\s*(?=\()") # find Verilog-2001 style parameters like #(parameter WIDTH = (12 - 1))
@@ -65,9 +73,9 @@ def parseModuleParamPort(text, call_from):
 	try:
 		for _str in port_s.split(","):
 			port_s = re.compile("\w+").findall(_str)[-1] # \w+(?!\w+)
-			size_l = re.compile("\[.*\]|signed\s+\[.*\]|signed").findall(_str)
+			size_l = re.compile("\[.*\]|(?<!\S)signed\s*\[.*\]|(?<!\S)signed(?!\S)").findall(_str)
 			size_s = size_l[0] if len(size_l) > 0 else ""
-			prtd_l = re.compile("input|output|inout").findall(_str)
+			prtd_l = re.compile("(?<!\S)input(?!\S)|(?<!\S)output(?!\S)|(?<!\S)inout(?!\S)").findall(_str)
 			prtd_s = prtd_l[0] if len(prtd_l) > 0 else ""
 			port_list.append([prtd_s, size_s, port_s])
 	except:
@@ -82,15 +90,15 @@ def parseModuleParamPort(text, call_from):
 	text_s  = re.sub(module_rx, "", text_s)
 
 	# port : re-search to check sizes for Verilog-1995 style
-	port_l = re.compile("input[^;]+;|output[^;]+;|inout[^;]+;").findall(text)
+	port_l = re.compile("(?<!\S)input(?!\S)[^;]+;|(?<!\S)output(?!\S)[^;]+;|(?<!\S)inout(?!\S)[^;]+;").findall(text_s)
 	for _str in port_l:
 		try:
 			for tmp_s in _str.split(","):
-				prtd_l = re.compile("input|output|inout").findall(tmp_s)
+				prtd_l = re.compile("(?<!\S)input(?!\S)|(?<!\S)output(?!\S)|(?<!\S)inout(?!\S)").findall(tmp_s)
 				prtd_s = prtd_l[0] if len(prtd_l) > 0 else prtd_s # preserve precendence
 				port_l = re.compile("\w+").findall(tmp_s)
 				port_s = port_l[-1] if len(port_l) > 0 else ""
-				size_l = re.compile("\[.*\]|signed\s+\[.*\]|signed").findall(tmp_s)
+				size_l = re.compile("\[.*\]|(?<!\S)signed\s*\[.*\]|(?<!\S)signed(?!\S)").findall(tmp_s)
 				size_s = size_l[0] if len(size_l) > 0 else size_s # preserve precendence
 				for i, _strl in enumerate(port_list):
 					if _strl[2] == port_s:
@@ -100,11 +108,11 @@ def parseModuleParamPort(text, call_from):
 			pass
 
 	# parameter : re-search for Verilog-1995 style
-	param_l = re.compile("parameter[^;]+(?=;)").findall(text_s)
+	param_l = re.compile("(?<!\S)parameter(?!\S)[^;]+(?=;)").findall(text_s)
 	for param_s in param_l:
 		parseParam(param_s, "parameter", param_list)
 
-	param_l = re.compile("localparam[^;]+(?=;)").findall(text_s)
+	param_l = re.compile("(?<!\S)localparam(?!\S)[^;]+(?=;)").findall(text_s)
 	for param_s in param_l:
 		parseParam(param_s, "localparam", param_list)
 
@@ -136,7 +144,7 @@ def declareSignals(port_list):
 	for i, _str in enumerate(str_list):
 		sp = lmax - len(_str)
 		if lmax == sp:
-			string = string + "\tlogic " + " " * sp + port_list[i][2] + ";\n"
+			string = string + "\tlogic " + " " * sp + " " + port_list[i][2] + ";\n"
 		else:
 			string = string + "\tlogic " + " " * sp + _str + " " + port_list[i][2] + ";\n"
 	return string
