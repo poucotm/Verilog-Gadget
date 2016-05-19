@@ -33,7 +33,7 @@ def parseParam(string, prefix, param_list):
 		for _str in string.split(","):
 			pname = re.compile("\w+(?=\s\=)|\w+(?=\=)").findall(_str)[0]	# assume non-consecutive space
 			pval  = re.compile("(?<=\=\s)\S.*\S*(?=\s)?|(?<=\=)\S.*\S*(?=\s)?").findall(_str)[0] # assume non-consecutive space
-			_left = re.compile("(?<!\S)parameter(?!\S)[^\=]+").findall(_str)
+			_left = re.compile("(?<!\S)" + prefix + "(?!\S)[^\=]+").findall(_str)
 			if len(_left) > 0:
 				_tmp = re.compile("\w+|\[.*\]").findall(_left[0])
 				if len(_tmp) >= 2:
@@ -160,8 +160,13 @@ def moduleInst(mod_name, port_list, param_list):
 		nchars = nchars + (len(_strl[2]) * 2 + 5) # .rstb(rstb), .clk(clk)
 		lmax   = max(lmax, len(_strl[2]))
 
+	plen = 0
+	for pstr in param_list:
+		if pstr == 'parameter':
+			plen = plen + 1
+
 	if nchars > 80: # place vertically
-		if len(param_list) > 0:
+		if plen > 0:
 			string = "\t" + mod_name + " #(\n"
 			for i, _strl in enumerate(param_list):
 				if _strl[0] == "parameter":
@@ -183,7 +188,7 @@ def moduleInst(mod_name, port_list, param_list):
 				string = string + "\n"
 		string = string + "\t" * 2 + ");\n"
 	else: # place horizontally
-		if len(param_list) > 0:
+		if plen > 0:
 			string = "\t" + mod_name + " #("
 			for i, _strl in enumerate(param_list):
 				string = string + "." + _strl[2] + "(" + _strl[2] + ")"
@@ -329,7 +334,7 @@ class VerilogGadgetInsertTemplateCommand(sublime_plugin.TextCommand):
 			text = \
 """
 // This is a simple example.
-// You can your own template file and set it's path to settings.
+// You can make a your own template file and set it's path to settings.
 // (Preferences > Package Settings > Verilog Gadget > Settings - User)
 //
 //		"templates": [
@@ -379,7 +384,7 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 			text = \
 """
 // This is a simple example.
-// You can your own header file and set it's path to settings.
+// You can make a your own header file and set it's path to settings.
 // (Preferences > Package Settings > Verilog Gadget > Settings - User)
 //
 //		"header": "D:/Temp/verilog_header.v"
