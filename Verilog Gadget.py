@@ -495,3 +495,68 @@ class VerilogGadgetInsertSubCommand(sublime_plugin.TextCommand):
 		text = args['text']
 		selr = self.view.sel()[0]
 		self.view.insert(edit, selr.end(), text)
+
+############################################################################
+# for context menu
+
+def check_verilog_ext(file_name):
+	try:
+		ext   = os.path.splitext(file_name)[1]
+		ext_l = re.compile(".[vV]|.[vV][hH]|.[sS][vV]|.[sS][vV][hH]").findall(ext)
+		if len(ext_l) > 0:
+			return True
+		else:
+			return False
+	except:
+		return False
+
+class VerilogGadgetModuleInstCtxCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.run_command('verilog_gadget_module_inst')
+	def is_visible(self):
+		lvg_settings = get_settings()
+		if not lvg_settings.get("context_menu", True):
+			return False
+		file_name = self.view.file_name()
+		return check_verilog_ext(file_name)
+
+class VerilogGadgetTbGenCtxCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.run_command('verilog_gadget_tb_gen')
+	def is_visible(self):
+		lvg_settings = get_settings()
+		if not lvg_settings.get("context_menu", True):
+			return False
+		file_name = self.view.file_name()
+		return check_verilog_ext(file_name)
+
+class VerilogGadgetTemplateCtxCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.run_command('verilog_gadget_template')
+	def is_visible(self):
+		lvg_settings = get_settings()
+		if not lvg_settings.get("context_menu", True):
+			return False
+		file_name = self.view.file_name()
+		return check_verilog_ext(file_name)
+
+class VerilogGadgetInsertHeaderCtxCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.run_command('verilog_gadget_insert_header')
+	def is_visible(self):
+		lvg_settings = get_settings()
+		if not lvg_settings.get("context_menu", True):
+			return False
+		file_name = self.view.file_name()
+		return check_verilog_ext(file_name)
+
+class VerilogGadgetRepeatCodeCtxCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.run_command('verilog_gadget_repeat_code')
+	def is_visible(self):
+		lvg_settings = get_settings()
+		if not lvg_settings.get("context_menu", True):
+			return False
+		file_name = self.view.file_name()
+		return check_verilog_ext(file_name)
+

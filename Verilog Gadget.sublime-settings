@@ -1,4 +1,7 @@
 {
+	// enable context menu for .v, .vh, .sv, .svh
+	"context_menu": true,
+
 	// template settings e.g) [ "type", "file-path" ]
 	"templates": [
 		[ "Default", "example" ]

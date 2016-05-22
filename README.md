@@ -1,9 +1,10 @@
 # Verilog Gadget for Sublime Text
 ==================================
 
-Use Command Palette (ctrl+shift+p) to run
+Use **Command Palette (ctrl+shift+p)** or **right mouse click (context menu)** to run.  
+The context menu only can be seen for .v, .vh, .sv, .svh file.
 
-* Verilog Gadget: Instantiate Module
+* **Verilog Gadget: Instantiate Module**
 	- Parse module ports in currently open file
 	- Generate its instance text
 	- Copy generated text to clipboard
@@ -18,7 +19,7 @@ Use Command Palette (ctrl+shift+p) to run
 		test #(.WIDTH(WIDTH)) inst_test (.a(a), .b(b));
 ```
 
-* Verilog Gadget: Generate Testbench
+* **Verilog Gadget: Generate Testbench**
 	- Parse module ports in currently open file
 	- Generate a simple testbench with its instance and signals
 	- Testbench will be generated as a systemverilog file
@@ -47,7 +48,7 @@ Use Command Palette (ctrl+shift+p) to run
 		endmodule
 ```
 
-* Verilog Gadget: Insert Template
+* **Verilog Gadget: Insert Template**
 	- Insert user-template text from the file specified in settings
 	- Multiple templates are possible
 ```
@@ -60,7 +61,7 @@ Use Command Palette (ctrl+shift+p) to run
 		]
 ```
 
-* Verilog Gadget: Insert Header
+* **Verilog Gadget: Insert Header**
 	- Insert header-description from the file specified in settings
 	- {DATE} will be replaced with current date
 	- {YEAR} will be replaced with this year
@@ -82,10 +83,10 @@ Use Command Palette (ctrl+shift+p) to run
 		// -----------------------------------------------------------------------------
 ```
 
-* Verilog Gadget: Repeat Code with Numbers
+* **Verilog Gadget: Repeat Code with Numbers**
 	- Select codes to be repeated, it may include Python's format symbol like {...}
-	- Run 'Repeat Code' command (default key map : ctrl+f12)
-	- Type a range in the input panel as the following : [from]~[to],[step]
+	- Run 'Repeat Code with Numbers' command (default key map : ctrl+f12)
+	- Type a range in the input panel as the following : [from]~[to],[step]  
 	`(e.g. 0 ~ 10 or 0 ~ 10, 2 or 10 ~ 0, -1 ...)`
 	- The codes will be repeated with incremental or decremental numbers
 	- In order to repeat line by line, the codes should include start of next line
