@@ -7,12 +7,19 @@ import os, time
 import re
 
 ############################################################################
-# plugin_loaded()
+# for settings
+
 def plugin_loaded():
     global vg_settings
     vg_settings = sublime.load_settings('Verilog Gadget.sublime-settings')
     vg_settings.clear_on_change('reload')
     vg_settings.add_on_change('reload', plugin_loaded)
+
+def get_settings():
+	if int(sublime.version()) < 3000:
+		return sublime.load_settings('Verilog Gadget.sublime-settings')
+	else:
+		return vg_settings
 
 ############################################################################
 # set of functions
@@ -238,9 +245,10 @@ class VerilogGadgetTbGenCommand(sublime_plugin.TextCommand):
 		decls  = declareSignals(port_list)
 		minst  = moduleInst(mod_name, port_list, param_list)
 
-		reset = vg_settings.get("reset", "rstb")
-		clock = vg_settings.get("clock", "clk")
-		wtype = vg_settings.get("wave_type", "fsdb")
+		lvg_settings = get_settings()
+		reset = lvg_settings.get("reset", "rstb")
+		clock = lvg_settings.get("clock", "clk")
+		wtype = lvg_settings.get("wave_type", "fsdb")
 		if wtype == "fsdb":
 			str_dump = """
 		$fsdbDumpfile("tb_""" + mod_name + """.fsdb");
@@ -307,7 +315,8 @@ endmodule
 class VerilogGadgetTemplateCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
-		self.templ_list = vg_settings.get("templates", None)
+		lvg_settings = get_settings()
+		self.templ_list = lvg_settings.get("templates", None)
 		if not self.templ_list:
 			sublime.message_dialog("Verilog Gadget (!)\n\nInsert Template : No 'templates' setting found")
 			return
@@ -379,7 +388,8 @@ endmodule // template
 class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
-		fname = vg_settings.get("header", "")
+		lvg_settings = get_settings()
+		fname = lvg_settings.get("header", "")
 		if fname == "example":
 			text = \
 """
@@ -432,7 +442,7 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		selr = self.view.sel()[0]
 		self.text = self.view.substr(selr)
-		self.view.window().show_input_panel("type range [start number]~[end number],[step] e.g. 0~12 or 0~30,3 or 10~0,-2", "", self.on_done, None, None)
+		self.view.window().show_input_panel("type range [from]~[to],[step] e.g. 0~12 or 0~30,3 or 10~0,-2", "", self.on_done, None, None)
 
 	def on_done(self, user_input):
 		frm_err = 0

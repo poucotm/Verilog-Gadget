@@ -85,13 +85,14 @@ Use Command Palette (ctrl+shift+p) to run
 * Verilog Gadget: Repeat Code with Numbers
 	- Select codes to be repeated, it may include Python's format symbol like {...}
 	- Run 'Repeat Code' command (default key map : ctrl+f12)
-	- Type a range in the input panel as the following : [start number]~[end number],[step]
+	- Type a range in the input panel as the following : [from]~[to],[step]
 	`(e.g. 0 ~ 10 or 0 ~ 10, 2 or 10 ~ 0, -1 ...)`
 	- The codes will be repeated with incremental or decremental numbers
 	- In order to repeat line by line, the codes should include start of next line
 	- Python's format symbol supports variable formats : binary, hex, leading zeros, ...
 	- To use '{' as is, you should type twice as '{{'
 	- Refer to Python's format symbol here, [https://www.python.org/dev/peps/pep-3101/](https://www.python.org/dev/peps/pep-3101/)
+	- For **sublime text 2 (python 2.x)**, you should insert index behind of ':' in curly brackets like `foo {0:5b} bar {1:3d}`
 ```
 	e.g)
 		case (abc)
