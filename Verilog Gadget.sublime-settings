@@ -10,7 +10,11 @@
 	// header description file path - {DATE}, {FILE}, {YEAR}, {TIME} will be replaced
 	"header": "example",
 
-	"reset": "rstb",		// default reset name
-	"clock": "clk",		// default clock name
-	"wave_type": "fsdb"	// type of waveform, one of "fsdb", "vpd", "shm"
+	// default prefix for a instance name
+	"inst_prefix": "inst_",
+
+	// for a testbench
+	"reset": "rstb",			// default reset name
+	"clock": "clk",			// default clock name
+	"wave_type": "fsdb"		// type of waveform, one of "fsdb", "vpd", "shm"
 }

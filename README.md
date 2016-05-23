@@ -1,7 +1,7 @@
 # Verilog Gadget for Sublime Text
 ==================================
 
-Use **Command Palette (ctrl+shift+p)** or **right mouse click (context menu)** to run.  
+Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
 The context menu only can be seen for .v, .vh, .sv, .svh file.
 
 * **Verilog Gadget: Instantiate Module**
@@ -81,6 +81,17 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 		// File   : {FILE}
 		// Create : {DATE} {TIME}
 		// -----------------------------------------------------------------------------
+
+		--> after insertion
+
+		//
+		// -----------------------------------------------------------------------------
+		// Copyright (c) 2014-2016 All rights reserved
+		// -----------------------------------------------------------------------------
+		// Author : yongchan jeon (Kris) poucotm@gmail.com
+		// File   : abc.v
+		// Create : 2016-05-23 23:34:57
+		// -----------------------------------------------------------------------------
 ```
 
 * **Verilog Gadget: Repeat Code with Numbers**
@@ -89,7 +100,7 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 	- Type a range in the input panel as the following : [from]~[to],[step]  
 	`(e.g. 0 ~ 10 or 0 ~ 10, 2 or 10 ~ 0, -1 ...)`
 	- The codes will be repeated with incremental or decremental numbers
-	- In order to repeat line by line, the codes should include start of next line
+	- In order to repeat line by line, the codes should include start of next line (\n:line feed)
 	- Python's format symbol supports variable formats : binary, hex, leading zeros, ...
 	- To use '{' as is, you should type twice as '{{'
 	- Refer to Python's format symbol here, [https://www.python.org/dev/peps/pep-3101/](https://www.python.org/dev/peps/pep-3101/)
@@ -114,3 +125,7 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 			5'b01001 : def <=   9;
 			5'b01010 : def <=  10;
 ```
+
+## issues
+
+When you have an issue, tell me through [https://github.com/poucotm/Verilog-Gadget/issues](https://github.com/poucotm/Verilog-Gadget/issues), or send me an e-mail poucotm@gmail.com, yongchan.jeon@samsung.com

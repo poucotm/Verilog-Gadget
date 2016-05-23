@@ -156,7 +156,7 @@ def declareSignals(port_list):
 			string = string + "\tlogic " + " " * sp + _str + " " + port_list[i][2] + ";\n"
 	return string
 
-def moduleInst(mod_name, port_list, param_list):
+def moduleInst(mod_name, port_list, param_list, iprefix):
 	nchars = 0
 	lmax   = 0
 
@@ -182,9 +182,9 @@ def moduleInst(mod_name, port_list, param_list):
 						string = string + ",\n"
 					else:
 						string = string + "\n"
-			string = string + "\t" * 2 + ") inst_" + mod_name + " (\n"
+			string = string + "\t" * 2 + ") " + iprefix + mod_name + " (\n"
 		else:
-			string = "\t" + mod_name + " inst_" + mod_name + "\n" + "\t" * 2 + "(\n"
+			string = "\t" + mod_name + " " + iprefix + mod_name + "\n" + "\t" * 2 + "(\n"
 
 		for i, _strl in enumerate(port_list):
 			sp = lmax - len(_strl[2])
@@ -201,9 +201,9 @@ def moduleInst(mod_name, port_list, param_list):
 				string = string + "." + _strl[2] + "(" + _strl[2] + ")"
 				if i != len(param_list) - 1:
 					string = string + ", "
-			string = string + ") inst_" + mod_name + " ("
+			string = string + ") " + iprefix + mod_name + " ("
 		else:
-			string = "\t" + mod_name + " inst_" + mod_name + " ("
+			string = "\t" + mod_name + " " + iprefix + mod_name + " ("
 
 		for i, _strl in enumerate(port_list):
 			string = string + "." + _strl[2] + "(" + _strl[2] + ")"
@@ -224,7 +224,10 @@ class VerilogGadgetModuleInstCommand(sublime_plugin.TextCommand):
 		mod_name, port_list, param_list = parseModuleParamPort(text, 'Instantiate Module')
 		if mod_name == "":
 			return
-		minst = moduleInst(mod_name, port_list, param_list)
+		lvg_settings = get_settings()
+		iprefix = lvg_settings.get("inst_prefix", "inst_")
+
+		minst = moduleInst(mod_name, port_list, param_list, iprefix)
 		sublime.set_clipboard(minst)
 		sublime.message_dialog("Verilog Gadget (O)\n\nInstantiate Module : Copied to Clipboard")
 
@@ -240,12 +243,13 @@ class VerilogGadgetTbGenCommand(sublime_plugin.TextCommand):
 		mod_name, port_list, param_list = parseModuleParamPort(text, 'Generate Testbench')
 		if mod_name == "":
 			return
+		lvg_settings = get_settings()
+		iprefix = lvg_settings.get("inst_prefix", "inst_")
 
 		declp  = declareParameters(param_list)
 		decls  = declareSignals(port_list)
-		minst  = moduleInst(mod_name, port_list, param_list)
+		minst  = moduleInst(mod_name, port_list, param_list, iprefix)
 
-		lvg_settings = get_settings()
 		reset = lvg_settings.get("reset", "rstb")
 		clock = lvg_settings.get("clock", "clk")
 		wtype = lvg_settings.get("wave_type", "fsdb")
@@ -343,7 +347,7 @@ class VerilogGadgetInsertTemplateCommand(sublime_plugin.TextCommand):
 			text = \
 """
 // This is a simple example.
-// You can make a your own template file and set it's path to settings.
+// You can make a your own template file and set its path to settings.
 // (Preferences > Package Settings > Verilog Gadget > Settings - User)
 //
 //		"templates": [
@@ -394,7 +398,7 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 			text = \
 """
 // This is a simple example.
-// You can make a your own header file and set it's path to settings.
+// You can make a your own header file and set its path to settings.
 // (Preferences > Package Settings > Verilog Gadget > Settings - User)
 //
 //		"header": "D:/Temp/verilog_header.v"
