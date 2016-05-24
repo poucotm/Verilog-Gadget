@@ -99,6 +99,8 @@ def parseModuleParamPort(text, call_from):
 	# port : re-search to check sizes for Verilog-1995 style
 	port_l = re.compile("(?<!\S)input(?!\S)[^;]+;|(?<!\S)output(?!\S)[^;]+;|(?<!\S)inout(?!\S)[^;]+;").findall(text_s)
 	for _str in port_l:
+		prtd_s = ""
+		size_s = ""
 		try:
 			for tmp_s in _str.split(","):
 				prtd_l = re.compile("(?<!\S)input(?!\S)|(?<!\S)output(?!\S)|(?<!\S)inout(?!\S)").findall(tmp_s)
@@ -169,7 +171,7 @@ def moduleInst(mod_name, port_list, param_list, iprefix):
 
 	plen = 0
 	for pstr in param_list:
-		if pstr == 'parameter':
+		if pstr[0] == 'parameter':
 			plen = plen + 1
 
 	if nchars > 80: # place vertically
