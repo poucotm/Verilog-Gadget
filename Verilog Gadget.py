@@ -505,10 +505,14 @@ class VerilogGadgetInsertSubCommand(sublime_plugin.TextCommand):
 ############################################################################
 # for context menu
 
-def check_verilog_ext(file_name):
+def check_visible(file_name, view_name):
+	lvg_settings = get_settings()
+	if not lvg_settings.get("context_menu", True):
+		return False
 	try:
-		ext   = os.path.splitext(file_name)[1]
-		ext_l = re.compile(".[vV]|.[vV][hH]|.[sS][vV]|.[sS][vV][hH]").findall(ext)
+		_name = file_name if view_name == "" else view_name
+		ext   = os.path.splitext(_name)[1]
+		ext_l = re.compile(".[vV]|.[vV][hH]|.[sS][vV]|.[sS][vV][hH]").findall(ext) # check verilog extension
 		if len(ext_l) > 0:
 			return True
 		else:
@@ -520,49 +524,28 @@ class VerilogGadgetModuleInstCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_module_inst')
 	def is_visible(self):
-		lvg_settings = get_settings()
-		if not lvg_settings.get("context_menu", True):
-			return False
-		file_name = self.view.file_name()
-		return check_verilog_ext(file_name)
+		return check_visible(self.view.file_name(), self.view.name())
 
 class VerilogGadgetTbGenCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_tb_gen')
 	def is_visible(self):
-		lvg_settings = get_settings()
-		if not lvg_settings.get("context_menu", True):
-			return False
-		file_name = self.view.file_name()
-		return check_verilog_ext(file_name)
+		return check_visible(self.view.file_name(), self.view.name())
 
 class VerilogGadgetTemplateCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_template')
 	def is_visible(self):
-		lvg_settings = get_settings()
-		if not lvg_settings.get("context_menu", True):
-			return False
-		file_name = self.view.file_name()
-		return check_verilog_ext(file_name)
+		return check_visible(self.view.file_name(), self.view.name())
 
 class VerilogGadgetInsertHeaderCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_insert_header')
 	def is_visible(self):
-		lvg_settings = get_settings()
-		if not lvg_settings.get("context_menu", True):
-			return False
-		file_name = self.view.file_name()
-		return check_verilog_ext(file_name)
+		return check_visible(self.view.file_name(), self.view.name())
 
 class VerilogGadgetRepeatCodeCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_repeat_code')
 	def is_visible(self):
-		lvg_settings = get_settings()
-		if not lvg_settings.get("context_menu", True):
-			return False
-		file_name = self.view.file_name()
-		return check_verilog_ext(file_name)
-
+		return check_visible(self.view.file_name(), self.view.name())
