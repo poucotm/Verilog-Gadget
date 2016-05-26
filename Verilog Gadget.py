@@ -1,6 +1,8 @@
-############################################################################
-# Author : yongchan jeon (Kris) poucotm@gmail.com
-############################################################################
+## -----------------------------------------------------------------------------
+## Author : yongchan jeon (Kris) poucotm@gmail.com
+## File   : Verilog Gadget.py
+## Create : 2016-05-15
+## -----------------------------------------------------------------------------
 
 import sublime, sublime_plugin
 import os, time
@@ -9,17 +11,22 @@ import re
 ############################################################################
 # for settings
 
+ST3 = int(sublime.version()) >= 3000
+
 def plugin_loaded():
-    global vg_settings
-    vg_settings = sublime.load_settings('Verilog Gadget.sublime-settings')
-    vg_settings.clear_on_change('reload')
-    vg_settings.add_on_change('reload', plugin_loaded)
+	global vg_settings
+	vg_settings = sublime.load_settings('Verilog Gadget.sublime-settings')
+	vg_settings.clear_on_change('reload')
+	vg_settings.add_on_change('reload', plugin_loaded)
+
+# def plugin_unloaded():
+	# print ("unloaded : Verilog Gadget.py")
 
 def get_settings():
-	if int(sublime.version()) < 3000:
-		return sublime.load_settings('Verilog Gadget.sublime-settings')
-	else:
+	if ST3:
 		return vg_settings
+	else:
+		return sublime.load_settings('Verilog Gadget.sublime-settings')
 
 ############################################################################
 # set of functions
@@ -505,47 +512,49 @@ class VerilogGadgetInsertSubCommand(sublime_plugin.TextCommand):
 ############################################################################
 # for context menu
 
-def check_visible(file_name, view_name):
+def verilog_check_visible(file_name, view_name):
 	lvg_settings = get_settings()
 	if not lvg_settings.get("context_menu", True):
 		return False
 	try:
 		_name = file_name if view_name == "" else view_name
 		ext   = os.path.splitext(_name)[1]
-		ext_l = re.compile(".[vV]|.[vV][hH]|.[sS][vV]|.[sS][vV][hH]").findall(ext) # check verilog extension
-		if len(ext_l) > 0:
+		ext   = ext.lower()
+		ext_l = [".v", ".vh", ".sv", ".svh"]
+		if any(ext == s for s in ext_l):
 			return True
 		else:
 			return False
 	except:
+		print ("error")
 		return False
 
 class VerilogGadgetModuleInstCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_module_inst')
 	def is_visible(self):
-		return check_visible(self.view.file_name(), self.view.name())
+		return verilog_check_visible(self.view.file_name(), self.view.name())
 
 class VerilogGadgetTbGenCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_tb_gen')
 	def is_visible(self):
-		return check_visible(self.view.file_name(), self.view.name())
+		return verilog_check_visible(self.view.file_name(), self.view.name())
 
 class VerilogGadgetTemplateCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_template')
 	def is_visible(self):
-		return check_visible(self.view.file_name(), self.view.name())
+		return verilog_check_visible(self.view.file_name(), self.view.name())
 
 class VerilogGadgetInsertHeaderCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_insert_header')
 	def is_visible(self):
-		return check_visible(self.view.file_name(), self.view.name())
+		return verilog_check_visible(self.view.file_name(), self.view.name())
 
 class VerilogGadgetRepeatCodeCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_repeat_code')
 	def is_visible(self):
-		return check_visible(self.view.file_name(), self.view.name())
+		return verilog_check_visible(self.view.file_name(), self.view.name())

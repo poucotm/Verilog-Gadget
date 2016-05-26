@@ -1,0 +1,33 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Verilog Log
+scopeName: source.verilog_log
+fileTypes: []
+uuid: 0da65be4-5aac-4b6f-8071-1aadb970b8d9
+patterns:
+# SYNOPSYS
+- comment: ...
+  name: msg.error
+  begin: ^Error-
+  end: ^\s*[\n]
+  patterns:
+  - include: $self
+  - name: msg.error.dquote
+    match: (?<=\")[^\"]+(?=\")
+  - name: msg.error.quote
+    match: (?<=\')[^\']+(?=\')
+  - name: msg.error.line
+    match: (?<=\,)\s*\d+(?=\:)
+- comment: ...
+  name: msg.warning
+  begin: ^Warning-
+  end: ^\s*[\n]
+  patterns:
+  - include: $self
+  - name: msg.warning.dquote
+    match: (?<=[\"])[^\"]+(?=[\"])
+  - name: msg.warning.quote
+    match: (?<=[\'])[^\']+(?=[\'])
+  - name: msg.warning.line
+    match: (?<=\,)\s*\d+(?=\:)
+...

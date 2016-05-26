@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Verilog Log</string>
+	<key>settings</key>
+	<array>
+		<dict>
+			<key>settings</key>
+			<dict>
+				<key>background</key>
+				<string>#272822</string>
+				<key>foreground</key>
+				<string>#ffffff</string>
+				<key>caret</key>
+				<string>#ffffff</string>
+
+				<key>selection</key>
+				<string>#555555</string>
+				<key>selectionBorder</key>
+				<string>#555555</string>
+				<!-- <key>selectionForeground</key> -->
+				<!-- <string>#000000</string> -->
+
+				<key>lineHighlight</key>
+				<string>#272822</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>scope</key>
+			<string>msg.error</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#F92672</string>
+				<!-- <key>fontStyle</key> -->
+				<!-- <string>bold</string> -->
+			</dict>
+		</dict>
+		<dict>
+			<key>scope</key>
+			<string>msg.error.dquote</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#ffff00</string>
+				<!-- <key>fontStyle</key> -->
+				<!-- <string>bold</string> -->
+			</dict>
+		</dict>
+		<dict>
+			<key>scope</key>
+			<string>msg.error.quote</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#66D9EF</string>
+				<!-- <key>fontStyle</key> -->
+				<!-- <string>bold</string> -->
+			</dict>
+		</dict>
+		<dict>
+			<key>scope</key>
+			<string>msg.error.line</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#ffff00</string>
+				<!-- <key>fontStyle</key> -->
+				<!-- <string>bold</string> -->
+			</dict>
+		</dict>
+		<dict>
+			<key>scope</key>
+			<string>msg.warning</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#A6E22E</string>
+				<!-- <key>fontStyle</key> -->
+				<!-- <string>bold</string> -->
+			</dict>
+		</dict>
+		<dict>
+			<key>scope</key>
+			<string>msg.warning.dquote</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FD971F</string>
+				<!-- <key>fontStyle</key> -->
+				<!-- <string>bold</string> -->
+			</dict>
+		</dict>
+		<dict>
+			<key>scope</key>
+			<string>msg.warning.quote</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#66D9EF</string>
+				<!-- <key>fontStyle</key> -->
+				<!-- <string>bold</string> -->
+			</dict>
+		</dict>
+		<dict>
+			<key>scope</key>
+			<string>msg.warning.line</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FD971F</string>
+				<!-- <key>fontStyle</key> -->
+				<!-- <string>bold</string> -->
+			</dict>
+		</dict>
+	</array>
+	<key>uuid</key>
+	<string>bd8fa353-22d0-4061-adfc-2a523c4b5f94</string>
+</dict>
+</plist>
