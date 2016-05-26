@@ -10,7 +10,7 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 	- Copy generated text to clipboard
 	- Paste the text on where you want
 	- Support Verilog-1995, Verilog-2001 style ports and parameters
-```
+```Verilog
 	e.g)
 		module test #(parameter WIDTH = 3)(input [WIDTH - 1:0] a, output [WIDTH - 1:0] b);
 		endmodule
@@ -24,7 +24,7 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 	- Generate a simple testbench with its instance and signals
 	- Testbench will be generated as a systemverilog file
 	- Support Verilog-1995, Verilog-2001 style ports and parameters
-```
+```Verilog
 	e.g)
 		module test #(parameter WIDTH = 3)(input [WIDTH - 1:0] a, output [WIDTH - 1:0] b);
 		endmodule
@@ -51,7 +51,7 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 * **Verilog Gadget: Insert Template**
 	- Insert user-template text from the file specified in settings
 	- Multiple templates are possible
-```
+```json
 	e.g)
 		In settings :
 
@@ -67,7 +67,7 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 	- {YEAR} will be replaced with this year
 	- {TIME} will be replaced with current time
 	- {FILE} will be replaced with current file name
-```
+```Verilog
 	e.g)
 		In settings :
 
@@ -105,7 +105,7 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 	- To use '{' as is, you should type twice as '{{'
 	- Refer to Python's format symbol here, [https://www.python.org/dev/peps/pep-3101/](https://www.python.org/dev/peps/pep-3101/)
 	- For **sublime text 2 (python 2.x)**, you should insert index behind of ':' in curly brackets like `foo {0:5b} bar {1:3d}`
-```
+```Verilog
 	e.g)
 		case (abc)
 			5'b{:05b} : def <= {:3d};
@@ -125,6 +125,9 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 			5'b01001 : def <=   9;
 			5'b01010 : def <=  10;
 ```
+
+* **Log Syntax Highlight, Goto Error/Warning - Under development**
+	- Logs for simulators (VCS,IES,...), compilers (Design Compiler,...)
 
 ## issues
 
