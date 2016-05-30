@@ -2,7 +2,8 @@
 ==================================
 
 Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
-The context menu only can be seen for .v, .vh, .sv, .svh file.
+The context menu only can be seen for .v, .vh, .sv, .svh file.  
+You can see `View Log` command of context menu only for .log file.
 
 * **Verilog Gadget: Instantiate Module**
 	- Parse module ports in currently open file
@@ -126,8 +127,14 @@ The context menu only can be seen for .v, .vh, .sv, .svh file.
 			5'b01010 : def <=  10;
 ```
 
-* **Log Syntax Highlight, Goto Error/Warning - Under development**
-	- Logs for simulators (VCS,IES,...), compilers (Design Compiler,...)
+* **Verilog Gadget: View Log**
+	- It highlights Error/Warning syntax (Monokai theme base)
+	- It is possible to go to Error/Warning positions of files in a log by double-click
+	- For relative path, it automatically searches a base directory near the log file
+	- Open `xxx.log` file and run `View Log` by righ-click (context menu)
+	- Log syntaxs will be continuosly updated for various vendor's tools (Synopsys, Cadence, Mentor, Xilinx, Altera,...)
+
+   ![Image of Verilog Gadget](https://github.com/poucotm/Links/blob/master/images/view_log.png)
 
 ## issues
 

@@ -36,12 +36,6 @@ def get_settings():
 
 class VerilogGadgetViewLogCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-
-
-
-
-
-
 		if ST3:
 			VerilogGadgetViewLogThread().start()
 		else:
@@ -73,41 +67,22 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		# set base dir & apply 'result_file_regex'
 		if self.base_dir != "":
 			self.view.settings().set('result_base_dir', self.base_dir)
-		self.view.settings().set('result_file_regex', '^\s*\"(.+)\",\s*(\d+)')
+		self.view.settings().set('result_file_regex', '\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?[,:]\s*(\d+)')
 		if ST3: # this is for ST3 bug related with 'result_file_regex' which I suspect
 			self.view.run_command('revert')
 
-
-		window.focus_view(self.view)
-		text = self.view.substr(sublime.Region(0, self.view.size()))
-		paragraphs = re.compile('[^\n].+?\n\n|[^\n].+?$', re.DOTALL).findall(text)
-		# for p in paragraphs:
-		# 	print ("-------------------------")
-		# 	print (p)
-
-		r = self.view.find('Error', 0, sublime.LITERAL)
-		print (r)
-
-
-
-
-
-
-
-
-
-
-
-
+		# summary
+		# window.focus_view(self.view)
+		# text = self.view.substr(sublime.Region(0, self.view.size()))
+		# paragraphs = re.compile('[^\n].+?\n\n|[^\n].+?$', re.DOTALL).findall(text)
 
 	def get_rel_path_file(self):
 		text     = self.view.substr(sublime.Region(0, self.view.size()))
-		files_l  = re.compile("\".+\",\s*\d+").findall(text)
+		files_l  = re.compile('\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?[,:]\s*\d+').findall(text)
 		rel_path = False
 		if len(files_l) > 0:
-			for _file in files_l:
-				file_name = re.split("[\"]", _file)[1] # use the first in relative path list
-				if not os.path.isabs(file_name):
+			for file_name in files_l:
+				if not os.path.isabs(file_name): # use the first in relative path list
 					rel_path = True
 					break
 			if rel_path:
@@ -184,5 +159,3 @@ class VerilogGadgetViewLogCtxCommand(sublime_plugin.TextCommand):
 		self.view.run_command('verilog_gadget_view_log')
 	def is_visible(self):
 		return log_check_visible(self.view.file_name(), self.view.name())
-
-

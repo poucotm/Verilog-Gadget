@@ -40,7 +40,7 @@
 		</dict>
 		<dict>
 			<key>scope</key>
-			<string>msg.error.dquote</string>
+			<string>msg.error.link</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -62,17 +62,6 @@
 		</dict>
 		<dict>
 			<key>scope</key>
-			<string>msg.error.line</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#ffff00</string>
-				<!-- <key>fontStyle</key> -->
-				<!-- <string>bold</string> -->
-			</dict>
-		</dict>
-		<dict>
-			<key>scope</key>
 			<string>msg.warning</string>
 			<key>settings</key>
 			<dict>
@@ -84,7 +73,7 @@
 		</dict>
 		<dict>
 			<key>scope</key>
-			<string>msg.warning.dquote</string>
+			<string>msg.warning.link</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -100,17 +89,6 @@
 			<dict>
 				<key>foreground</key>
 				<string>#66D9EF</string>
-				<!-- <key>fontStyle</key> -->
-				<!-- <string>bold</string> -->
-			</dict>
-		</dict>
-		<dict>
-			<key>scope</key>
-			<string>msg.warning.line</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#FD971F</string>
 				<!-- <key>fontStyle</key> -->
 				<!-- <string>bold</string> -->
 			</dict>

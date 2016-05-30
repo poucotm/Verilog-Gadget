@@ -5,29 +5,67 @@ scopeName: source.verilog_log
 fileTypes: []
 uuid: 0da65be4-5aac-4b6f-8071-1aadb970b8d9
 patterns:
-# SYNOPSYS
+# SYNOPSYS VCS
 - comment: ...
   name: msg.error
   begin: ^Error-
   end: ^\s*[\n]
   patterns:
   - include: $self
-  - name: msg.error.dquote
-    match: (?<=\")[^\"]+(?=\")
+  - name: msg.error.link
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
   - name: msg.error.quote
     match: (?<=\')[^\']+(?=\')
-  - name: msg.error.line
-    match: (?<=\,)\s*\d+(?=\:)
 - comment: ...
   name: msg.warning
   begin: ^Warning-
   end: ^\s*[\n]
   patterns:
   - include: $self
-  - name: msg.warning.dquote
-    match: (?<=[\"])[^\"]+(?=[\"])
+  - name: msg.warning.link
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
   - name: msg.warning.quote
-    match: (?<=[\'])[^\']+(?=[\'])
-  - name: msg.warning.line
-    match: (?<=\,)\s*\d+(?=\:)
+    match: (?<=\')[^\']+(?=\')
+# SYNOPSYS DC
+- comment: ...
+  name: msg.error
+  begin: "^Error:"
+  end: \n$
+  patterns:
+  - include: $self
+  - name: msg.error.link
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+  - name: msg.error.quote
+    match: (?<=\')[^\']+(?=\')
+- comment: ...
+  name: msg.warning
+  begin: "^Warning:"
+  end: \n$
+  patterns:
+  - include: $self
+  - name: msg.warning.link
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+  - name: msg.warning.quote
+    match: (?<=\')[^\']+(?=\')
+# CADENCE IES
+- comment: ...
+  name: msg.error
+  begin: ^\w+:\s*\*E
+  end: \n$
+  patterns:
+  - include: $self
+  - name: msg.error.link
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+  - name: msg.error.quote
+    match: (?<=\')[^\']+(?=\')
+- comment: ...
+  name: msg.warning
+  begin: ^\w+:\s*\*W
+  end: \n$
+  patterns:
+  - include: $self
+  - name: msg.warning.link
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+  - name: msg.warning.quote
+    match: (?<=\')[^\']+(?=\')
 ...
