@@ -134,7 +134,7 @@ You can see `View Log` command of context menu only for .log file.
 	- Open `xxx.log` file and run `View Log` by righ-click (context menu)
 	- Log syntaxs will be continuosly updated for various vendor's tools (Synopsys, Cadence, Mentor, Xilinx, Altera,...)
 
-   ![Image of Verilog Gadget](https://github.com/poucotm/Links/blob/master/images/view_log.png)
+   ![Image of Verilog Gadget](https://raw.githubusercontent.com/poucotm/Links/master/image/view_log.png)
 
 ## issues
 
