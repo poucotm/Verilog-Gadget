@@ -29,8 +29,8 @@ patterns:
 # SYNOPSYS DC
 - comment: ...
   name: msg.error
-  begin: "^Error:"
-  end: \n$
+  begin: '^Error:'
+  end: ^\s*[\n]|(?=^[^\s])
   patterns:
   - include: $self
   - name: msg.error.link
@@ -39,18 +39,39 @@ patterns:
     match: (?<=\')[^\']+(?=\')
 - comment: ...
   name: msg.warning
-  begin: "^Warning:"
-  end: \n$
+  begin: '^Warning:'
+  end: ^\s*[\n]|(?=^[^\s])
   patterns:
   - include: $self
   - name: msg.warning.link
     match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
   - name: msg.warning.quote
     match: (?<=\')[^\']+(?=\')
-# CADENCE IES
+# SYNOPSYS VERDI
 - comment: ...
   name: msg.error
-  begin: ^\w+:\s*\*E
+  begin: ^\*Error\*
+  end: ^\s*[\n]
+  patterns:
+  - include: $self
+  - name: msg.error.link
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+  - name: msg.error.quote
+    match: (?<=\')[^\']+(?=\')
+- comment: ...
+  name: msg.warning
+  begin: ^\*Warning\*
+  end: ^\s*[\n]
+  patterns:
+  - include: $self
+  - name: msg.warning.link
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+  - name: msg.warning.quote
+    match: (?<=\')[^\']+(?=\')
+# CADENCE IES / XILINX VIVADO / ALTERA QUARTUS
+- comment: ...
+  name: msg.error
+  begin: '^\w+:\s*\*E|^ERROR:|^Error\s*\(\d+\):'
   end: \n$
   patterns:
   - include: $self
@@ -60,7 +81,7 @@ patterns:
     match: (?<=\')[^\']+(?=\')
 - comment: ...
   name: msg.warning
-  begin: ^\w+:\s*\*W
+  begin: '^\w+:\s*\*W|^WARNING:|^Warning\s*\(\d+\):'
   end: \n$
   patterns:
   - include: $self
@@ -68,4 +89,7 @@ patterns:
     match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
   - name: msg.warning.quote
     match: (?<=\')[^\']+(?=\')
+- comment: ...
+  name: msg.error.link
+  match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*line\s*\d+
 ...

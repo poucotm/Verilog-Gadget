@@ -67,7 +67,7 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		# set base dir & apply 'result_file_regex'
 		if self.base_dir != "":
 			self.view.settings().set('result_base_dir', self.base_dir)
-		self.view.settings().set('result_file_regex', '\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?[,:]\s*(\d+)')
+		self.view.settings().set('result_file_regex', '\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?\s*[,:line]{1,4}\s*(\d+)')
 		if ST3: # this is for ST3 bug related with 'result_file_regex' which I suspect
 			self.view.run_command('revert')
 
@@ -78,7 +78,7 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 
 	def get_rel_path_file(self):
 		text     = self.view.substr(sublime.Region(0, self.view.size()))
-		files_l  = re.compile('\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?[,:]\s*\d+').findall(text)
+		files_l  = re.compile('\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?\s*[,:line]{1,4}\s*\d+').findall(text)
 		rel_path = False
 		if len(files_l) > 0:
 			for file_name in files_l:
