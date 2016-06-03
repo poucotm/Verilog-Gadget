@@ -418,6 +418,7 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 // Author : yongchan jeon (Kris) poucotm@gmail.com
 // File   : {FILE}
 // Create : {DATE} {TIME}
+// Editor : sublime text{SUBLIME_VERSION}, tab size ({TABS})
 // -----------------------------------------------------------------------------
 """
 		else:
@@ -429,13 +430,17 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 				text  = str(f.read())
 				f.close()
 
-		# replace {DATE}, {FILE}, {YEAR}, {TIME}
+		# replace {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION}
 		date  = time.strftime('%Y-%m-%d', time.localtime())
 		year  = time.strftime('%Y', time.localtime())
 		ntime = time.strftime('%H:%M:%S', time.localtime())
-		text  = re.sub("{DATE}", date, text)	# {DATE}
-		text  = re.sub("{YEAR}", year, text)	# {YEAR}
-		text  = re.sub("{TIME}", ntime, text)	# {TIME}
+		tabs  = str(self.view.settings().get('tab_size'))
+		sver  = sublime.version()[0]
+		text  = re.sub("{DATE}", date, text)				# {DATE}
+		text  = re.sub("{YEAR}", year, text)				# {YEAR}
+		text  = re.sub("{TIME}", ntime, text)				# {TIME}
+		text  = re.sub("{TABS}", tabs, text)				# {TABS}
+		text  = re.sub("{SUBLIME_VERSION}", sver, text)	# {SUBLIME_VERSION}
 		_file = re.compile("{FILE}").findall(text)
 		if _file:
 			fname = self.view.file_name()

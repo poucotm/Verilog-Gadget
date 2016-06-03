@@ -1,8 +1,8 @@
 # Verilog Gadget for Sublime Text
 ==================================
 
-Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
-The context menu only can be seen for .v, .vh, .sv, .svh file.  
+Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.
+The context menu only can be seen for .v, .vh, .sv, .svh file.
 You can see `View Log` command of context menu only for .log file.
 
 * **Verilog Gadget: Instantiate Module**
@@ -68,6 +68,8 @@ You can see `View Log` command of context menu only for .log file.
 	- {YEAR} will be replaced with this year
 	- {TIME} will be replaced with current time
 	- {FILE} will be replaced with current file name
+	- {TABS} will be replaced with current tab size
+	- {SUBLIME_VERSION} will be replaced with current sublime text version
 ```Verilog
 	e.g)
 		In settings :
@@ -81,6 +83,7 @@ You can see `View Log` command of context menu only for .log file.
 		// Author : yongchan jeon (Kris) poucotm@gmail.com
 		// File   : {FILE}
 		// Create : {DATE} {TIME}
+		// Editor : sublime text{SUBLIME_VERSION}, tab size ({TABS})
 		// -----------------------------------------------------------------------------
 
 		--> after insertion
@@ -91,14 +94,15 @@ You can see `View Log` command of context menu only for .log file.
 		// -----------------------------------------------------------------------------
 		// Author : yongchan jeon (Kris) poucotm@gmail.com
 		// File   : abc.v
-		// Create : 2016-05-23 23:34:57
+		// Create : 2016-06-03 22:34:43
+		// Editor : sublime text3, tab size (3)
 		// -----------------------------------------------------------------------------
 ```
 
 * **Verilog Gadget: Repeat Code with Numbers**
 	- Select codes to be repeated, it may include Python's format symbol like {...}
 	- Run 'Repeat Code with Numbers' command (default key map : ctrl+f12)
-	- Type a range in the input panel as the following : [from]~[to],[step]  
+	- Type a range in the input panel as the following : [from]~[to],[step]
 	`(e.g. 0 ~ 10 or 0 ~ 10, 2 or 10 ~ 0, -1 ...)`
 	- The codes will be repeated with incremental or decremental numbers
 	- In order to repeat line by line, the codes should include start of next line (\n:line feed)
