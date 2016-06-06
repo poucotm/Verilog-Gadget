@@ -71,40 +71,13 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		if ST3: # this is for ST3 bug related with 'result_file_regex' which I suspect
 			self.view.run_command('revert')
 
+		# add bookmarks
+		self.add_bookmarks(self.view)
+
 		# summary
-		lvg_settings = get_settings()
-		log_panel    = lvg_settings.get("log_panel", True)
-		error_only   = lvg_settings.get("error_only", False)
-		if not log_panel:
-			return
+		self.do_summary(self.view)
 
-		err_msg   = '^Error-\[.+?^\s*\n|^Error:.+?(?=^[^\s]|\r?\n\r?\n)|^\*Error\*.+?^\s*\n|^\w+:\s*\*E[^\r\n]+|^ERROR:.[^\r\n]+|^Error\s*\(\d+\):[^\r\n]+'
-		warn_msg  = '^Warning-\[.+?^\s*\n|^Warning:.+?(?=^[^\s]|\r?\n\r?\n)|^\*Warning\*.+?^\s*\n|^\w+:\s*\*W[^\r\n]+|^WARNING:.[^\r\n]+|^Warning\s*\(\d+\):[^\r\n]+'
-		if error_only:
-			filt_msg  = err_msg
-			summary   = "\n" + "Error Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
-		else:
-			filt_msg  = err_msg + '|' + warn_msg
-			summary   = "\n" + "Error / Warning Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
-
-		window.focus_view(self.view)
-		text      = self.view.substr(sublime.Region(0, self.view.size()))
-		ewtext_l  = re.compile(filt_msg, re.MULTILINE|re.DOTALL).findall(text)
-		for _str in ewtext_l:
-			_str = re.sub(re.compile('\r?\n\r?\n'), '\n', _str)
-			summary = summary + _str + ('\n\n' if _str[-1] != '\n' else '\n')
-
-		global g_output_view
-		g_output_view = self.view.window().get_output_panel('errors')
-		g_output_view.set_read_only(False)
-		self.view.window().run_command("show_panel", {"panel": "output.errors"})
-		g_output_view.settings().set('result_file_regex', '\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?\s*[,:line]{1,4}\s*(\d+)')
-		if self.base_dir != "":
-			self.view.settings().set('result_base_dir', self.base_dir)
-		g_output_view.set_syntax_file('Packages/Verilog Gadget/Verilog Gadget Log.tmLanguage')
-		g_output_view.settings().set('color_scheme', 'Packages/Verilog Gadget/Verilog Gadget Log.hidden-tmTheme')
-		g_output_view.run_command("append", {"characters": summary})
-		g_output_view.set_read_only(True)
+		return
 
 	def get_rel_path_file(self):
 		text     = self.view.substr(sublime.Region(0, self.view.size()))
@@ -165,6 +138,53 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 			sublime.status_message("View Log : Fail to find (" + str(scan_path) + ") - " + file_name)
 
 		return found
+
+	def add_bookmarks(self, view):
+		err_head  = '^Error-\[.+|^Error:.+|^\*Error\*.+|^\w+:\s*\*E.+|^ERROR:.+|^Error\s*\(\d+\):.+'
+		warn_head = '^Warning-\[.+|^Warning:.+|^\*Warning\*.+|^\w+:\s*\*E.+|^WARNING:.+|^Warning\s*\(\d+\):.+'
+		filt_head = err_head + '|' + warn_head
+		sublime.active_window().focus_view(view)
+		regions   = view.find_all(filt_head)
+		view.add_regions("bookmarks", regions, "bookmarks", "dot", sublime.HIDDEN | sublime.PERSISTENT)
+		return
+
+	def do_summary(self, view):
+		lvg_settings = get_settings()
+		log_panel    = lvg_settings.get("log_panel", True)
+		error_only   = lvg_settings.get("error_only", False)
+		if not log_panel:
+			return
+
+		err_msg   = '^Error-\[.+?^\s*\n|^Error:.+?(?=^[^\s]|\r?\n\r?\n)|^\*Error\*.+?^\s*\n|^\w+:\s*\*E[^\r\n]+|^ERROR:.[^\r\n]+|^Error\s*\(\d+\):[^\r\n]+'
+		warn_msg  = '^Warning-\[.+?^\s*\n|^Warning:.+?(?=^[^\s]|\r?\n\r?\n)|^\*Warning\*.+?^\s*\n|^\w+:\s*\*W[^\r\n]+|^WARNING:.[^\r\n]+|^Warning\s*\(\d+\):[^\r\n]+'
+		if error_only:
+			filt_msg  = err_msg
+			summary   = "\n" + "Error Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
+		else:
+			filt_msg  = err_msg + '|' + warn_msg
+			summary   = "\n" + "Error / Warning Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
+
+		sublime.active_window().focus_view(view)
+		text      = view.substr(sublime.Region(0, view.size()))
+		ewtext_l  = re.compile(filt_msg, re.MULTILINE|re.DOTALL).findall(text)
+		for _str in ewtext_l:
+			_str = re.sub(re.compile('\r?\n\r?\n'), '\n', _str)
+			summary = summary + _str + ('\n\n' if _str[-1] != '\n' else '\n')
+
+		global g_output_view
+		g_output_view = view.window().get_output_panel('errors')
+		g_output_view.set_read_only(False)
+		view.window().run_command("show_panel", {"panel": "output.errors"})
+		g_output_view.settings().set('result_file_regex', '\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?\s*[,:line]{1,4}\s*(\d+)')
+		if self.base_dir != "":
+			view.settings().set('result_base_dir', self.base_dir)
+		g_output_view.set_syntax_file('Packages/Verilog Gadget/Verilog Gadget Log.tmLanguage')
+		g_output_view.settings().set('color_scheme', 'Packages/Verilog Gadget/Verilog Gadget Log.hidden-tmTheme')
+		g_output_view.run_command("append", {"characters": summary})
+		g_output_view.set_read_only(True)
+		# add bookmarks
+		self.add_bookmarks(g_output_view)
+		return
 
 ############################################################################
 # for context menu

@@ -1,8 +1,8 @@
 # Verilog Gadget for Sublime Text
 ==================================
 
-Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.
-The context menu only can be seen for .v, .vh, .sv, .svh file.
+Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
+The context menu only can be seen for .v, .vh, .sv, .svh file.  
 You can see `View Log` command of context menu only for .log file.
 
 * **Verilog Gadget: Instantiate Module**
@@ -102,7 +102,7 @@ You can see `View Log` command of context menu only for .log file.
 * **Verilog Gadget: Repeat Code with Numbers**
 	- Select codes to be repeated, it may include Python's format symbol like {...}
 	- Run 'Repeat Code with Numbers' command (default key map : ctrl+f12)
-	- Type a range in the input panel as the following : [from]~[to],[step]
+	- Type a range in the input panel as the following : [from]~[to],[step]  
 	`(e.g. 0 ~ 10 or 0 ~ 10, 2 or 10 ~ 0, -1 ...)`
 	- The codes will be repeated with incremental or decremental numbers
 	- In order to repeat line by line, the codes should include start of next line (\n:line feed)
@@ -135,7 +135,8 @@ You can see `View Log` command of context menu only for .log file.
 	- It highlights Error/Warning syntax (Monokai theme base)
 	- It is possible to go to Error/Warning positions of files in a log by double-click
 	- For relative path, it automatically searches a base directory near the log file
-	- Open `xxx.log` file and run `View Log` by righ-click (context menu)
+	- Open `.log` file and run `View Log` by righ-click (context menu)
+	- It automatically generates bookmarks to navigate errors/warnings easily (with new key binding : `alt+pagedown/up`)
 	- Summary will be shown in the output panel ("log_panel": true in settings)
 	- The output panel can be toggled by ctrl+f11 (default)
 	- Only errors can be displayed in the output panel ("error_only: true in settings")

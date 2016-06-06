@@ -1,4 +1,6 @@
 [
-    { "keys": ["ctrl+f12"], "command": "verilog_gadget_repeat_code" },
-    { "keys": ["ctrl+f11"], "command": "verilog_gadget_log_panel" }
+	{ "keys": ["ctrl+f12"], "command": "verilog_gadget_repeat_code" },
+	{ "keys": ["ctrl+f11"], "command": "verilog_gadget_log_panel" },
+	{ "keys": ["alt+pagedown"], "command": "next_bookmark" },
+	{ "keys": ["alt+pageup"], "command": "prev_bookmark" }
 ]
