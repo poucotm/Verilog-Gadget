@@ -72,9 +72,39 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 			self.view.run_command('revert')
 
 		# summary
-		# window.focus_view(self.view)
-		# text = self.view.substr(sublime.Region(0, self.view.size()))
-		# paragraphs = re.compile('[^\n].+?\n\n|[^\n].+?$', re.DOTALL).findall(text)
+		lvg_settings = get_settings()
+		log_panel    = lvg_settings.get("log_panel", True)
+		error_only   = lvg_settings.get("error_only", False)
+		if not log_panel:
+			return
+
+		err_msg   = '^Error-\[.+?^\s*\n|^Error:.+?(?=^[^\s]|\r?\n\r?\n)|^\*Error\*.+?^\s*\n|^\w+:\s*\*E[^\r\n]+|^ERROR:.[^\r\n]+|^Error\s*\(\d+\):[^\r\n]+'
+		warn_msg  = '^Warning-\[.+?^\s*\n|^Warning:.+?(?=^[^\s]|\r?\n\r?\n)|^\*Warning\*.+?^\s*\n|^\w+:\s*\*W[^\r\n]+|^WARNING:.[^\r\n]+|^Warning\s*\(\d+\):[^\r\n]+'
+		if error_only:
+			filt_msg  = err_msg
+			summary   = "\n" + "Error Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
+		else:
+			filt_msg  = err_msg + '|' + warn_msg
+			summary   = "\n" + "Error / Warning Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
+
+		window.focus_view(self.view)
+		text      = self.view.substr(sublime.Region(0, self.view.size()))
+		ewtext_l  = re.compile(filt_msg, re.MULTILINE|re.DOTALL).findall(text)
+		for _str in ewtext_l:
+			_str = re.sub(re.compile('\r?\n\r?\n'), '\n', _str)
+			summary = summary + _str + ('\n\n' if _str[-1] != '\n' else '\n')
+
+		global g_output_view
+		g_output_view = self.view.window().get_output_panel('errors')
+		g_output_view.set_read_only(False)
+		self.view.window().run_command("show_panel", {"panel": "output.errors"})
+		g_output_view.settings().set('result_file_regex', '\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?\s*[,:line]{1,4}\s*(\d+)')
+		if self.base_dir != "":
+			self.view.settings().set('result_base_dir', self.base_dir)
+		g_output_view.set_syntax_file('Packages/Verilog Gadget/Verilog Gadget Log.tmLanguage')
+		g_output_view.settings().set('color_scheme', 'Packages/Verilog Gadget/Verilog Gadget Log.hidden-tmTheme')
+		g_output_view.run_command("append", {"characters": summary})
+		g_output_view.set_read_only(True)
 
 	def get_rel_path_file(self):
 		text     = self.view.substr(sublime.Region(0, self.view.size()))
@@ -154,8 +184,20 @@ def log_check_visible(file_name, view_name):
 	except:
 		return False
 
+class VerilogGadgetLogPanelCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		try:
+			if g_output_view:
+				if bool(g_output_view.window()):
+					self.view.window().run_command("hide_panel", {"panel": "output.errors"})
+				else:
+					self.view.window().run_command("show_panel", {"panel": "output.errors"})
+		except:
+			pass
+
 class VerilogGadgetViewLogCtxCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.run_command('verilog_gadget_view_log')
 	def is_visible(self):
 		return log_check_visible(self.view.file_name(), self.view.name())
+

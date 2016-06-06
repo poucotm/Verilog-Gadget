@@ -1,3 +1,4 @@
 [
-    { "keys": ["super+f12"], "command": "verilog_gadget_repeat_code" }
+    { "keys": ["super+f12"], "command": "verilog_gadget_repeat_code" },
+    { "keys": ["super+f11"], "command": "verilog_gadget_log_panel" }
 ]

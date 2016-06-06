@@ -136,6 +136,9 @@ You can see `View Log` command of context menu only for .log file.
 	- It is possible to go to Error/Warning positions of files in a log by double-click
 	- For relative path, it automatically searches a base directory near the log file
 	- Open `xxx.log` file and run `View Log` by righ-click (context menu)
+	- Summary will be shown in the output panel ("log_panel": true in settings)
+	- The output panel can be toggled by ctrl+f11 (default)
+	- Only errors can be displayed in the output panel ("error_only: true in settings")
 	- Log syntaxs will be continuosly updated for various vendor's tools (Synopsys, Cadence, Mentor, Xilinx, Altera,...)
 
    ![Image of Verilog Gadget](https://raw.githubusercontent.com/poucotm/Links/master/image/view_log.png)

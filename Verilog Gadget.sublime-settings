@@ -16,5 +16,9 @@
 	// for a testbench
 	"reset": "rstb",			// default reset name
 	"clock": "clk",			// default clock name
-	"wave_type": "fsdb"		// type of waveform, one of "fsdb", "vpd", "shm"
+	"wave_type": "fsdb",		// type of waveform, one of "fsdb", "vpd", "shm"
+
+	// log view summary panel
+	"log_panel": true,		// show log view summary panel
+	"error_only": false		// display only errors in the summary panel
 }
