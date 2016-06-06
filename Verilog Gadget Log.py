@@ -177,7 +177,7 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		view.window().run_command("show_panel", {"panel": "output.errors"})
 		g_output_view.settings().set('result_file_regex', '\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?\s*[,:line]{1,4}\s*(\d+)')
 		if self.base_dir != "":
-			view.settings().set('result_base_dir', self.base_dir)
+			g_output_view.settings().set('result_base_dir', self.base_dir)
 		g_output_view.set_syntax_file('Packages/Verilog Gadget/Verilog Gadget Log.tmLanguage')
 		g_output_view.settings().set('color_scheme', 'Packages/Verilog Gadget/Verilog Gadget Log.hidden-tmTheme')
 		g_output_view.run_command("append", {"characters": summary})
