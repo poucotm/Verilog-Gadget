@@ -353,38 +353,13 @@ class VerilogGadgetInsertTemplateCommand(sublime_plugin.TextCommand):
 	def run(self, edit, args):
 		fname = args['fname']
 		if fname == "example":
-			text = \
-"""
-// This is a simple example.
-// You can make a your own template file and set its path to settings.
-// (Preferences > Package Settings > Verilog Gadget > Settings - User)
-//
-//		"templates": [
-//			[ "Default", "D:/Temp/verilog_template.v" ],
-//			[ "FSM", "D:/Temp/verilog_fsm_template.v" ]
-//		]
-
-module template (
-	input        rstb,
-	input        clk,
-	input        inp_valid,
-	input  [3:0] inp_data,
-	output       out_valid,
-	output [3:0] out_data
-);
-
-	always @(posedge clk or negedge rstb) begin
-		if(!rstb) begin
-
-		end
-		else begin
-
-		end
-	end
-
-endmodule // template
-"""
-		else:
+			if ST3:
+				text  = sublime.load_resource('Packages/Verilog Gadget/template/verilog_template_default.v')
+			else:
+				fname = os.path.join(sublime.packages_path(), 'Verilog Gadget/template/verilog_template_default.v')
+		if fname != "example":
+			if fname.startswith('Packages'):
+				fname = re.sub('Packages', sublime.packages_path(), fname)
 			if not os.path.isfile(fname):
 				sublime.message_dialog("Verilog Gadget (!)\n\nInsert Template : File not found (" + fname + ")")
 				return
@@ -404,24 +379,13 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 		lvg_settings = get_settings()
 		fname = lvg_settings.get("header", "")
 		if fname == "example":
-			text = \
-"""
-// This is a simple example.
-// You can make a your own header file and set its path to settings.
-// (Preferences > Package Settings > Verilog Gadget > Settings - User)
-//
-//		"header": "D:/Temp/verilog_header.v"
-//
-// -----------------------------------------------------------------------------
-// Copyright (c) 2014-{YEAR} All rights reserved
-// -----------------------------------------------------------------------------
-// Author : yongchan jeon (Kris) poucotm@gmail.com
-// File   : {FILE}
-// Create : {DATE} {TIME}
-// Editor : sublime text{SUBLIME_VERSION}, tab size ({TABS})
-// -----------------------------------------------------------------------------
-"""
-		else:
+			if ST3:
+				text  = sublime.load_resource('Packages/Verilog Gadget/template/verilog_header.v')
+			else:
+				fname = os.path.join(sublime.packages_path(), 'Verilog Gadget/template/verilog_header.v')
+		if fname != "example":
+			if fname.startswith('Packages'):
+				fname = re.sub('Packages', sublime.packages_path(), fname)
 			if not os.path.isfile(fname):
 				sublime.message_dialog("Verilog Gadget (!)\n\nInsert Header : File not found (" + fname + ")")
 				return
@@ -531,7 +495,6 @@ def verilog_check_visible(file_name, view_name):
 		else:
 			return False
 	except:
-		print ("error")
 		return False
 
 class VerilogGadgetModuleInstCtxCommand(sublime_plugin.TextCommand):

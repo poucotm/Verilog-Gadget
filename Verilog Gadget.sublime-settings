@@ -7,7 +7,7 @@
 		[ "Default", "example" ]
 	],
 
-	// header description file path - {DATE}, {FILE}, {YEAR}, {TIME} will be replaced
+	// header description file path - {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION} will be replaced
 	"header": "example",
 
 	// default prefix for a instance name
