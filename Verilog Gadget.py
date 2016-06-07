@@ -32,12 +32,12 @@ def get_settings():
 # set of functions
 
 def removeCommentLineSpace(string):
-	string = re.sub(re.compile("/\*.*?\*/", re.DOTALL), "", string) # remove all occurance streamed comments (/*COMMENT */) from string
-	string = re.sub(re.compile("//.*?\n"), "", string)              # remove all occurance singleline comments (//COMMENT\n ) from string
-	string = re.sub(re.compile("\s*[\n]"), " ", string)             # remove lines (replace with a space, for easy parsing)
-	string = re.sub(re.compile(";"), "; ", string)                  # insert a space ahead of ; (for easy parsing)
-	string = re.sub(re.compile("\["), " [", string)                 # insert a space behind of [ (for easy parsing)
-	string = re.sub(re.compile("\s+"), " ", string)                 # remove consecutive spaces and tabs
+	string = re.sub(re.compile(r"/\*.*?\*/", re.DOTALL), "", string) # remove all occurance streamed comments (/*COMMENT */) from string
+	string = re.sub(re.compile(r"//.*?\n"), "", string)              # remove all occurance singleline comments (//COMMENT\n ) from string
+	string = re.sub(re.compile(r"\s*[\n]"), " ", string)             # remove lines (replace with a space, for easy parsing)
+	string = re.sub(re.compile(r";"), "; ", string)                  # insert a space ahead of ; (for easy parsing)
+	string = re.sub(re.compile(r"\["), " [", string)                 # insert a space behind of [ (for easy parsing)
+	string = re.sub(re.compile(r"\s+"), " ", string)                 # remove consecutive spaces and tabs
 	return string
 
 def parseParam(string, prefix, param_list):
@@ -45,11 +45,11 @@ def parseParam(string, prefix, param_list):
 	_param = False
 	try:
 		for _str in string.split(","):
-			pname = re.compile("\w+(?=\s\=)|\w+(?=\=)").findall(_str)[0]	# assume non-consecutive space
-			pval  = re.compile("(?<=\=\s)\S.*\S*(?=\s)?|(?<=\=)\S.*\S*(?=\s)?").findall(_str)[0] # assume non-consecutive space
-			_left = re.compile("(?<!\S)" + prefix + "(?!\S)[^\=]+").findall(_str)
+			pname = re.compile(r"\w+(?=\s\=)|\w+(?=\=)").findall(_str)[0]	# assume non-consecutive space
+			pval  = re.compile(r"(?<=\=\s)\S.*\S*(?=\s)?|(?<=\=)\S.*\S*(?=\s)?").findall(_str)[0] # assume non-consecutive space
+			_left = re.compile(r"(?<!\S)" + prefix + r"(?!\S)[^\=]+").findall(_str)
 			if len(_left) > 0:
-				_tmp = re.compile("\w+|\[.*\]").findall(_left[0])
+				_tmp = re.compile(r"\w+|\[.*\]").findall(_left[0])
 				if len(_tmp) >= 2:
 					if len(_tmp) > 2:
 						_type = _tmp[1]
@@ -68,15 +68,15 @@ def parseParam(string, prefix, param_list):
 def parseModuleParamPort(text, call_from):
 	# module ~ endmodule
 	try:
-		text_s    = re.compile("(?<!\S)module(?!\S).+(?<!\S)endmodule(?!\S)").findall(text)[0] # only for 1st module
-		module_rx = re.compile("module[^;]+;") # module ... ;
+		text_s    = re.compile(r"(?<!\S)module(?!\S).+(?<!\S)endmodule(?!\S)").findall(text)[0] # only for 1st module
+		module_rx = re.compile(r"module[^;]+;") # module ... ;
 		module_s  = module_rx.findall(text_s)[0]
-		param_rx  = re.compile("\#\s*\(.*\)\s*(?=\()") # find Verilog-2001 style parameters like #(parameter WIDTH = (12 - 1))
+		param_rx  = re.compile(r"\#\s*\(.*\)\s*(?=\()") # find Verilog-2001 style parameters like #(parameter WIDTH = (12 - 1))
 		param_l   = param_rx.findall(module_s)
-		param_s   = re.compile("(?<=\().*(?=\))").findall(param_l[0])[0] if len(param_l) > 0 else "" # extract strings in #()
+		param_s   = re.compile(r"(?<=\().*(?=\))").findall(param_l[0])[0] if len(param_l) > 0 else "" # extract strings in #()
 		module_s  = re.sub(param_rx, "", module_s) # exclude Verilog-2001 style parameters
-		mod_name  = re.compile("\w+").findall(module_s)[1] # \w+(?!\w+)
-		port_l    = re.compile("(?<=\().*(?=\))").findall(module_s) # extract strings in ()
+		mod_name  = re.compile(r"\w+").findall(module_s)[1] # \w+(?!\w+)
+		port_l    = re.compile(r"(?<=\().*(?=\))").findall(module_s) # extract strings in ()
 		port_s    = port_l[0] if len(port_l) > 0 else ""
 	except:
 		sublime.message_dialog("Verilog Gadget (!)\n\n" + call_from + " : Fail to find 'module'")
@@ -86,10 +86,10 @@ def parseModuleParamPort(text, call_from):
 	port_list = []
 	try:
 		for _str in port_s.split(","):
-			port_s = re.compile("\w+").findall(_str)[-1] # \w+(?!\w+)
-			size_l = re.compile("\[.*\]|(?<!\S)signed\s*\[.*\]|(?<!\S)signed(?!\S)").findall(_str)
+			port_s = re.compile(r"\w+").findall(_str)[-1] # \w+(?!\w+)
+			size_l = re.compile(r"\[.*\]|(?<!\S)signed\s*\[.*\]|(?<!\S)signed(?!\S)").findall(_str)
 			size_s = size_l[0] if len(size_l) > 0 else ""
-			prtd_l = re.compile("(?<!\S)input(?!\S)|(?<!\S)output(?!\S)|(?<!\S)inout(?!\S)").findall(_str)
+			prtd_l = re.compile(r"(?<!\S)input(?!\S)|(?<!\S)output(?!\S)|(?<!\S)inout(?!\S)").findall(_str)
 			prtd_s = prtd_l[0] if len(prtd_l) > 0 else ""
 			port_list.append([prtd_s, size_s, port_s])
 	except:
@@ -104,17 +104,17 @@ def parseModuleParamPort(text, call_from):
 	text_s  = re.sub(module_rx, "", text_s)
 
 	# port : re-search to check sizes for Verilog-1995 style
-	port_l = re.compile("(?<!\S)input(?!\S)[^;]+;|(?<!\S)output(?!\S)[^;]+;|(?<!\S)inout(?!\S)[^;]+;").findall(text_s)
+	port_l = re.compile(r"(?<!\S)input(?!\S)[^;]+;|(?<!\S)output(?!\S)[^;]+;|(?<!\S)inout(?!\S)[^;]+;").findall(text_s)
 	for _str in port_l:
 		prtd_s = ""
 		size_s = ""
 		try:
 			for tmp_s in _str.split(","):
-				prtd_l = re.compile("(?<!\S)input(?!\S)|(?<!\S)output(?!\S)|(?<!\S)inout(?!\S)").findall(tmp_s)
+				prtd_l = re.compile(r"(?<!\S)input(?!\S)|(?<!\S)output(?!\S)|(?<!\S)inout(?!\S)").findall(tmp_s)
 				prtd_s = prtd_l[0] if len(prtd_l) > 0 else prtd_s # preserve precendence
-				port_l = re.compile("\w+").findall(tmp_s)
+				port_l = re.compile(r"\w+").findall(tmp_s)
 				port_s = port_l[-1] if len(port_l) > 0 else ""
-				size_l = re.compile("\[.*\]|(?<!\S)signed\s*\[.*\]|(?<!\S)signed(?!\S)").findall(tmp_s)
+				size_l = re.compile(r"\[.*\]|(?<!\S)signed\s*\[.*\]|(?<!\S)signed(?!\S)").findall(tmp_s)
 				size_s = size_l[0] if len(size_l) > 0 else size_s # preserve precendence
 				for i, _strl in enumerate(port_list):
 					if _strl[2] == port_s:
@@ -124,11 +124,11 @@ def parseModuleParamPort(text, call_from):
 			pass
 
 	# parameter : re-search for Verilog-1995 style
-	param_l = re.compile("(?<!\S)parameter(?!\S)[^;]+(?=;)").findall(text_s)
+	param_l = re.compile(r"(?<!\S)parameter(?!\S)[^;]+(?=;)").findall(text_s)
 	for param_s in param_l:
 		parseParam(param_s, "parameter", param_list)
 
-	param_l = re.compile("(?<!\S)localparam(?!\S)[^;]+(?=;)").findall(text_s)
+	param_l = re.compile(r"(?<!\S)localparam(?!\S)[^;]+(?=;)").findall(text_s)
 	for param_s in param_l:
 		parseParam(param_s, "localparam", param_list)
 
@@ -405,7 +405,7 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 		text  = re.sub("{TIME}", ntime, text)				# {TIME}
 		text  = re.sub("{TABS}", tabs, text)				# {TABS}
 		text  = re.sub("{SUBLIME_VERSION}", sver, text)	# {SUBLIME_VERSION}
-		_file = re.compile("{FILE}").findall(text)
+		_file = re.compile(r"{FILE}").findall(text)
 		if _file:
 			fname = self.view.file_name()
 			if not fname:
@@ -428,8 +428,8 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 
 	def on_done(self, user_input):
 		frm_err = 0
-		_range = re.compile("[-+]?\d+").findall(user_input)
-		_step  = re.compile("(?<=,)\s*[-\d]+").findall(user_input)
+		_range = re.compile(r"[-+]?\d+").findall(user_input)
+		_step  = re.compile(r"(?<=,)\s*[-\d]+").findall(user_input)
 		range_len = 0
 		try:
 			if len(_range) >= 2:
@@ -454,7 +454,7 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 			return
 
 		try:
-			tup_l = re.compile("(?<!{)\s*{\s*(?!{)").findall(self.text)
+			tup_l = re.compile(r"(?<!{)\s*{\s*(?!{)").findall(self.text)
 			tup_n = len(tup_l)
 			repeat_str = ""
 			for i in range(st_n, ed_n, sp_n):

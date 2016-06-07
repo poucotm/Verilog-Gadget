@@ -2,8 +2,8 @@
 ==================================
 
 Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
-The context menu only can be seen for .v, .vh, .sv, .svh file.  
-You can see `View Log` command of context menu only for .log file.
+The context menu only can be seen for `.v, .vh, .sv, .svh` file.  
+You can see `View Log` command of context menu only for `.log` file.
 
 * **Verilog Gadget: Instantiate Module**
 	- Parse module ports in currently open file
@@ -57,8 +57,8 @@ You can see `View Log` command of context menu only for .log file.
 		In settings :
 
 		"templates": [
-			[ "Default", "D:/Temp/verilog_template.v" ],
-			[ "FSM", "D:/Temp/verilog_fsm_template.v" ]
+			[ "Default", "Packages/Verilog Gadget/template/verilog_template_default.v" ],
+			[ "FSM", "D:/template/verilog_fsm_template.v" ]
 		]
 ```
 
@@ -74,7 +74,7 @@ You can see `View Log` command of context menu only for .log file.
 	e.g)
 		In settings :
 
-		"header": "D:/Temp/verilog_header.v"
+		"header": "D:/template/verilog_header.v"
 
 		//
 		// -----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ You can see `View Log` command of context menu only for .log file.
 		case (abc)
 			5'b{:05b} : def <= {:3d};
 
-		--> select `	5'b{:05b} : def <= {:3d};`, run the command and type the range 0~10
+		--> select `5'b{:05b} : def <= {:3d};`, run the command and type the range 0~10
 		case (abc)
 			5'b{:05b} : def <= {:3d};
 			5'b00000 : def <=   0;
@@ -136,10 +136,10 @@ You can see `View Log` command of context menu only for .log file.
 	- It is possible to go to Error/Warning positions of files in a log by double-click
 	- For relative path, it automatically searches a base directory near the log file
 	- Open `.log` file and run `View Log` by righ-click (context menu)
-	- It automatically generates bookmarks to navigate errors/warnings easily (with new key binding : `alt+pagedown/up`)
+	- It automatically generates bookmarks to navigate errors/warnings easily (with new key binding : alt+pagedown/up)
 	- Summary will be shown in the output panel ("log_panel": true in settings)
 	- The output panel can be toggled by ctrl+f11 (default)
-	- Only errors can be displayed in the output panel ("error_only: true in settings")
+	- There's an option in settings in order to display only errors in the output panel ("error_only: true in settings")
 	- Log syntaxs will be continuosly updated for various vendor's tools (Synopsys, Cadence, Mentor, Xilinx, Altera,...)
 
    ![Image of Verilog Gadget](https://raw.githubusercontent.com/poucotm/Links/master/image/view_log.png)

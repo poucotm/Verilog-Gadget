@@ -71,7 +71,7 @@ patterns:
 # CADENCE IES / XILINX VIVADO / ALTERA QUARTUS
 - comment: ...
   name: msg.error
-  begin: '^\w+:\s*\*E|^ERROR:|^Error\s*\(\d+\):'
+  begin: '^\w+:\s*\*E|^\w+:\s*\*F|^ERROR:|^Error\s*\(\d+\):'
   end: \n$
   patterns:
   - include: $self
