@@ -139,7 +139,7 @@ You can see `View Log` command of context menu only for `.log` file.
 * **Verilog Gadget: View Log**
 	- It highlights Error/Warning syntax (Monokai theme base)
 	- It is possible to go to Error/Warning positions of files in a log by double-click
-	- For relative path, it automatically searches a base directory near the log file
+	- For relative path, it automatically searches a base directory near the log file (space in path isn't allowed)
 	- Open `.log` file and run `View Log` by righ-click (context menu)
 	- It automatically generates bookmarks to navigate Errors/Warnings easily (with new key binding : `alt+pagedown/up`)
 	- Summary will be shown in the output panel (`"log_panel": true` in settings)
