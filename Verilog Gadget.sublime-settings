@@ -1,6 +1,7 @@
 {
 	// enable context menu for .v, .vh, .sv, .svh
 	"context_menu": true,
+	"verilog_ext":	[ ".v", ".vh", ".sv", ".svh" ],
 
 	// template settings e.g) [ "type", "file-path" ]
 	"templates": [
@@ -17,6 +18,9 @@
 	"reset": "rstb",			// default reset name
 	"clock": "clk",			// default clock name
 	"wave_type": "fsdb",		// type of waveform, one of "fsdb", "vpd", "shm"
+
+	// log context menu for .log
+	"log_ext": [ ".log" ],
 
 	// log view summary panel
 	"log_panel": true,		// show log view summary panel

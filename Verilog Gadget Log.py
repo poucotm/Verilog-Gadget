@@ -212,7 +212,8 @@ def log_check_visible(file_name, view_name):
 		_name = file_name if view_name == "" else view_name
 		ext   = os.path.splitext(_name)[1]
 		ext   = ext.lower()
-		if ext == ".log":
+		ext_l = lvg_settings.get("log_ext") # [".log"]
+		if any(ext == s for s in ext_l):
 			return True
 		else:
 			return False

@@ -489,7 +489,7 @@ def verilog_check_visible(file_name, view_name):
 		_name = file_name if view_name == "" else view_name
 		ext   = os.path.splitext(_name)[1]
 		ext   = ext.lower()
-		ext_l = [".v", ".vh", ".sv", ".svh"]
+		ext_l = lvg_settings.get("verilog_ext") # [".v", ".vh", ".sv", ".svh"]
 		if any(ext == s for s in ext_l):
 			return True
 		else:

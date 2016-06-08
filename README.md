@@ -3,13 +3,14 @@
 
 Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
 The context menu only can be seen for `.v, .vh, .sv, .svh` file.  
-You can see `View Log` command of context menu only for `.log` file.
+You can see `View Log` command of context menu only for `.log` file.  
+(the file extension can be added or changed in settings)
 
 * **Verilog Gadget: Instantiate Module**
-	- Parse module ports in currently open file
-	- Generate its instance text
-	- Copy generated text to clipboard
-	- Paste the text on where you want
+	- It parses module ports in currently open file
+	- It generates its instance text
+	- It copies generated text to clipboard
+	- You can paste the text on where you want
 	- Support Verilog-1995, Verilog-2001 style ports and parameters
 ```Verilog
 	e.g)
@@ -17,12 +18,13 @@ You can see `View Log` command of context menu only for `.log` file.
 		endmodule
 
 		--> generate
+
 		test #(.WIDTH(WIDTH)) inst_test (.a(a), .b(b));
 ```
 
 * **Verilog Gadget: Generate Testbench**
-	- Parse module ports in currently open file
-	- Generate a simple testbench with its instance and signals
+	- It parses module ports in currently open file
+	- It generates a simple testbench with its instance and signals
 	- Testbench will be generated as a systemverilog file
 	- Support Verilog-1995, Verilog-2001 style ports and parameters
 ```Verilog
@@ -31,6 +33,7 @@ You can see `View Log` command of context menu only for `.log` file.
 		endmodule
 
 		--> generate
+
 		`timescale 1ns/1ps
 
 		module tb_test (); /* this is automatically generated */
@@ -50,8 +53,9 @@ You can see `View Log` command of context menu only for `.log` file.
 ```
 
 * **Verilog Gadget: Insert Template**
-	- Insert user-template text from the file specified in settings
+	- You can insert your own template text from the file specified in settings
 	- Multiple templates are possible
+	- Run `Insert Template` and choose the type listed in the quick panel
 ```json
 	e.g)
 		In settings :
@@ -63,7 +67,7 @@ You can see `View Log` command of context menu only for `.log` file.
 ```
 
 * **Verilog Gadget: Insert Header**
-	- Insert header-description from the file specified in settings
+	- You can insert your own header-description as your format from the file specified in settings
 	- {DATE} will be replaced with current date
 	- {YEAR} will be replaced with this year
 	- {TIME} will be replaced with current time
@@ -101,7 +105,7 @@ You can see `View Log` command of context menu only for `.log` file.
 
 * **Verilog Gadget: Repeat Code with Numbers**
 	- Select codes to be repeated, it may include Python's format symbol like {...}
-	- Run 'Repeat Code with Numbers' command (default key map : ctrl+f12)
+	- Run `Repeat Code with Numbers` command (default key map : ctrl+f12)
 	- Type a range in the input panel as the following : [from]~[to],[step]  
 	`(e.g. 0 ~ 10 or 0 ~ 10, 2 or 10 ~ 0, -1 ...)`
 	- The codes will be repeated with incremental or decremental numbers
@@ -116,6 +120,7 @@ You can see `View Log` command of context menu only for `.log` file.
 			5'b{:05b} : def <= {:3d};
 
 		--> select `5'b{:05b} : def <= {:3d};`, run the command and type the range 0~10
+
 		case (abc)
 			5'b{:05b} : def <= {:3d};
 			5'b00000 : def <=   0;
@@ -136,10 +141,10 @@ You can see `View Log` command of context menu only for `.log` file.
 	- It is possible to go to Error/Warning positions of files in a log by double-click
 	- For relative path, it automatically searches a base directory near the log file
 	- Open `.log` file and run `View Log` by righ-click (context menu)
-	- It automatically generates bookmarks to navigate errors/warnings easily (with new key binding : alt+pagedown/up)
-	- Summary will be shown in the output panel ("log_panel": true in settings)
-	- The output panel can be toggled by ctrl+f11 (default)
-	- There's an option in settings in order to display only errors in the output panel ("error_only: true in settings")
+	- It automatically generates bookmarks to navigate Errors/Warnings easily (with new key binding : `alt+pagedown/up`)
+	- Summary will be shown in the output panel (`"log_panel": true` in settings)
+	- The output panel can be toggled by `ctrl+f11` (default)
+	- There's an option in settings in order to display only errors in the output panel (`"error_only: true` in settings")
 	- Log syntaxs will be continuosly updated for various vendor's tools (Synopsys, Cadence, Mentor, Xilinx, Altera,...)
 
    ![Image of Verilog Gadget](https://raw.githubusercontent.com/poucotm/Links/master/image/view_log.png)
