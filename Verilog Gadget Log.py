@@ -34,8 +34,13 @@ def get_settings():
 ############################################################################
 # VerilogGadgetViewLogCommand
 
+is_working = False
+
 class VerilogGadgetViewLogCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
+		global is_working
+		if is_working:
+			return
 		if ST3:
 			VerilogGadgetViewLogThread().start()
 		else:
@@ -46,11 +51,13 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def run(self):
+		is_working = True
 		window    = sublime.active_window()
 		self.view = window.active_view()
 		log_name  = self.view.file_name()
 		if not log_name or not os.path.isfile(log_name):
 			sublime.message_dialog("Verilog Gadget (!)\n\nView Log : Unknown name for current view")
+			is_working = False
 			return
 
 		# set syntax for coloring / set read only
@@ -70,13 +77,34 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		self.view.settings().set('result_file_regex', r'\"?([\w\d\:\\/\.\-\=]+\.\w+[\w\d]*)\"?\s*[,:line]{1,4}\s*(\d+)')
 		if ST3: # this is for ST3 bug related with 'result_file_regex' which I suspect
 			self.view.run_command('revert')
+			self.timeout = 0
+			sublime.status_message("View Log : Waiting for loading ...")
+			self.wait_for_loading()
+		else:
+			self.do_next()
 
+		is_working = False
+		return
+
+	def wait_for_loading(self):
+		if self.view.is_loading():
+			self.timeout = self.timeout + 1
+			if self.timeout > 200:
+				sublime.status_message("View Log : Timed out waiting for loading")
+				is_working = False
+				return
+			sublime.set_timeout(self.wait_for_loading, 50)
+		else:
+			self.do_next()
+
+		is_working = False
+		return
+
+	def do_next(self):
 		# add bookmarks
 		self.add_bookmarks(self.view)
-
 		# summary
 		self.do_summary(self.view)
-
 		return
 
 	def get_rel_path_file(self):
@@ -100,7 +128,7 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 	def search_base(self, log_name, file_name):
 		sublime.status_message("View Log : Searching base directory ...")
 		old_path  = ["", 0]
-		_path     = os.path.dirname(os.path.dirname(log_name))
+		_path     = os.path.dirname(log_name)
 		_depth    = _path.count(os.path.sep)
 		new_path  = [_path, _depth]
 		scan_path = 0
@@ -110,6 +138,7 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 				for _dir in os.walk(new_path[0]):
 					if i == 0 or not _dir[0].startswith(old_path[0]):
 						sublime.status_message("View Log : Searching - " + _dir[0])
+						# print ("Searching - " + _dir[0])
 						if os.path.isfile(os.path.join(_dir[0], file_name)):
 							self.base_dir = _dir[0]
 							found = True
@@ -143,16 +172,16 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		erro_head = r'^Error-\[.+|^Error:.+|^\*Error\*.+|^\w+:\s*\*E.+|^\w+:\s*\*F.+|^ERROR:.+|^Error\s*\(\d+\):.+'
 		warn_head = r'^Warning-\[.+|^Warning:.+|^\*Warning\*.+|^\w+:\s*\*W.+|^WARNING:.+|^Warning\s*\(\d+\):.+'
 		filt_head = erro_head + '|' + warn_head
-		sublime.active_window().focus_view(view)
 		regions   = view.find_all(filt_head)
 		view.add_regions("bookmarks", regions, "bookmarks", "dot", sublime.HIDDEN | sublime.PERSISTENT)
+		sublime.status_message("View Log : ( "+str(len(regions))+" ) error/warnings are found")
 		return
 
 	def do_summary(self, view):
-		lvg_settings = get_settings()
-		log_panel    = lvg_settings.get("log_panel", True)
-		error_only   = lvg_settings.get("error_only", False)
-		if not log_panel:
+		lvg_settings  = get_settings()
+		summary_panel = lvg_settings.get("summary_panel", True)
+		error_only    = lvg_settings.get("error_only", False)
+		if not summary_panel:
 			return
 
 		erro_msg = r'^Error-\[.+?(?=^\s*[\r\n]|\Z)|^Error:.+?(?=^[^\s]|^\s*[\r\n]|\Z)|^\*Error\*.+?(?=^\s*[\r\n]|\Z)|^\w+:\s*\*E[^\r\n\Z]+|^\w+:\s*\*F[^\r\n\Z]+|^ERROR:[^\r\n\Z]+|^Error\s*\(\d+\):[^\r\n\Z]+'
@@ -164,13 +193,10 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 			filt_msg  = erro_msg + '|' + warn_msg
 			summary   = "\n" + "Error / Warning Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
 
-		sublime.active_window().focus_view(view)
 		text      = view.substr(sublime.Region(0, view.size()))
 		ewtext_l  = re.compile(filt_msg, re.MULTILINE|re.DOTALL).findall(text)
 		for _str in ewtext_l:
-			# _str = re.sub(re.compile('\r?\n\r?\n'), '\n', _str)
-			# summary = summary + _str + ('\n\n' if _str[-1] != '\n' else '\n')
-			summary = summary + _str + '\n'
+			summary = summary + _str + ('\n\n' if _str[-1] != '\n' else '\n')
 
 		global g_summary_view
 		g_summary_view = view.window().get_output_panel('summary')
@@ -230,4 +256,3 @@ class VerilogGadgetViewLogCtxCommand(sublime_plugin.TextCommand):
 		self.view.run_command('verilog_gadget_view_log')
 	def is_visible(self):
 		return log_check_visible(self.view.file_name(), self.view.name())
-

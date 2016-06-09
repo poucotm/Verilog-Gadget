@@ -4,11 +4,11 @@
 Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
 The context menu only can be seen for `.v, .vh, .sv, .svh` file.  
 You can see `View Log` command of context menu only for `.log` file.  
-(the file extension can be added or changed in settings)
+(file extensions can be added or changed in settings)
 
 * **Verilog Gadget: Instantiate Module**
 	- It parses module ports in currently open file
-	- It generates its instance text
+	- It generates module's instance text
 	- It copies generated text to clipboard
 	- You can paste the text on where you want
 	- Support Verilog-1995, Verilog-2001 style ports and parameters
@@ -24,7 +24,7 @@ You can see `View Log` command of context menu only for `.log` file.
 
 * **Verilog Gadget: Generate Testbench**
 	- It parses module ports in currently open file
-	- It generates a simple testbench with its instance and signals
+	- It generates a simple testbench with module's instance and signals
 	- Testbench will be generated as a systemverilog file
 	- Support Verilog-1995, Verilog-2001 style ports and parameters
 ```Verilog
