@@ -465,8 +465,6 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 				prm_l = []
 				for j in range(tup_n):
 					prm_l.append(i + j *csp_n)
-
-				print (prm_l)
 				repeat_str = repeat_str + '\n' + self.text.format(*prm_l)
 		except:
 			sublime.message_dialog("Verilog Gadget (!)\n\nRepeat Code : Format error\n\n" + self.text)
