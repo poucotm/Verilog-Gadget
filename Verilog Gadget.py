@@ -424,32 +424,36 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		selr = self.view.sel()[0]
 		self.text = self.view.substr(selr)
-		self.view.window().show_input_panel("type range [from]~[to],[step] e.g. 0~12 or 0~30,3 or 10~0,-2", "", self.on_done, None, None)
+		self.view.window().show_input_panel("type range [from]~[to],[↓step],[→step]", "", self.on_done, None, None)
 
 	def on_done(self, user_input):
-		frm_err = 0
-		_range = re.compile(r"[-+]?\d+").findall(user_input)
-		_step  = re.compile(r"(?<=,)\s*[-\d]+").findall(user_input)
+		frm_err   = False
+		_range    = re.compile(r"[-+]?\d+").findall(user_input)
+		_step     = re.compile(r"(?<=,)\s*[-\d]+").findall(user_input)
 		range_len = 0
 		try:
 			if len(_range) >= 2:
-				st_n = int(_range[0])
-				ed_n = int(_range[1])
-				if st_n <= ed_n:
-					ed_n = ed_n + 1
-					sp_n = 1
+				sta_n = int(_range[0])
+				end_n = int(_range[1])
+				if sta_n <= end_n:
+					end_n = end_n + 1
+					rsp_n = 1
+					csp_n = 0
 				else:
-					ed_n = ed_n - 1
-					sp_n = -1
+					end_n = end_n - 1
+					rsp_n = -1
+					csp_n = 0
 				if len(_step) > 0:
-					sp_n = int(_step[0])
+					rsp_n = int(_step[0])
+					if len(_step) > 1:
+						csp_n = int(_step[1])
 			else:
-				frm_err = 1
-			range_len = len(range(st_n, ed_n, sp_n))
+				frm_err = True
+			range_len = len(range(sta_n, end_n, rsp_n))
 		except:
-			frm_err = 1
+			frm_err = True
 
-		if range_len < 1 or frm_err == 1:
+		if range_len < 1 or frm_err:
 			sublime.message_dialog("Verilog Gadget (!)\n\nRepeat Code : Range format error (" + user_input + ")")
 			return
 
@@ -457,11 +461,13 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 			tup_l = re.compile(r"(?<!{)\s*{\s*(?!{)").findall(self.text)
 			tup_n = len(tup_l)
 			repeat_str = ""
-			for i in range(st_n, ed_n, sp_n):
+			for i in range(sta_n, end_n, rsp_n):
 				prm_l = []
 				for j in range(tup_n):
-					prm_l.append(i)
-				repeat_str = repeat_str + self.text.format(*prm_l)
+					prm_l.append(i + j *csp_n)
+
+				print (prm_l)
+				repeat_str = repeat_str + '\n' + self.text.format(*prm_l)
 		except:
 			sublime.message_dialog("Verilog Gadget (!)\n\nRepeat Code : Format error\n\n" + self.text)
 			return

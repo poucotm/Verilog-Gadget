@@ -106,10 +106,10 @@ You can see `View Log` command of context menu only for `.log` file.
 * **Verilog Gadget: Repeat Code with Numbers**
 	- Select codes to be repeated, it may include Python's format symbol like {...}
 	- Run `Repeat Code with Numbers` command (default key map : ctrl+f12)
-	- Type a range in the input panel as the following : [from]~[to],[step]  
-	`(e.g. 0 ~ 10 or 0 ~ 10, 2 or 10 ~ 0, -1 ...)`
+	- Type a range in the input panel as the following : [from]~[to],[↓step],[→step]  
+	  ``(e.g. 0~10 or 0~10,2 or 10~0,-1 or 0~5,1,1 ...)``
+	- [↓step] means row step, default is 1, [→step] means column step, default is 0
 	- The codes will be repeated with incremental or decremental numbers
-	- In order to repeat line by line, the codes should include start of next line (\n:line feed)
 	- Python's format symbol supports variable formats : binary, hex, leading zeros, ...
 	- To use '{' as is, you should type twice as '{{'
 	- Refer to Python's format symbol here, [https://www.python.org/dev/peps/pep-3101/](https://www.python.org/dev/peps/pep-3101/)
@@ -119,21 +119,21 @@ You can see `View Log` command of context menu only for `.log` file.
 		case (abc)
 			5'b{:05b} : def <= {:3d};
 
-		--> select `5'b{:05b} : def <= {:3d};`, run the command and type the range 0~10
+		--> select `5'b{:05b} : def <= {:3d};`, run the command and type the range 0~10,1,3
 
 		case (abc)
 			5'b{:05b} : def <= {:3d};
-			5'b00000 : def <=   0;
-			5'b00001 : def <=   1;
-			5'b00010 : def <=   2;
-			5'b00011 : def <=   3;
-			5'b00100 : def <=   4;
-			5'b00101 : def <=   5;
-			5'b00110 : def <=   6;
-			5'b00111 : def <=   7;
-			5'b01000 : def <=   8;
-			5'b01001 : def <=   9;
-			5'b01010 : def <=  10;
+			5'b00000 : def <=   3;
+			5'b00001 : def <=   4;
+			5'b00010 : def <=   5;
+			5'b00011 : def <=   6;
+			5'b00100 : def <=   7;
+			5'b00101 : def <=   8;
+			5'b00110 : def <=   9;
+			5'b00111 : def <=  10;
+			5'b01000 : def <=  11;
+			5'b01001 : def <=  12;
+			5'b01010 : def <=  13;
 ```
 
 * **Verilog Gadget: View Log**
