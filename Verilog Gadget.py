@@ -132,7 +132,25 @@ def parseModuleParamPort(text, call_from):
 	for param_s in param_l:
 		parseParam(param_s, "localparam", param_list)
 
-	return mod_name, port_list, param_list
+	# find reset, clock which is matched in the port list
+	clk_l, rst_l = getResetClock(text_s)
+	clk   = ""
+	rst   = ""
+	clk_b = False
+	rst_b = False
+	for pt_l in port_list:
+		if not clk_b:
+			for _str in clk_l:
+				if pt_l[2] == _str:
+					clk_b = True
+					clk = _str
+		if not rst_b:
+			for _str in rst_l:
+				if pt_l[2] == _str:
+					rst_b = True
+					rst = _str
+
+	return mod_name, port_list, param_list, clk, rst
 
 def declareParameters(param_list):
 	string = ""
@@ -221,6 +239,24 @@ def moduleInst(mod_name, port_list, param_list, iprefix):
 		string = string + ");\n"
 	return string
 
+def getResetClock(text):
+
+	als = re.compile(r'always\s*@\s*\(.+?\)').findall(text)
+	# list up
+	clkrst_list = []
+	for _str in als:
+		clkrst = re.compile(r'(?:posedge|negedge)\s+([\w\d]+)').findall(_str)
+		clkrst_list.extend(clkrst)
+	clk_l = []
+	rst_l = []
+	for _str in clkrst_list:
+		clk = re.compile(r'.*(?i)clk.*|.*(?i)ck.*').findall(_str)
+		rst = re.compile(r'.*(?i)rst.*').findall(_str)
+		clk_l.extend(clk)
+		rst_l.extend(rst)
+
+	return clk_l, rst_l
+
 ############################################################################
 # VerilogGadgetModuleInstCommand
 
@@ -230,7 +266,7 @@ class VerilogGadgetModuleInstCommand(sublime_plugin.TextCommand):
 		text = self.view.substr(sublime.Region(0, self.view.size()))
 		text = removeCommentLineSpace(text)
 
-		mod_name, port_list, param_list = parseModuleParamPort(text, 'Instantiate Module')
+		mod_name, port_list, param_list, clk, rst = parseModuleParamPort(text, 'Instantiate Module')
 		if mod_name == "":
 			return
 		lvg_settings = get_settings()
@@ -249,9 +285,10 @@ class VerilogGadgetTbGenCommand(sublime_plugin.TextCommand):
 		text = self.view.substr(sublime.Region(0, self.view.size()))
 		text = removeCommentLineSpace(text)
 
-		mod_name, port_list, param_list = parseModuleParamPort(text, 'Generate Testbench')
+		mod_name, port_list, param_list, clk, rst = parseModuleParamPort(text, 'Generate Testbench')
 		if mod_name == "":
 			return
+
 		lvg_settings = get_settings()
 		iprefix = lvg_settings.get("inst_prefix", "inst_")
 
@@ -259,8 +296,8 @@ class VerilogGadgetTbGenCommand(sublime_plugin.TextCommand):
 		decls  = declareSignals(port_list)
 		minst  = moduleInst(mod_name, port_list, param_list, iprefix)
 
-		reset = lvg_settings.get("reset", "rstb")
-		clock = lvg_settings.get("clock", "clk")
+		reset = rst if rst != "" else lvg_settings.get("reset", "rstb")
+		clock = clk if clk != "" else lvg_settings.get("clock", "clk")
 		wtype = lvg_settings.get("wave_type", "fsdb")
 		if wtype == "fsdb":
 			str_dump = """
