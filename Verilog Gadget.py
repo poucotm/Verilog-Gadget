@@ -79,7 +79,7 @@ def parseModuleParamPort(text, call_from):
 		port_l    = re.compile(r"(?<=\().*(?=\))").findall(module_s) # extract strings in ()
 		port_s    = port_l[0] if len(port_l) > 0 else ""
 	except:
-		sublime.message_dialog("Verilog Gadget (!)\n\n" + call_from + " : Fail to find 'module'")
+		sublime.status_message(call_from + " : Fail to find 'module'")
 		return "", None, None
 
 	# parse ports
@@ -238,7 +238,7 @@ class VerilogGadgetModuleInstCommand(sublime_plugin.TextCommand):
 
 		minst = moduleInst(mod_name, port_list, param_list, iprefix)
 		sublime.set_clipboard(minst)
-		sublime.message_dialog("Verilog Gadget (O)\n\nInstantiate Module : Copied to Clipboard")
+		sublime.status_message("Instantiate Module : Copied to Clipboard")
 
 ############################################################################
 # VerilogGadgetTbGenCommand
@@ -331,7 +331,7 @@ class VerilogGadgetTemplateCommand(sublime_plugin.TextCommand):
 		lvg_settings = get_settings()
 		self.templ_list = lvg_settings.get("templates", None)
 		if not self.templ_list:
-			sublime.message_dialog("Verilog Gadget (!)\n\nInsert Template : No 'templates' setting found")
+			sublime.status_message("Insert Template : No 'templates' setting found")
 			return
 		sel_list = []
 		for l in self.templ_list:
@@ -361,7 +361,7 @@ class VerilogGadgetInsertTemplateCommand(sublime_plugin.TextCommand):
 			if fname.startswith('Packages'):
 				fname = re.sub('Packages', sublime.packages_path(), fname)
 			if not os.path.isfile(fname):
-				sublime.message_dialog("Verilog Gadget (!)\n\nInsert Template : File not found (" + fname + ")")
+				sublime.status_message("Insert Template : File not found (" + fname + ")")
 				return
 			else:
 				f = open(fname, "r")
@@ -387,7 +387,7 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 			if fname.startswith('Packages'):
 				fname = re.sub('Packages', sublime.packages_path(), fname)
 			if not os.path.isfile(fname):
-				sublime.message_dialog("Verilog Gadget (!)\n\nInsert Header : File not found (" + fname + ")")
+				sublime.status_message("Insert Header : File not found (" + fname + ")")
 				return
 			else:
 				f = open(fname, "r")
@@ -409,7 +409,7 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 		if _file:
 			fname = self.view.file_name()
 			if not fname:
-				sublime.message_dialog("Verilog Gadget (?)\n\nInsert Header : Save with name")
+				sublime.status_message("Insert Header : Save with name")
 				fname = ""
 			else:
 				fname = os.path.split(fname)[1]
@@ -454,7 +454,7 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 			frm_err = True
 
 		if range_len < 1 or frm_err:
-			sublime.message_dialog("Verilog Gadget (!)\n\nRepeat Code : Range format error (" + user_input + ")")
+			sublime.statu_message("Repeat Code : Range format error (" + user_input + ")")
 			return
 
 		try:
@@ -467,7 +467,7 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 					prm_l.append(i + j *csp_n)
 				repeat_str = repeat_str + '\n' + self.text.format(*prm_l)
 		except:
-			sublime.message_dialog("Verilog Gadget (!)\n\nRepeat Code : Format error\n\n" + self.text)
+			sublime.status_message("Repeat Code : Format error\n\n" + self.text)
 			return
 
 		self.view.run_command("verilog_gadget_insert_sub", {"args":{'text': repeat_str}})

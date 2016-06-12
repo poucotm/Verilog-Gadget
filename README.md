@@ -105,7 +105,7 @@ You can see `View Log` command of context menu only for `.log` file.
 
 * **Verilog Gadget: Repeat Code with Numbers**
 	- Select codes to be repeated, it may include Python's format symbol like {...}
-	- Run `Repeat Code with Numbers` command (default key map : ctrl+f12)
+	- Run `Repeat Code with Numbers` command (default key map : `ctrl+f12`)
 	- Type a range in the input panel as the following : [from]~[to],[↓step],[→step]  
 	  ``(e.g. 0~10 or 0~10,2 or 10~0,-1 or 0~5,1,1 ...)``
 	- [↓step] means row step, default is 1, [→step] means column step, default is 0
@@ -142,7 +142,7 @@ You can see `View Log` command of context menu only for `.log` file.
 	- For relative path, it automatically searches a base directory near the log file (space in path isn't allowed)
 	- Open `.log` file and run `View Log` by righ-click (context menu)
 	- It automatically generates bookmarks to navigate Errors/Warnings easily (with new key binding : `alt+pagedown/up`)
-	- Summary will be shown in the output panel (`"log_panel": true` in settings)
+	- Summary will be shown in the output panel (`"summary_panel": true` in settings)
 	- The output panel can be toggled by `ctrl+f11` (default)
 	- There's an option in settings in order to display only errors in the output panel (`"error_only: true` in settings")
 	- Log syntaxs will be continuosly updated for various vendor's tools (Synopsys, Cadence, Mentor, Xilinx, Altera,...)

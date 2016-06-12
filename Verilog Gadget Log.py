@@ -56,7 +56,7 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		self.view = window.active_view()
 		log_name  = self.view.file_name()
 		if not log_name or not os.path.isfile(log_name):
-			sublime.message_dialog("Verilog Gadget (!)\n\nView Log : Unknown name for current view")
+			sublime.status_message("View Log : Unknown name for current view")
 			is_working = False
 			return
 
