@@ -16,8 +16,8 @@ ST3 = int(sublime.version()) >= 3000
 def plugin_loaded():
 	global vg_settings
 	vg_settings = sublime.load_settings('Verilog Gadget.sublime-settings')
-	vg_settings.clear_on_change('reload')
-	vg_settings.add_on_change('reload', plugin_loaded)
+	# vg_settings.clear_on_change('reload')
+	# vg_settings.add_on_change('reload', plugin_loaded)
 
 # def plugin_unloaded():
 	# print ("unloaded : Verilog Gadget.py")
