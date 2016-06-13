@@ -46,7 +46,7 @@ def parseParam(string, prefix, param_list):
 	try:
 		for _str in string.split(","):
 			pname = re.compile(r"\w+(?=\s\=)|\w+(?=\=)").findall(_str)[0]	# assume non-consecutive space
-			pval  = re.compile(r"(?<=\=\s)\S.*\S*(?=\s)?|(?<=\=)\S.*\S*(?=\s)?").findall(_str)[0] # assume non-consecutive space
+			pval  = re.compile(r"(?<=\=\s)\S.*\S*(?=\s)?|(?<=\=)\S.*\S*(?=\s)?").findall(_str)[0].strip() # assume non-consecutive space
 			_left = re.compile(r"(?<!\S)" + prefix + r"(?!\S)[^\=]+").findall(_str)
 			if len(_left) > 0:
 				_tmp = re.compile(r"\w+|\[.*\]").findall(_left[0])
@@ -187,28 +187,31 @@ def moduleInst(mod_name, port_list, param_list, iprefix):
 	nchars = 0
 	lmax   = 0
 
-	# check the length
+	print (param_list)
+
+	# check the length & list up 'parameter' only
+
+	prmonly_list = []
 	for _strl in param_list:
-		nchars = nchars + (len(_strl[2]) * 2 + 5) # .WIDTH(WIDTH), .HEIGHT(HEIGHT)
+		if _strl[0] == 'parameter':
+			nchars = nchars + (len(_strl[2]) * 2 + 5) # .WIDTH(WIDTH), .HEIGHT(HEIGHT)
+			prmonly_list.append(_strl)
+
 	for _strl in port_list:
 		nchars = nchars + (len(_strl[2]) * 2 + 5) # .rstb(rstb), .clk(clk)
 		lmax   = max(lmax, len(_strl[2]))
 
-	plen = 0
-	for pstr in param_list:
-		if pstr[0] == 'parameter':
-			plen = plen + 1
+	plen = len(prmonly_list)
 
 	if nchars > 80: # place vertically
 		if plen > 0:
 			string = "\t" + mod_name + " #(\n"
-			for i, _strl in enumerate(param_list):
-				if _strl[0] == "parameter":
-					string = string + "\t" * 3 + "." + _strl[2] + "(" + _strl[2] + ")"
-					if i != len(param_list) - 1:
-						string = string + ",\n"
-					else:
-						string = string + "\n"
+			for i, _strl in enumerate(prmonly_list):
+				string = string + "\t" * 3 + "." + _strl[2] + "(" + _strl[2] + ")"
+				if i != plen - 1:
+					string = string + ",\n"
+				else:
+					string = string + "\n"
 			string = string + "\t" * 2 + ") " + iprefix + mod_name + " (\n"
 		else:
 			string = "\t" + mod_name + " " + iprefix + mod_name + "\n" + "\t" * 2 + "(\n"
@@ -224,9 +227,9 @@ def moduleInst(mod_name, port_list, param_list, iprefix):
 	else: # place horizontally
 		if plen > 0:
 			string = "\t" + mod_name + " #("
-			for i, _strl in enumerate(param_list):
+			for i, _strl in enumerate(prmonly_list):
 				string = string + "." + _strl[2] + "(" + _strl[2] + ")"
-				if i != len(param_list) - 1:
+				if i != plen - 1:
 					string = string + ", "
 			string = string + ") " + iprefix + mod_name + " ("
 		else:
@@ -251,7 +254,7 @@ def getResetClock(text):
 	rst_l = []
 	for _str in clkrst_list:
 		clk = re.compile(r'.*(?i)clk.*|.*(?i)ck.*').findall(_str)
-		rst = re.compile(r'.*(?i)rst.*').findall(_str)
+		rst = re.compile(r'.*(?i)hrs.*|.*(?i)rst.*').findall(_str)
 		clk_l.extend(clk)
 		rst_l.extend(rst)
 
