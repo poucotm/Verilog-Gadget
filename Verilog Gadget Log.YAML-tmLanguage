@@ -13,9 +13,9 @@ patterns:
   patterns:
   - include: $self
   - name: msg.error.link
-    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
   - name: msg.error.quote
-    match: (?<=\')[^\']+(?=\')
+    match: (?<=[\'\"])[^[\'\"]]+(?=[\'\"])
 - comment: ...
   name: msg.warning
   begin: ^Warning-
@@ -23,9 +23,9 @@ patterns:
   patterns:
   - include: $self
   - name: msg.warning.link
-    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
   - name: msg.warning.quote
-    match: (?<=\')[^\']+(?=\')
+    match: (?<=[\'\"])[^[\'\"]]+(?=[\'\"])
 # SYNOPSYS DC
 - comment: ...
   name: msg.error
@@ -34,9 +34,9 @@ patterns:
   patterns:
   - include: $self
   - name: msg.error.link
-    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
   - name: msg.error.quote
-    match: (?<=\')[^\']+(?=\')
+    match: (?<=[\'\"])[^[\'\"]]+(?=[\'\"])
 - comment: ...
   name: msg.warning
   begin: '^Warning:'
@@ -44,9 +44,9 @@ patterns:
   patterns:
   - include: $self
   - name: msg.warning.link
-    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
   - name: msg.warning.quote
-    match: (?<=\')[^\']+(?=\')
+    match: (?<=[\'\"])[^[\'\"]]+(?=[\'\"])
 # SYNOPSYS VERDI
 - comment: ...
   name: msg.error
@@ -55,9 +55,9 @@ patterns:
   patterns:
   - include: $self
   - name: msg.error.link
-    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
   - name: msg.error.quote
-    match: (?<=\')[^\']+(?=\')
+    match: (?<=[\'\"])[^[\'\"]]+(?=[\'\"])
 - comment: ...
   name: msg.warning
   begin: ^\*Warning\*
@@ -65,9 +65,9 @@ patterns:
   patterns:
   - include: $self
   - name: msg.warning.link
-    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
   - name: msg.warning.quote
-    match: (?<=\')[^\']+(?=\')
+    match: (?<=[\'\"])[^[\'\"]]+(?=[\'\"])
 # CADENCE IES / XILINX VIVADO / ALTERA QUARTUS
 - comment: ...
   name: msg.error
@@ -76,9 +76,9 @@ patterns:
   patterns:
   - include: $self
   - name: msg.error.link
-    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
   - name: msg.error.quote
-    match: (?<=\')[^\']+(?=\')
+    match: (?<=[\'\"])[^[\'\"]]+(?=[\'\"])
 - comment: ...
   name: msg.warning
   begin: '^\w+:\s*\*W|^WARNING:|^Warning\s*\(\d+\):'
@@ -86,10 +86,10 @@ patterns:
   patterns:
   - include: $self
   - name: msg.warning.link
-    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?[,:]\s*\d+
+    match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
   - name: msg.warning.quote
-    match: (?<=\')[^\']+(?=\')
+    match: (?<=[\'\"])[^[\'\"]]+(?=[\'\"])
 - comment: ...
   name: msg.error.link
-  match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*line\s*\d+
+  match: \"?[\w\d\:\\/\.\-\=]+\.\w+[\w\d]*\"?\s*[,:line]{1,5}\s*\d+
 ...
