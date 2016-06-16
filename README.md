@@ -147,7 +147,7 @@ You can see `View Log` command of context menu only for `.log` file.
 	- There's an option in settings in order to display only errors in the output panel (`"error_only: true` in settings")
 	- Log syntaxs will be continuosly updated for various vendor's tools (Synopsys, Cadence, Mentor, Xilinx, Altera,...)
 
-   ![Image of Verilog Gadget](https://raw.githubusercontent.com/poucotm/Links/master/image/view_log.png)
+   ![Image of Verilog Gadget](https://raw.githubusercontent.com/poucotm/Links/master/image/view_log.gif)
 
 ## issues
 

@@ -188,10 +188,10 @@ class  VerilogGadgetViewLogThread(threading.Thread):
 		warn_msg = r'^Warning-\[.+?(?=^\s*[\r\n]|\Z)|^Warning:.+?(?=^[^\s]|^\s*[\r\n]|\Z)|^\*Warning\*.+?(?=^\s*[\r\n]|\Z)|^\w+:\s*\*W[^\r\n\Z]+|^WARNING:[^\r\n\Z]+|^Warning\s*\(\d+\):[^\r\n\Z]+'
 		if error_only:
 			filt_msg  = erro_msg
-			summary   = "\n" + "Error Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
+			summary   = "\n" + "Error Summary (toggle : ctrl+f11 (default), hide : ESC)\n" + "-" * 100 + "\n\n"
 		else:
 			filt_msg  = erro_msg + '|' + warn_msg
-			summary   = "\n" + "Error / Warning Summary (toggle : ctrl+f11 (default))\n" + "-" * 100 + "\n\n"
+			summary   = "\n" + "Error / Warning Summary (toggle : ctrl+f11 (default), hide : ESC)\n" + "-" * 100 + "\n\n"
 
 		text      = view.substr(sublime.Region(0, view.size()))
 		ewtext_l  = re.compile(filt_msg, re.MULTILINE|re.DOTALL).findall(text)
