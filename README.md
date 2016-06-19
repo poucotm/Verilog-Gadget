@@ -4,7 +4,9 @@
 Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
 The context menu only can be seen for `.v, .vh, .sv, .svh` file.  
 You can see `View Log` command of context menu only for `.log` file.  
-(file extensions can be added or changed in settings)
+(file extensions can be added or changed in settings)  
+**NOTE** : `View Log` command will be deprecated.  
+Use **Log Highlight** instead, I separated this function with adding customizable settings.
 
 * **Verilog Gadget: Instantiate Module**
 	- It parses module ports in currently open file
@@ -137,7 +139,7 @@ You can see `View Log` command of context menu only for `.log` file.
 ```
 
 * **Verilog Gadget: View Log**
-	- This will be **deprecated**. Use **Log Highlight** instead, I separated this function adding customizable settings.
+	- This will be **deprecated**.
 	- It highlights Error/Warning syntax (Monokai theme base)
 	- It is possible to go to Error/Warning positions of files in a log by double-click
 	- For relative path, it automatically searches a base directory near the log file (space in path isn't allowed)
