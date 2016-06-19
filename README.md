@@ -6,7 +6,7 @@ The context menu only can be seen for `.v, .vh, .sv, .svh` file.
 You can see `View Log` command of context menu only for `.log` file.  
 (file extensions can be added or changed in settings)  
 **NOTE** : `View Log` command will be deprecated.  
-Use **Log Highlight** instead, I separated this function with adding customizable settings.
+Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** instead, I separated this function with adding customizable settings.
 
 * **Verilog Gadget: Instantiate Module**
 	- It parses module ports in currently open file
