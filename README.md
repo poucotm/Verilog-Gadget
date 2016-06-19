@@ -53,7 +53,7 @@ You can see `View Log` command of context menu only for `.log` file.
 ```
 
 * **Verilog Gadget: Insert Template**
-	- You can insert your own template text from the file specified in settings
+	- You can insert your own template text (larger than a snippet) from the file specified in settings
 	- Multiple templates are possible
 	- Run `Insert Template` and choose the type listed in the quick panel
 ```json
@@ -137,6 +137,7 @@ You can see `View Log` command of context menu only for `.log` file.
 ```
 
 * **Verilog Gadget: View Log**
+	- This will be **deprecated**. Use **Log Highlight** instead, I separated this function adding customizable settings.
 	- It highlights Error/Warning syntax (Monokai theme base)
 	- It is possible to go to Error/Warning positions of files in a log by double-click
 	- For relative path, it automatically searches a base directory near the log file (space in path isn't allowed)
