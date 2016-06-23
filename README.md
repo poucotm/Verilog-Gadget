@@ -3,9 +3,8 @@
 
 Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
 The context menu only can be seen for `.v, .vh, .sv, .svh` file.  
-You can see `View Log` command of context menu only for `.log` file.  
 (file extensions can be added or changed in settings)  
-**NOTE** : `View Log` command will be deprecated.  
+**NOTE** : `View Log` command was deprecated.  
 Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** instead, I separated this function with adding customizable settings.
 
 * **Verilog Gadget: Instantiate Module**
@@ -137,20 +136,6 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 			5'b01001 : def <=  12;
 			5'b01010 : def <=  13;
 ```
-
-* **Verilog Gadget: View Log**
-	- This will be **deprecated**.
-	- It highlights Error/Warning syntax (Monokai theme base)
-	- It is possible to go to Error/Warning positions of files in a log by double-click
-	- For relative path, it automatically searches a base directory near the log file (space in path isn't allowed)
-	- Open `.log` file and run `View Log` by righ-click (context menu)
-	- It automatically generates bookmarks to navigate Errors/Warnings easily (with new key binding : `alt+pagedown/up`)
-	- Summary will be shown in the output panel (`"summary_panel": true` in settings)
-	- The output panel can be toggled by `ctrl+f11` (default)
-	- There's an option in settings in order to display only errors in the output panel (`"error_only: true` in settings")
-	- Log syntaxs will be continuosly updated for various vendor's tools (Synopsys, Cadence, Mentor, Xilinx, Altera,...)
-
-   ![Image of Verilog Gadget](https://raw.githubusercontent.com/poucotm/Links/master/image/view_log.gif)
 
 ## issues
 

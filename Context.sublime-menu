@@ -5,6 +5,4 @@
 	{ "command": "verilog_gadget_template_ctx", "caption": "Insert Template" },
 	{ "command": "verilog_gadget_module_inst_ctx", "caption": "Instantiate Module" },
 	{ "command": "verilog_gadget_repeat_code_ctx", "caption": "Repeat Code with Numbers" },
-	{ "caption": "-", "id": "verilog_gadget_log" },
-	{ "command": "verilog_gadget_view_log_ctx", "caption": "View Log (Verilog Gadget)" }
 ]

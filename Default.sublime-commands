@@ -18,9 +18,5 @@
     {
         "caption": "Verilog Gadget: Repeat Code with Numbers",
         "command": "verilog_gadget_repeat_code"
-    },
-    {
-        "caption": "Verilog Gadget: View Log",
-        "command": "verilog_gadget_view_log"
     }
  ]
