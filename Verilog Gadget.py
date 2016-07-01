@@ -261,6 +261,25 @@ def getResetClock(text):
 	return clk_l, rst_l
 
 ############################################################################
+# for context menu
+
+def verilog_check_visible(file_name, view_name):
+	lvg_settings = get_settings()
+	if not lvg_settings.get("context_menu", True):
+		return False
+	try:
+		_name = file_name if view_name == "" else view_name
+		ext   = os.path.splitext(_name)[1]
+		ext   = ext.lower()
+		ext_l = lvg_settings.get("verilog_ext") # [".v", ".vh", ".sv", ".svh"]
+		if any(ext == s for s in ext_l):
+			return True
+		else:
+			return False
+	except:
+		return False
+
+############################################################################
 # VerilogGadgetModuleInstCommand
 
 class VerilogGadgetModuleInstCommand(sublime_plugin.TextCommand):
@@ -278,6 +297,9 @@ class VerilogGadgetModuleInstCommand(sublime_plugin.TextCommand):
 		minst = moduleInst(mod_name, port_list, param_list, iprefix)
 		sublime.set_clipboard(minst)
 		sublime.status_message("Instantiate Module : Copied to Clipboard")
+
+	def is_visible(self):
+		return verilog_check_visible(self.view.file_name(), self.view.name())
 
 ############################################################################
 # VerilogGadgetTbGenCommand
@@ -362,6 +384,9 @@ endmodule
 		v.set_scratch(True)
 		v.insert(edit, 0, string)
 
+	def is_visible(self):
+		return verilog_check_visible(self.view.file_name(), self.view.name())
+
 ############################################################################
 # VerilogGadgetTemplateCommand
 
@@ -384,6 +409,9 @@ class VerilogGadgetTemplateCommand(sublime_plugin.TextCommand):
 			return
 		fname = self.templ_list[index][1]
 		self.view.run_command("verilog_gadget_insert_template", {"args":{'fname': fname}})
+
+	def is_visible(self):
+		return verilog_check_visible(self.view.file_name(), self.view.name())
 
 ############################################################################
 # VerilogGadgetInsertTemplateCommand
@@ -409,6 +437,9 @@ class VerilogGadgetInsertTemplateCommand(sublime_plugin.TextCommand):
 				f.close()
 		pos = self.view.sel()[0].begin()
 		self.view.insert(edit, pos, text)
+
+	def is_visible(self):
+		return verilog_check_visible(self.view.file_name(), self.view.name())
 
 ############################################################################
 # VerilogGadgetInsertHeaderCommand
@@ -455,6 +486,9 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 				fname = os.path.split(fname)[1]
 				text = re.sub("{FILE}", fname, text) # {FILE}
 		self.view.insert(edit, 0, text)
+
+	def is_visible(self):
+		return verilog_check_visible(self.view.file_name(), self.view.name())
 
 ############################################################################
 # VerilogGadgetRepeatCodeCommand
@@ -512,6 +546,9 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 
 		self.view.run_command("verilog_gadget_insert_sub", {"args":{'text': repeat_str}})
 
+	def is_visible(self):
+		return verilog_check_visible(self.view.file_name(), self.view.name())
+
 ############################################################################
 # VerilogGadgetInsertSubCommand
 
@@ -521,52 +558,3 @@ class VerilogGadgetInsertSubCommand(sublime_plugin.TextCommand):
 		text = args['text']
 		selr = self.view.sel()[0]
 		self.view.insert(edit, selr.end(), text)
-
-############################################################################
-# for context menu
-
-def verilog_check_visible(file_name, view_name):
-	lvg_settings = get_settings()
-	if not lvg_settings.get("context_menu", True):
-		return False
-	try:
-		_name = file_name if view_name == "" else view_name
-		ext   = os.path.splitext(_name)[1]
-		ext   = ext.lower()
-		ext_l = lvg_settings.get("verilog_ext") # [".v", ".vh", ".sv", ".svh"]
-		if any(ext == s for s in ext_l):
-			return True
-		else:
-			return False
-	except:
-		return False
-
-class VerilogGadgetModuleInstCtxCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		self.view.run_command('verilog_gadget_module_inst')
-	def is_visible(self):
-		return verilog_check_visible(self.view.file_name(), self.view.name())
-
-class VerilogGadgetTbGenCtxCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		self.view.run_command('verilog_gadget_tb_gen')
-	def is_visible(self):
-		return verilog_check_visible(self.view.file_name(), self.view.name())
-
-class VerilogGadgetTemplateCtxCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		self.view.run_command('verilog_gadget_template')
-	def is_visible(self):
-		return verilog_check_visible(self.view.file_name(), self.view.name())
-
-class VerilogGadgetInsertHeaderCtxCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		self.view.run_command('verilog_gadget_insert_header')
-	def is_visible(self):
-		return verilog_check_visible(self.view.file_name(), self.view.name())
-
-class VerilogGadgetRepeatCodeCtxCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		self.view.run_command('verilog_gadget_repeat_code')
-	def is_visible(self):
-		return verilog_check_visible(self.view.file_name(), self.view.name())
