@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 ## -----------------------------------------------------------------------------
 ## Author : yongchan jeon (Kris) poucotm@gmail.com
 ## File   : Verilog Gadget.py
@@ -186,8 +188,6 @@ def declareSignals(port_list):
 def moduleInst(mod_name, port_list, param_list, iprefix):
 	nchars = 0
 	lmax   = 0
-
-	print (param_list)
 
 	# check the length & list up 'parameter' only
 
@@ -498,7 +498,7 @@ class VerilogGadgetRepeatCodeCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		selr = self.view.sel()[0]
 		self.text = self.view.substr(selr)
-		self.view.window().show_input_panel("Type a range [from]~[to],[↓step],[→step]", "", self.on_done, None, None)
+		self.view.window().show_input_panel(u"Type a range [from]~[to],[↓step],[→step]", "", self.on_done, None, None)
 
 	def on_done(self, user_input):
 		frm_err   = False
