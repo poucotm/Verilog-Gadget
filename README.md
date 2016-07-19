@@ -1,10 +1,10 @@
 # Verilog Gadget for Sublime Text
 ==================================
 
-Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.  
-The context menu only can be seen for `.v, .vh, .sv, .svh` file.  
+Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.
+The context menu only can be seen for `.v, .vh, .sv, .svh` file.
 (file extensions can be added or changed in settings)  
-**NOTE** : `View Log` command was deprecated.  
+**NOTE** : `View Log` command was deprecated.
 Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** instead, I separated this function with adding customizable settings.
 
 * **Verilog Gadget: Instantiate Module**
@@ -107,7 +107,7 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 * **Verilog Gadget: Repeat Code with Numbers**
 	- Select codes to be repeated, it may include Python's format symbol like {...}
 	- Run `Repeat Code with Numbers` command (default key map : `ctrl+f12`)
-	- Type a range in the input panel as the following : [from]~[to],[↓step],[→step]  
+	- Type a range in the input panel as the following : [from]~[to],[↓step],[→step]
 	  ``(e.g. 0~10 or 0~10,2 or 10~0,-1 or 0~5,1,1 ...)``
 	- [↓step] means row step, default is 1, [→step] means column step, default is 0
 	- The codes will be repeated with incremental or decremental numbers
@@ -135,6 +135,21 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 			5'b01000 : def <=  11;
 			5'b01001 : def <=  12;
 			5'b01010 : def <=  13;
+		...
+
+		abc[{0:2d}] = {0:2d} + {1:2d} + {2:2d} + {2:2d};
+
+		--> using index case, select and run the command and type the range 0~8,1,2
+
+		abc[ 0] =  0 +  2 +  4 +  4;
+		abc[ 1] =  1 +  3 +  5 +  5;
+		abc[ 2] =  2 +  4 +  6 +  6;
+		abc[ 3] =  3 +  5 +  7 +  7;
+		abc[ 4] =  4 +  6 +  8 +  8;
+		abc[ 5] =  5 +  7 +  9 +  9;
+		abc[ 6] =  6 +  8 + 10 + 10;
+		abc[ 7] =  7 +  9 + 11 + 11;
+		abc[ 8] =  8 + 10 + 12 + 12;
 ```
 
 ## issues
