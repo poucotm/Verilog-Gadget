@@ -139,7 +139,7 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 
 		abc[{0:2d}] = {0:2d} + {1:2d} + {2:2d} + {2:2d};
 
-		--> using index case, select and run the command and type the range 0~8,1,2
+		--> index-used case, select and run the command and type the range 0~8,1,2
 
 		abc[ 0] =  0 +  2 +  4 +  4;
 		abc[ 1] =  1 +  3 +  5 +  5;
