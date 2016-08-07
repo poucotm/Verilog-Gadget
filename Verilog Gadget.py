@@ -135,11 +135,13 @@ def parseModuleParamPort(text, call_from):
 		parseParam(param_s, "localparam", param_list)
 
 	# find reset, clock which is matched in the port list
-	clk_l, rst_l = getResetClock(text_s)
-	clk   = ""
-	rst   = ""
-	clk_b = False
-	rst_b = False
+	clk_l, rst_l, srst_l = getResetClock(text_s)
+	clk    = ""
+	rst    = ""
+	srst   = ""
+	clk_b  = False
+	rst_b  = False
+	srst_b = False
 	for pt_l in port_list:
 		if not clk_b:
 			for _str in clk_l:
@@ -151,8 +153,13 @@ def parseModuleParamPort(text, call_from):
 				if pt_l[2] == _str:
 					rst_b = True
 					rst = _str
+		if not srst_b:
+			for _str in srst_l:
+				if pt_l[2] == _str:
+					srst_b = True
+					srst = _str
 
-	return mod_name, port_list, param_list, clk, rst
+	return mod_name, port_list, param_list, clk, rst, srst
 
 def declareParameters(param_list):
 	string = ""
@@ -170,19 +177,21 @@ def declareParameters(param_list):
 		string = string + "\t" + _str + " " * sp + " = " + param_list[i][3] + ";\n"
 	return string
 
-def declareSignals(port_list):
+def declareSignals(port_list, _reset, _sreset, _clock):
 	string = ""
 	str_list = []
 	lmax = 0
 	for _strl in port_list:
-		lmax = max(lmax, len(_strl[1]))
-		str_list.append(_strl[1])
+		if _strl[2] != _clock and _strl[2] != _reset:
+			lmax = max(lmax, len(_strl[1]))
+			str_list.append(_strl[1])
 	for i, _str in enumerate(str_list):
-		sp = lmax - len(_str)
-		if lmax == sp:
-			string = string + "\tlogic " + " " * sp + " " + port_list[i][2] + ";\n"
-		else:
-			string = string + "\tlogic " + " " * sp + _str + " " + port_list[i][2] + ";\n"
+		if port_list[i][2] != _clock and port_list[i][2] != _reset and port_list[i][2] != _sreset:
+			sp = lmax - len(_str)
+			if lmax == sp:
+				string = string + "\tlogic " + " " * sp + " " + port_list[i][2] + ";\n"
+			else:
+				string = string + "\tlogic " + " " * sp + _str + " " + port_list[i][2] + ";\n"
 	return string
 
 def moduleInst(mod_name, port_list, param_list, iprefix):
@@ -250,15 +259,24 @@ def getResetClock(text):
 	for _str in als:
 		clkrst = re.compile(r'(?:posedge|negedge)\s+([\w\d]+)').findall(_str)
 		clkrst_list.extend(clkrst)
-	clk_l = []
-	rst_l = []
+	clk_l  = []
+	rst_l  = []
+	srst_l = []
 	for _str in clkrst_list:
 		clk = re.compile(r'.*(?i)clk.*|.*(?i)ck.*').findall(_str)
 		rst = re.compile(r'.*(?i)hrs.*|.*(?i)rst.*').findall(_str)
 		clk_l.extend(clk)
 		rst_l.extend(rst)
 
-	return clk_l, rst_l
+	als = re.compile(r'always\s*@\s*\(\s*(?:posedge|negedge).*?\).*if\s*\(\w*',re.MULTILINE).findall(text)
+	for _str in als:
+		strs  = re.compile(r'if\s*\(\w*').findall(_str)[0]
+		srst  = re.compile(r'(?<=\()\w*').findall(strs)[0]
+		srstl = re.compile(r'.*(?i)rst.*').findall(srst)
+		srst  = srstl[0] if len(srstl) > 0 else ""
+		srst_l.extend(srst)
+
+	return clk_l, rst_l, srst_l
 
 ############################################################################
 # for context menu
@@ -310,24 +328,26 @@ class VerilogGadgetTbGenCommand(sublime_plugin.TextCommand):
 		text = self.view.substr(sublime.Region(0, self.view.size()))
 		text = removeCommentLineSpace(text)
 
-		mod_name, port_list, param_list, clk, rst = parseModuleParamPort(text, 'Generate Testbench')
+		mod_name, port_list, param_list, clk, rst, srst = parseModuleParamPort(text, 'Generate Testbench')
 		if mod_name == "":
 			return
 
 		lvg_settings = get_settings()
 		iprefix = lvg_settings.get("inst_prefix", "inst_")
 
+		reset  = rst if rst != "" else lvg_settings.get("reset", "rstb")
+		sreset = srst if srst != "" else lvg_settings.get("sreset", "srst")
+		clock  = clk if clk != "" else lvg_settings.get("clock", "clk")
+
 		declp  = declareParameters(param_list)
-		decls  = declareSignals(port_list)
+		decls  = declareSignals(port_list, reset, sreset, clock)
 		minst  = moduleInst(mod_name, port_list, param_list, iprefix)
 
-		reset = rst if rst != "" else lvg_settings.get("reset", "rstb")
-		clock = clk if clk != "" else lvg_settings.get("clock", "clk")
 		wtype = lvg_settings.get("wave_type", "fsdb")
 		if wtype == "fsdb":
 			str_dump = """
 		$fsdbDumpfile("tb_""" + mod_name + """.fsdb");
-		$fsdbDumpvars(0, "tb_""" + mod_name + """");"""
+		$fsdbDumpvars(0, "tb_""" + mod_name + """", "+mda");"""
 		elif wtype == "vpd":
 			str_dump = """
 		$vcdplusfile("tb_""" + mod_name + """.vpd");
@@ -348,6 +368,7 @@ class VerilogGadgetTbGenCommand(sublime_plugin.TextCommand):
 module tb_""" + mod_name + """ (); /* this is automatically generated */
 
 	logic """ + reset + """;
+	logic """ + sreset + """;
 	logic """ + clock + """;
 
 	// clock
@@ -359,8 +380,13 @@ module tb_""" + mod_name + """ (); /* this is automatically generated */
 	// reset
 	initial begin
 		""" + reset + """ = 0;
+		""" + sreset + """ = 0;
 		#20
 		""" + reset + """ = 1;
+		repeat (5) @(posedge """ + clock + """);
+		""" + sreset + """ = 1
+		repeat (1) @(posedge """ + clock + """);
+		""" + sreset + """ = 0
 	end
 
 	// (*NOTE*) replace reset, clock
@@ -369,7 +395,8 @@ module tb_""" + mod_name + """ (); /* this is automatically generated */
 """
 	initial begin
 		// do something
-		#1000
+
+		repeat(10)@(posedge """ + clock + """);
 		$finish;
 	end
 

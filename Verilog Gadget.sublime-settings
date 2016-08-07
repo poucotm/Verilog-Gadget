@@ -15,7 +15,8 @@
 	"inst_prefix": "inst_",
 
 	// for a testbench
-	"reset": "rstb",			// default reset name
+	"reset": "rstb",			// default asynchronous reset name
+	"sreset": "srst",			// default synchronous reset name
 	"clock": "clk",			// default clock name
 	"wave_type": "fsdb"		// type of waveform, one of "fsdb", "vpd", "shm"
 }
