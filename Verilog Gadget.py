@@ -182,9 +182,8 @@ def declareSignals(port_list, _reset, _sreset, _clock):
 	str_list = []
 	lmax = 0
 	for _strl in port_list:
-		if _strl[2] != _clock and _strl[2] != _reset:
-			lmax = max(lmax, len(_strl[1]))
-			str_list.append(_strl[1])
+		lmax = max(lmax, len(_strl[1]))
+		str_list.append(_strl[1])
 	for i, _str in enumerate(str_list):
 		if port_list[i][2] != _clock and port_list[i][2] != _reset and port_list[i][2] != _sreset:
 			sp = lmax - len(_str)
@@ -384,9 +383,9 @@ module tb_""" + mod_name + """ (); /* this is automatically generated */
 		#20
 		""" + reset + """ = 1;
 		repeat (5) @(posedge """ + clock + """);
-		""" + sreset + """ = 1
+		""" + sreset + """ = 1;
 		repeat (1) @(posedge """ + clock + """);
-		""" + sreset + """ = 0
+		""" + sreset + """ = 0;
 	end
 
 	// (*NOTE*) replace reset, clock
