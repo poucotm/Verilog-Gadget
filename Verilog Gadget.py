@@ -305,7 +305,7 @@ class VerilogGadgetModuleInstCommand(sublime_plugin.TextCommand):
 		text = self.view.substr(sublime.Region(0, self.view.size()))
 		text = removeCommentLineSpace(text)
 
-		mod_name, port_list, param_list, clk, rst = parseModuleParamPort(text, 'Instantiate Module')
+		mod_name, port_list, param_list, clk, rst, srst = parseModuleParamPort(text, 'Instantiate Module')
 		if mod_name == "":
 			return
 		lvg_settings = get_settings()
