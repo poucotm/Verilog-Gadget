@@ -1,5 +1,6 @@
 # Verilog Gadget for Sublime Text
-==================================
+
+[![Package Control](https://packagecontrol.herokuapp.com/downloads/Verilog%20Gadget.svg?style=flat-square)](https://packagecontrol.io/packages/Verilog%20Gadget)
 
 Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.
 The context menu only can be seen for `.v, .vh, .sv, .svh` file.
@@ -22,6 +23,8 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 
 		test #(.WIDTH(WIDTH)) inst_test (.a(a), .b(b));
 ```
+
+![Image](https://raw.githubusercontent.com/poucotm/Links/master/image/vg_inst.gif)
 
 * **Verilog Gadget: Generate Testbench**
 	- It parses module ports in currently open file
@@ -52,6 +55,8 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 			...
 		endmodule
 ```
+
+![Image](https://raw.githubusercontent.com/poucotm/Links/master/image/vg_testb.gif)
 
 * **Verilog Gadget: Insert Template**
 	- You can insert your own template text (larger than a snippet) from the file specified in settings
@@ -104,6 +109,8 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 		// -----------------------------------------------------------------------------
 ```
 
+![Image](https://raw.githubusercontent.com/poucotm/Links/master/image/vg_head.gif)
+
 * **Verilog Gadget: Repeat Code with Numbers**
 	- Select codes to be repeated, it may include Python's format symbol like {...}
 	- Run `Repeat Code with Numbers` command (default key map : `ctrl+f12`)
@@ -151,6 +158,8 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 		abc[ 7] =  7 +  9 + 11 + 11;
 		abc[ 8] =  8 + 10 + 12 + 12;
 ```
+
+![Image](https://raw.githubusercontent.com/poucotm/Links/master/image/vg_rep.gif)
 
 ## issues
 
