@@ -584,3 +584,18 @@ class VerilogGadgetInsertSubCommand(sublime_plugin.TextCommand):
 		text = args['text']
 		selr = self.view.sel()[0]
 		self.view.insert(edit, selr.end(), text)
+
+
+############################################################################
+# VerilogGadgetBlockTitleCommand
+
+class VerilogGadgetBlockTitleCommand(sublime_plugin.TextCommand):
+
+	def run(self, edit):
+		self.view.window().show_input_panel(u"Comment Title : ", "", self.on_done, None, None)
+
+	def on_done(self, user_input):
+		rpt   = 76 - len(user_input)
+		title = "//  " + user_input + "  " + "/" * rpt
+		self.view.run_command("verilog_gadget_insert_sub", {"args":{'text': title}})
+
