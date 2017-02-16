@@ -277,6 +277,46 @@ def getResetClock(text):
 
 	return clk_l, rst_l, srst_l
 
+def getHeaderText(view):
+	lvg_settings = get_settings()
+	fname = lvg_settings.get("header", "")
+	if fname == "example":
+		if ST3:
+			text  = sublime.load_resource('Packages/Verilog Gadget/template/verilog_header.v')
+		else:
+			fname = os.path.join(sublime.packages_path(), 'Verilog Gadget/template/verilog_header.v')
+	if fname != "example":
+		if fname.startswith('Packages'):
+			fname = re.sub('Packages', sublime.packages_path(), fname)
+		if not os.path.isfile(fname):
+			sublime.status_message("Insert Header : File not found (" + fname + ")")
+			return
+		else:
+			f = open(fname, "r")
+			text  = str(f.read())
+			f.close()
+	# replace {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION}
+	date  = time.strftime('%Y-%m-%d', time.localtime())
+	year  = time.strftime('%Y', time.localtime())
+	ntime = time.strftime('%H:%M:%S', time.localtime())
+	tabs  = str(view.settings().get('tab_size'))
+	sver  = sublime.version()[0]
+	text  = re.sub("{DATE}", date, text)				# {DATE}
+	text  = re.sub("{YEAR}", year, text)				# {YEAR}
+	text  = re.sub("{TIME}", ntime, text)				# {TIME}
+	text  = re.sub("{TABS}", tabs, text)				# {TABS}
+	text  = re.sub("{SUBLIME_VERSION}", sver, text)	# {SUBLIME_VERSION}
+	_file = re.compile(r"{FILE}").findall(text)
+	if _file:
+		fname = view.file_name()
+		if not fname:
+			sublime.status_message("Insert Header : Save with name")
+			fname = ""
+		else:
+			fname = os.path.split(fname)[1]
+			text = re.sub("{FILE}", fname, text) # {FILE}	
+	return text
+
 ############################################################################
 # for context menu
 
@@ -473,48 +513,30 @@ class VerilogGadgetInsertTemplateCommand(sublime_plugin.TextCommand):
 class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
 
 	def run(self, edit):
-		lvg_settings = get_settings()
-		fname = lvg_settings.get("header", "")
-		if fname == "example":
-			if ST3:
-				text  = sublime.load_resource('Packages/Verilog Gadget/template/verilog_header.v')
-			else:
-				fname = os.path.join(sublime.packages_path(), 'Verilog Gadget/template/verilog_header.v')
-		if fname != "example":
-			if fname.startswith('Packages'):
-				fname = re.sub('Packages', sublime.packages_path(), fname)
-			if not os.path.isfile(fname):
-				sublime.status_message("Insert Header : File not found (" + fname + ")")
-				return
-			else:
-				f = open(fname, "r")
-				text  = str(f.read())
-				f.close()
+		text = getHeaderText(self.view)
+		text = re.sub("{UPDATE_ON_SAVE}", "", text)
 
-		# replace {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION}
-		date  = time.strftime('%Y-%m-%d', time.localtime())
-		year  = time.strftime('%Y', time.localtime())
-		ntime = time.strftime('%H:%M:%S', time.localtime())
-		tabs  = str(self.view.settings().get('tab_size'))
-		sver  = sublime.version()[0]
-		text  = re.sub("{DATE}", date, text)				# {DATE}
-		text  = re.sub("{YEAR}", year, text)				# {YEAR}
-		text  = re.sub("{TIME}", ntime, text)				# {TIME}
-		text  = re.sub("{TABS}", tabs, text)				# {TABS}
-		text  = re.sub("{SUBLIME_VERSION}", sver, text)	# {SUBLIME_VERSION}
-		_file = re.compile(r"{FILE}").findall(text)
-		if _file:
-			fname = self.view.file_name()
-			if not fname:
-				sublime.status_message("Insert Header : Save with name")
-				fname = ""
-			else:
-				fname = os.path.split(fname)[1]
-				text = re.sub("{FILE}", fname, text) # {FILE}
 		self.view.insert(edit, 0, text)
 
 	def is_visible(self):
 		return verilog_check_visible(self.view.file_name(), self.view.name())
+
+############################################################################
+# VerilogGadgetChangeModifyTimeCommand
+
+class VerilogGadgetChangeModifyTimeCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		text = getHeaderText(self.view)
+		lines = text.split("\n")
+		for i,line in enumerate(lines):
+			if "{UPDATE_ON_SAVE}" in line: 
+				insert_region = self.view.line(sublime.Region(self.view.text_point(i, 0)))
+				current_line  = self.view.substr(insert_region)
+				left_text = line.partition("{UPDATE_ON_SAVE}")[0]
+				if left_text in current_line:
+					line  = re.sub("{UPDATE_ON_SAVE}", "", line)
+					self.view.erase(edit, insert_region)
+					self.view.insert(edit, insert_region.begin(), line)
 
 ############################################################################
 # VerilogGadgetRepeatCodeCommand
@@ -598,4 +620,3 @@ class VerilogGadgetBlockTitleCommand(sublime_plugin.TextCommand):
 		rpt   = 76 - len(user_input)
 		title = "//  " + user_input + "  " + "/" * rpt
 		self.view.run_command("verilog_gadget_insert_sub", {"args":{'text': title}})
-

@@ -10,5 +10,6 @@
 // Author : yongchan jeon (Kris) poucotm@gmail.com
 // File   : {FILE}
 // Create : {DATE} {TIME}
+// Last modified time: {UPDATE_ON_SAVE} {DATE} {TIME}
 // Editor : sublime text{SUBLIME_VERSION}, tab size ({TABS})
 // -----------------------------------------------------------------------------
