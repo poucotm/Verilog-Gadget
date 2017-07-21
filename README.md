@@ -1,6 +1,6 @@
 # Verilog Gadget for Sublime Text
 
-[![Package Control](https://packagecontrol.herokuapp.com/downloads/Verilog%20Gadget.svg?style=flat-square)](https://packagecontrol.io/packages/Verilog%20Gadget)
+[![Package Control](https://packagecontrol.herokuapp.com/downloads/Verilog%20Gadget.svg?style=round-square)](https://packagecontrol.io/packages/Verilog%20Gadget)
 
 Use **Command Palette (ctrl+shift+p)** or **Right-Click (context menu)** to run.
 The context menu only can be seen for `.v, .vh, .sv, .svh` file.
@@ -80,6 +80,7 @@ Use **[Log Highlight](https://packagecontrol.io/packages/Log%20Highlight)** inst
 	- {FILE} will be replaced with current file name
 	- {TABS} will be replaced with current tab size
 	- {SUBLIME_VERSION} will be replaced with current sublime text version
+	- {ENCODING} will be replaced with current encoding (utf-8,...)
 ```Verilog
 	e.g)
 		In settings :

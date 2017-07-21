@@ -10,5 +10,5 @@
 // Author : yongchan jeon (Kris) poucotm@gmail.com
 // File   : {FILE}
 // Create : {DATE} {TIME}
-// Editor : sublime text{SUBLIME_VERSION}, tab size ({TABS})
+// Editor : sublime text{SUBLIME_VERSION}, tab size ({TABS}), encoding({ENCODING})
 // -----------------------------------------------------------------------------

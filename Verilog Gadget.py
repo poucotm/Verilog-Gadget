@@ -382,45 +382,46 @@ class VerilogGadgetTbGenCommand(sublime_plugin.TextCommand):
 
 module tb_""" + mod_name + """ (); /* this is automatically generated */
 
-    logic """ + reset + """;
-    logic """ + sreset + """;
-    logic """ + clock + """;
+	logic """ + reset + """;
+	logic """ + sreset + """;
+	logic """ + clock + """;
 
-    // clock
-    initial begin
-        """ + clock + """ = 0;
-        forever #5 """ + clock + """ = ~""" + clock + """;
-    end
+	// clock
+	initial begin
+		""" + clock + """ = 0;
+		forever #5 """ + clock + """ = ~""" + clock + """;
+	end
 
-    // reset
-    initial begin
-        """ + reset + """ = 0;
-        """ + sreset + """ = 0;
-        #20
-        """ + reset + """ = 1;
-        repeat (5) @(posedge """ + clock + """);
-        """ + sreset + """ = 1;
-        repeat (1) @(posedge """ + clock + """);
-        """ + sreset + """ = 0;
-    end
+	// reset
+	initial begin
+		""" + reset + """ = 0;
+		""" + sreset + """ = 0;
+		#20
+		""" + reset + """ = 1;
+		repeat (5) @(posedge """ + clock + """);
+		""" + sreset + """ = 1;
+		repeat (1) @(posedge """ + clock + """);
+		""" + sreset + """ = 0;
+	end
 
-    // (*NOTE*) replace reset, clock
+	// (*NOTE*) replace reset, clock, others
 
 """ + declp + decls + minst + \
 """
-    initial begin
-        // do something
+	initial begin
+		// do something
 
-        repeat(10)@(posedge """ + clock + """);
-        $finish;
-    end
+		repeat(10)@(posedge """ + clock + """);
+		$finish;
+	end
 
-    // dump wave
-    initial begin""" + str_dump + """
-    end
+	// dump wave
+	initial begin""" + str_dump + """
+	end
 
 endmodule
 """
+
         v = sublime.active_window().new_file()
         v.set_name('tb_' + mod_name + '.sv')
         v.set_scratch(True)
@@ -510,17 +511,19 @@ class VerilogGadgetInsertHeaderCommand(sublime_plugin.TextCommand):
                 text  = str(f.read())
                 f.close()
 
-        # replace {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION}
+        # replace {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION}, {ENCODING}
         date  = time.strftime('%Y-%m-%d', time.localtime())
         year  = time.strftime('%Y', time.localtime())
         ntime = time.strftime('%H:%M:%S', time.localtime())
         tabs  = str(self.view.settings().get('tab_size'))
+        enco  = self.view.encoding()
         sver  = sublime.version()[0]
         text  = re.sub("{DATE}", date, text)                # {DATE}
         text  = re.sub("{YEAR}", year, text)                # {YEAR}
         text  = re.sub("{TIME}", ntime, text)               # {TIME}
         text  = re.sub("{TABS}", tabs, text)                # {TABS}
         text  = re.sub("{SUBLIME_VERSION}", sver, text)     # {SUBLIME_VERSION}
+        text  = re.sub("{ENCODING}", enco, text)            # {ENCODING}
         _file = re.compile(r"{FILE}").findall(text)
         if _file:
             fname = self.view.file_name()
