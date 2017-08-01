@@ -96,12 +96,14 @@ def parseModuleParamPort(text, call_from):
     # parse ports
     port_list = []
     try:
+        prtd_s = ""
+        size_s = ""
         for _str in port_s.split(","):
             port_s = re.compile(r"\w+").findall(_str)[-1]  # \w+(?!\w+)
             size_l = re.compile(r"\[.*\]|(?<!\S)signed\s*\[.*\]|(?<!\S)signed(?!\S)").findall(_str)
-            size_s = size_l[0] if len(size_l) > 0 else ""
+            size_s = size_l[0] if len(size_l) > 0 else size_s  # preserve precendence
             prtd_l = re.compile(r"(?<!\S)input(?!\S)|(?<!\S)output(?!\S)|(?<!\S)inout(?!\S)").findall(_str)
-            prtd_s = prtd_l[0] if len(prtd_l) > 0 else ""
+            prtd_s = prtd_l[0] if len(prtd_l) > 0 else prtd_s  # preserve precendence
             port_list.append([prtd_s, size_s, port_s])
     except:
         pass  # no port
