@@ -1,4 +1,5 @@
 [
-	{ "keys": ["ctrl+f12"], "command": "verilog_gadget_repeat_code" },
-	{ "keys": ["alt+insert"], "command": "verilog_gadget_block_title" }
+	{ "keys": ["ctrl+shift+insert"], "command": "verilog_gadget_insert_header" },
+	{ "keys": ["ctrl+shift+c"], "command": "verilog_gadget_module_inst" },
+	{ "keys": ["ctrl+f12"], "command": "verilog_gadget_repeat_code" }
 ]

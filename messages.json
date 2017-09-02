@@ -1,5 +1,6 @@
 {
     "install" : "README.md",
     "v0.6.28" : "changelog/v0.6.28.txt",
-    "v0.8.0"  : "changelog/v0.8.0.txt"
+    "v0.8.0"  : "changelog/v0.8.0.txt",
+    "v1.0.0"  : "changelog/v1.0.0.md"
 }
