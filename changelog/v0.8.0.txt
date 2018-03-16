@@ -1,0 +1,4 @@
+Change Log: v0.8.0
+
+	* Fix
+		- fix up parsing `,` concatenated port declaration

@@ -1,0 +1,17 @@
+{
+	// enable context menu for .v, .vh, .sv, .svh, view log for .log
+	"context_menu": true,
+	"verilog_ext":	[ ".v", ".vh", ".sv", ".svh" ],
+
+	// header description file path - {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION} will be replaced
+	"header": "example",
+
+	// default prefix for a instance name
+	"inst_prefix": "inst_",
+
+	// for a testbench
+	"reset": "rstb",			// default asynchronous reset name
+	"sreset": "srst",			// default synchronous reset name
+	"clock": "clk",			// default clock name
+	"wave_type": "fsdb"		// type of waveform, one of "fsdb", "vpd", "shm"
+}
