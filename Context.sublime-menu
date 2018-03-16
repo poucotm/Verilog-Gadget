@@ -1,0 +1,7 @@
+[
+	{ "caption": "-", "id": "verilog_gadget" },
+	{ "command": "verilog_gadget_tb_gen", "caption": "Generate Testbench" },
+	{ "command": "verilog_gadget_insert_header", "caption": "Insert Header" },
+	{ "command": "verilog_gadget_module_inst", "caption": "Instantiate Module" },
+	{ "command": "verilog_gadget_repeat_code", "caption": "Repeat Code with Numbers" }
+]

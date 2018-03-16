@@ -1,0 +1,8 @@
+Change Log: v0.6.28
+
+	* Fix
+		- Context.sublime-menu : remove last comma
+		- Set UTF-8 encoding header (for ST2) : Verilog Gadget.py
+	* Update
+		- Starting change log message
+		- Context Menu Commands : Verilog Gadget.py, Context.sublime-menu
