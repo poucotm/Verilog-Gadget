@@ -3,6 +3,12 @@
 	"context_menu": true,
 	"verilog_ext":	[ ".v", ".vh", ".sv", ".svh" ],
 
+	"Generate Testbench": "show",
+	"Generate Testbench Ref/Imp": "hide",
+	"Insert Header": "show",
+	"Instantiate Module": "show",
+	"Repeat Code with Numbers": "show",
+
 	// header description file path - {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION} will be replaced
 	"header": "example",
 
