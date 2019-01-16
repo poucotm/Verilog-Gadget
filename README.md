@@ -98,6 +98,12 @@ In settings : "header": "D:/template/verilog_header.v"
 
 ![Image][S4]
 
+### Verilog Linter (another package)
+
+[__SublimeLinter-contrib-verilator__](https://packagecontrol.io/packages/SublimeLinter-contrib-verilator)
+
+![Image](https://raw.githubusercontent.com/poucotm/Links/master/image/SublimeLinter-Contrib-Verilator/vl-cap.gif)
+
 ### Donate
 
 [![Doate Image](https://raw.githubusercontent.com/poucotm/Links/master/image/PayPal/donate-paypal.png)][PM]
