@@ -1,23 +1,48 @@
 {
-	// enable context menu for .v, .vh, .sv, .svh, view log for .log
+
+	/*  UI Configuration  _________________________________________
+	*/
+
 	"context_menu": true,
-	"verilog_ext":	[ ".v", ".vh", ".sv", ".svh" ],
+	"verilog_ext":	[ ".v", ".vh", ".sv", ".svh" ], // for context_menu
 
 	"Generate Testbench": "show",
 	"Generate Testbench Ref/Imp": "hide",
 	"Insert Header": "show",
+	"Insert Snippet": "show",
 	"Instantiate Module": "show",
 	"Repeat Code with Numbers": "show",
 
-	// header description file path - {DATE}, {FILE}, {YEAR}, {TIME}, {TABS}, {SUBLIME_VERSION} will be replaced
-	"header": "example",
+	/*  Core settings  ____________________________________________
+	*/
 
 	// default prefix for a instance name
 	"inst_prefix": "inst_",
 
-	// for a testbench
+	/*  Header / Snippet  _________________________________________
+	*/
+
+	// header description file path
+	"header": "example",
+
+	// parameterized snippets
+	"snippets" : {
+		"Complex Multiplier" : { // example
+			"codes" : "Packages/Verilog Gadget/template/verilog_cplxm.v",
+			"param" : ["AB", "BB"],
+			"evals" : ["ZB=AB+BB+1"], // simple calculation only
+			"descr" : "INPUTA , INPUTB [ complex mult ]",
+			"regex" : "\\s*(?P<AB>\\d+)\\s*[,.\\s]\\s*(?P<BB>\\d+)\\s*"// regex for parameter input
+		},
+		/* add more snippets here */
+	},
+
+	/*  for Testbench  ____________________________________________
+	*/
+
 	"reset": "rstb",			// default asynchronous reset name
 	"sreset": "srst",			// default synchronous reset name
 	"clock": "clk",			// default clock name
-	"wave_type": "fsdb"		// type of waveform, one of "fsdb", "vpd", "shm"
+	"wave_type": "fsdb",		// type of waveform, one of "fsdb", "vpd", "shm"
+
 }

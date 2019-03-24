@@ -98,6 +98,15 @@ In settings : "header": "D:/template/verilog_header.v"
 
 ![Image][S4]
 
+#### Verilog Gadget: Insert Snippet (ctrl+shift+z)
+
+ * You can make your own parameterized snippets like this [__example__][L1]
+ * Add your snippet settings like [__this__][L2]
+ * Run __*Insert Snippet*__ command
+ * example)
+
+![Image][S7]
+
 ### Verilog Linter (another package)
 
 [__SublimeLinter-contrib-verilator__](https://packagecontrol.io/packages/SublimeLinter-contrib-verilator)
@@ -120,5 +129,8 @@ When you have an issue, tell me through [https://github.com/poucotm/Verilog-Gadg
 [S4]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-aln.gif
 [S5]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-rep-clip.gif
 [S6]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-rep-idx.gif
+[S7]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-snippet.gif
+[L1]:https://github.com/poucotm/Verilog-Gadget/blob/master/template/verilog_cplxm.v
+[L2]:https://github.com/poucotm/Verilog-Gadget/blob/master/Verilog%20Gadget.sublime-settings
 [PP]:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=89YVNDSC7DZHQ "PayPal"
 [PM]:https://www.paypal.me/poucotm/2.5 "PayPal"

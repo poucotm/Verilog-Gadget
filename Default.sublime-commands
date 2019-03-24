@@ -16,7 +16,11 @@
         "command": "verilog_gadget_insert_header"
     },
     {
+        "caption": "Verilog Gadget: Insert Snippet",
+        "command": "verilog_gadget_insert_snippet"
+    },
+    {
         "caption": "Verilog Gadget: Repeat Code with Numbers",
         "command": "verilog_gadget_repeat_code"
-    }
+    },
  ]
