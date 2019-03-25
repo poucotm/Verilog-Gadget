@@ -3,5 +3,5 @@
 	{ "keys": ["ctrl+shift+c"], "command": "verilog_gadget_module_inst" },
 	{ "keys": ["ctrl+f12"], "command": "verilog_gadget_repeat_code" },
 	{ "keys": ["ctrl+shift+x"], "command": "verilog_gadget_align" },
-	{ "keys": ["ctrl+shift+z"], "command": "verilog_gadget_insert_snippet" }
+	{ "keys": ["ctrl+alt+p"], "command": "verilog_gadget_insert_snippet" }
 ]

@@ -98,7 +98,7 @@ In settings : "header": "D:/template/verilog_header.v"
 
 ![Image][S4]
 
-#### Verilog Gadget: Insert Snippet (ctrl+shift+z)
+#### Verilog Gadget: Insert Snippet (ctrl+alt+p)
 
  * You can make your own parameterized snippets like this [__example__][L1]
  * Add your snippet settings like [__this__][L2]
