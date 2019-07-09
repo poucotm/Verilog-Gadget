@@ -133,4 +133,4 @@ When you have an issue, tell me through [https://github.com/poucotm/Verilog-Gadg
 [L1]:https://github.com/poucotm/Verilog-Gadget/blob/master/template/verilog_cplxm.v
 [L2]:https://github.com/poucotm/Verilog-Gadget/blob/master/Verilog%20Gadget.sublime-settings
 [PP]:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=89YVNDSC7DZHQ "PayPal"
-[PM]:https://www.paypal.me/poucotm/2.5 "PayPal"
+[PM]:https://www.paypal.me/poucotm/1.0 "PayPal"
