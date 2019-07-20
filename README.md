@@ -32,35 +32,17 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 #### Verilog Gadget: Insert Header (ctrl+shift+insert)
 
  * You can insert your own header-description as your format from the file specified in settings
- * `{DATE}` will be replaced with current date
- * `{YEAR}` will be replaced with this year
- * `{TIME}` will be replaced with current time
- * `{FILE}` will be replaced with current file name
- * `{TABS}` will be replaced with current tab size
- * `{SUBLIME_VERSION}` will be replaced with current sublime text version
- * example)
+ * `{YEAR}` will be replaced as this year
+ * `{DATE}` will be replaced as create date
+ * `{TIME}` will be replaced as create time
+ * `{RDATE}` will be replaced as revised date
+ * `{RTIME}` will be replaced as revised time
+ * `{FILE}` will be replaced as file name
+ * `{TABS}` will be replaced as tab size
+ * `{SUBLIME_VERSION}` will be replaced as current sublime text version
+ * example) [__header example__][L3]
 
-```Verilog
-In settings : "header": "D:/template/verilog_header.v"
-
-// -----------------------------------------------------------------------------
-// Copyright (c) 2014-{YEAR} All rights reserved
-// -----------------------------------------------------------------------------
-// Author : yongchan jeon (Kris) poucotm@gmail.com
-// File   : {FILE}
-// Create : {DATE} {TIME}
-// Editor : sublime text{SUBLIME_VERSION}, tab size ({TABS})
-// -----------------------------------------------------------------------------
---> after insertion
-// -----------------------------------------------------------------------------
-// Copyright (c) 2014-2016 All rights reserved
-// -----------------------------------------------------------------------------
-// Author : yongchan jeon (Kris) poucotm@gmail.com
-// File   : abc.v
-// Create : 2016-06-03 22:34:43
-// Editor : sublime text3, tab size (3)
-// -----------------------------------------------------------------------------
-```
+![Image][S8]
 
 #### Verilog Gadget: Repeat Code with Numbers (ctrl+f12)
 
@@ -130,7 +112,9 @@ When you have an issue, tell me through [https://github.com/poucotm/Verilog-Gadg
 [S5]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-rep-clip.gif
 [S6]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-rep-idx.gif
 [S7]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-snippet.gif
+[S8]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-header.gif
 [L1]:https://github.com/poucotm/Verilog-Gadget/blob/master/template/verilog_cplxm.v
 [L2]:https://github.com/poucotm/Verilog-Gadget/blob/master/Verilog%20Gadget.sublime-settings
+[L3]:https://github.com/poucotm/Verilog-Gadget/blob/master/template/verilog_header.v
 [PP]:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=89YVNDSC7DZHQ "PayPal"
 [PM]:https://www.paypal.me/poucotm/1.0 "PayPal"

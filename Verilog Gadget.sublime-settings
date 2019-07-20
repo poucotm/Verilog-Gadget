@@ -22,8 +22,9 @@
 	/*  Header / Snippet  _________________________________________
 	*/
 
-	// header description file path
+	// header template file path
 	"header": "example",
+	"auto_update_header": true,
 
 	// parameterized snippets
 	"snippets" : {

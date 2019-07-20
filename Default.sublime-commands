@@ -13,7 +13,8 @@
     // },
     {
         "caption": "Verilog Gadget: Insert Header",
-        "command": "verilog_gadget_insert_header"
+        "command": "verilog_gadget_insert_header",
+        "args": {"args" : {"cmd":"insert"}}
     },
     {
         "caption": "Verilog Gadget: Insert Snippet",

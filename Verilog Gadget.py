@@ -23,7 +23,7 @@ try:
             imp.reload(sys.modules[mod])
     # import
     from .core import vgcore
-    from .core.vgcore import (VerilogGadgetInsertSub, VerilogGadgetModuleInst, VerilogGadgetTbGen, VerilogGadgetTbGenRefImp, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetInsertSnippet)
+    from .core.vgcore import (VerilogGadgetInsertSub, VerilogGadgetModuleInst, VerilogGadgetTbGen, VerilogGadgetTbGenRefImp, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetInsertSnippet, VerilogGadgetEventListener)
     import_ok = True
 except Exception:
     print ('VERILOG GADGET : ERROR ______________________________________')
