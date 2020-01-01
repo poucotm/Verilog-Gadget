@@ -1,12 +1,10 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------------
 # Author : yongchan jeon (Kris) poucotm@gmail.com
 # File   : Verilog Gadget.py
-# Create : 2018-02-08 01:36:44
+# Create : 2020-01-01 20:51:05
 # Editor : sublime text3, tab size (4)
 # -----------------------------------------------------------------------------
-
-#`protect
 
 import sublime, sublime_plugin
 import sys, imp
@@ -31,7 +29,6 @@ except Exception:
     print ('=============================================================')
     import_ok = False
 
-
 # package control
 try:
     from package_control import events
@@ -43,14 +40,8 @@ except Exception:
 ##  plugin_loaded  ____________________________________________
 
 def plugin_loaded():
-
-    # import
+    global import_ok
     if not import_ok:
-        path = os.path.join(sublime.packages_path(), 'Verilog Gadget', 'core')
-        sys.path.insert(0, path)
-        import vgcore
-        vgcore.upgrade()
-
-    pass
-
-#`endprotect
+        sublime.status_message("(*E) Verilog Gadget : Error in importing sub-modules.")
+        return
+    vgcore.loaded()
