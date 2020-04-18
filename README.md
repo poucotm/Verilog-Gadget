@@ -89,6 +89,14 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 ![Image][S7]
 
+#### Verilog Gadget: VCD to WaveDrom (ctrl+alt+v)
+
+ * [__WaveDrom__][L4] : digital timing diagram editor
+ * Open .vcd file
+ * Run __*VCD to WaveDrom*__ command
+
+![Image][S9]
+
 ### Verilog Linter (another package)
 
 [__SublimeLinter-contrib-verilator__](https://packagecontrol.io/packages/SublimeLinter-contrib-verilator)
@@ -113,8 +121,10 @@ When you have an issue, tell me through [https://github.com/poucotm/Verilog-Gadg
 [S6]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-rep-idx.gif
 [S7]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-snippet.gif
 [S8]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-header.gif
+[S9]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/wavdrom.png
 [L1]:https://github.com/poucotm/Verilog-Gadget/blob/master/template/verilog_cplxm.v
 [L2]:https://github.com/poucotm/Verilog-Gadget/blob/master/Verilog%20Gadget.sublime-settings
 [L3]:https://github.com/poucotm/Verilog-Gadget/blob/master/template/verilog_header.v
+[L4]:https://wavedrom.com
 [PP]:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=89YVNDSC7DZHQ "PayPal"
 [PM]:https://www.paypal.me/poucotm/1.0 "PayPal"

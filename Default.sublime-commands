@@ -24,4 +24,8 @@
         "caption": "Verilog Gadget: Repeat Code with Numbers",
         "command": "verilog_gadget_repeat_code"
     },
+    {
+        "caption": "Verilog Gadget: VCD to WaveDrom",
+        "command": "verilog_gadget_vcd_to_wavedrom"
+    },
  ]

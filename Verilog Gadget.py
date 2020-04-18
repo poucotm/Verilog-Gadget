@@ -21,7 +21,7 @@ try:
             imp.reload(sys.modules[mod])
     # import
     from .core import vgcore
-    from .core.vgcore import (VerilogGadgetInsertSub, VerilogGadgetModuleInst, VerilogGadgetTbGen, VerilogGadgetTbGenRefImp, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetInsertSnippet, VerilogGadgetEventListener)
+    from .core.vgcore import (VerilogGadgetInsertSub, VerilogGadgetModuleInst, VerilogGadgetTbGen, VerilogGadgetTbGenRefImp, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetInsertSnippet, VerilogGadgetEventListener, VerilogGadgetVcdToWavedrom)
     import_ok = True
 except Exception:
     print ('VERILOG GADGET : ERROR ______________________________________')
@@ -45,3 +45,10 @@ def plugin_loaded():
         sublime.status_message("(*E) Verilog Gadget : Error in importing sub-modules.")
         return
     vgcore.loaded()
+
+class VerilogGadgetInsertSub(sublime_plugin.TextCommand):
+
+    def run(self, edit, args):
+        text = args['text']
+        selr = self.view.sel()[0]
+        self.view.insert(edit, selr.end(), text)
