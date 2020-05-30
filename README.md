@@ -92,7 +92,7 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 #### Verilog Gadget: VCD to WaveDrom (ctrl+alt+v)
 
  * [__WaveDrom__][L4] : digital timing diagram editor
- * Open .vcd file
+ * Open .vcd file (a clock should be included)
  * Run __*VCD to WaveDrom*__ command
 
 ![Image][S9]
