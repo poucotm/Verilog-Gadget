@@ -16,8 +16,8 @@ import os
 try:
     # reload
     mods = ['Verilog Gadget.core.vgcore']
-    for mod in list(sys.modules):
-        if any(mod == m for m in mods):
+    for mod in mods:
+        if any(mod == m for m in list(sys.modules)):
             imp.reload(sys.modules[mod])
     # import
     from .core import vgcore
@@ -44,11 +44,12 @@ def plugin_loaded():
     if not import_ok:
         sublime.status_message("(*E) Verilog Gadget : Error in importing sub-modules.")
         return
-    vgcore.loaded()
 
-class VerilogGadgetInsertSub(sublime_plugin.TextCommand):
+    if package_control_installed and (events.install('Verilog Gadget') or events.post_upgrade('Verilog Gadget')):
+        def installed():
+            vgcore.loaded()
 
-    def run(self, edit, args):
-        text = args['text']
-        selr = self.view.sel()[0]
-        self.view.insert(edit, selr.end(), text)
+        sublime.set_timeout_async(installed, 1000)
+    else:
+        vgcore.loaded()
+    return
