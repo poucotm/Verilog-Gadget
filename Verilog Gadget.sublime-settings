@@ -43,9 +43,11 @@
 	/*  for Testbench  ____________________________________________
 	*/
 
-	"reset" : "",        // default asynchronous reset name, leave a blank not to use it
-	"sreset": "srstb",   // default synchronous reset name, leave a blank not to use it
-	"clock" : "clk",     // default clock name, leave a blank not to use it
-	"wave_type": "fsdb", // type of waveform, one of "fsdb", "vpd", "shm"
+	"reset"     : "",       // default asynchronous reset name, leave a blank not to use it
+	"sreset"    : "srstb",  // default synchronous reset name, leave a blank not to use it
+	"clock"     : "clk",    // default clock name, leave a blank not to use it
+	"wave_type" : "fsdb",   // type of waveform, one of "fsdb", "vpd", "shm"
+	"task_init" : true,
+	"task_drive": true
 
 }
