@@ -8,6 +8,7 @@
 
 	"Generate Testbench": "show",
 	"Generate Testbench Ref/Imp": "hide",
+	"Module Wrapper": "hide",
 	"Insert Header": "show",
 	"Insert Snippet": "show",
 	"Instantiate Module": "show",
@@ -42,9 +43,9 @@
 	/*  for Testbench  ____________________________________________
 	*/
 
-	"reset": "rstb",			// default asynchronous reset name
-	"sreset": "srst",			// default synchronous reset name
-	"clock": "clk",			// default clock name
-	"wave_type": "fsdb",		// type of waveform, one of "fsdb", "vpd", "shm"
+	"reset" : "",        // default asynchronous reset name, leave a blank not to use it
+	"sreset": "srstb",   // default synchronous reset name, leave a blank not to use it
+	"clock" : "clk",     // default clock name, leave a blank not to use it
+	"wave_type": "fsdb", // type of waveform, one of "fsdb", "vpd", "shm"
 
 }

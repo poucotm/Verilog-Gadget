@@ -5,6 +5,7 @@
 	{ "command": "verilog_gadget_insert_header", "caption": "Insert Header", "args": {"args" : {"cmd":"insert"}} },
 	{ "command": "verilog_gadget_insert_snippet", "caption": "Insert Snippet" },
 	{ "command": "verilog_gadget_module_inst", "caption": "Instantiate Module" },
+	{ "command": "verilog_gadget_module_wrapper", "caption": "Module Wrapper" },
 	{ "command": "verilog_gadget_repeat_code", "caption": "Repeat Code with Numbers" },
 	{ "command": "verilog_gadget_vcd_to_wavedrom", "caption": "VCD to WaveDrom" }
 ]
