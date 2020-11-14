@@ -29,6 +29,15 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 ![Image][S2]
 
+#### Verilog Gadget: Simulaton Template
+
+ * It generates files for simulation based on a template
+ * You can make a your own template as a compressed file (.zip,.tar,.tgz)
+ * You can specify a path of your template (`"simulation_template"`,`"simulation_directory`")
+ * `'example'` is modelsim template
+ * It automatically generates a testbench file for current view
+ * It changes keywords in files of template (`{{TESTBENCH FILE}}`, `{{TESTBENCH NAME}}`, `{{MODULE FILE}}`, `{{MODULE NAME}}`,)
+
 #### Verilog Gadget: Insert Header (ctrl+shift+insert)
 
  * You can insert your own header-description as your format from the file specified in settings

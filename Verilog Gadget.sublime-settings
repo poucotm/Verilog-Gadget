@@ -9,6 +9,7 @@
 	"Generate Testbench": "show",
 	"Generate Testbench Ref/Imp": "hide",
 	"Module Wrapper": "hide",
+	"Simulation Template": "show",
 	"Insert Header": "show",
 	"Insert Snippet": "show",
 	"Instantiate Module": "show",
@@ -48,6 +49,13 @@
 	"clock"     : "clk",    // default clock name, leave a blank not to use it
 	"wave_type" : "fsdb",   // type of waveform, one of "fsdb", "vpd", "shm"
 	"task_init" : true,
-	"task_drive": true
+	"task_drive": true,
+
+	/*  Simulation Template  ______________________________________
+	*/
+
+	// specify a template path (compressed file - zip,tgz,tar)
+	"simulation_template"  : "example",
+	"simulation_directory" : "simtest"
 
 }

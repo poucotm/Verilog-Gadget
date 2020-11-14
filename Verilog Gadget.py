@@ -21,7 +21,9 @@ try:
             imp.reload(sys.modules[mod])
     # import
     from .core import vgcore
-    from .core.vgcore import (VerilogGadgetInsertSub, VerilogGadgetModuleInst, VerilogGadgetTbGen, VerilogGadgetTbGenRefImp, VerilogGadgetModuleWrapper, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetInsertSnippet, VerilogGadgetEventListener, VerilogGadgetVcdToWavedrom)
+    from .core.vgcore import (VerilogGadgetInsertSub, VerilogGadgetModuleInst, VerilogGadgetTbGen, VerilogGadgetTbGenRefImp, VerilogGadgetSimTemplate,
+        VerilogGadgetModuleWrapper, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetInsertSnippet,
+        VerilogGadgetEventListener, VerilogGadgetVcdToWavedrom)
     import_ok = True
 except Exception:
     print ('VERILOG GADGET : ERROR ______________________________________')
