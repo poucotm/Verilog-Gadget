@@ -34,9 +34,12 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
  * It generates files for simulation based on a template
  * You can make a your own template as a compressed file (.zip,.tar,.tgz)
  * You can specify a path of your template (`"simulation_template"`,`"simulation_directory`")
- * `'example'` is modelsim template
+ * `'example-modelsim'` is a template for modelsim, `'example-vcs'` is a template for vcs
  * It automatically generates a testbench file for current view
  * It changes keywords in files of template (`{{TESTBENCH FILE}}`, `{{TESTBENCH NAME}}`, `{{MODULE FILE}}`, `{{MODULE NAME}}`,)
+ * example)
+
+![Image][G1]
 
 #### Verilog Gadget: Insert Header (ctrl+shift+insert)
 
@@ -131,6 +134,7 @@ When you have an issue, tell me through [https://github.com/poucotm/Verilog-Gadg
 [S7]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-snippet.gif
 [S8]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-header.gif
 [S9]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/wavdrom.png
+[G1]:https://raw.githubusercontent.com/poucotm/Links/master/image/Verilog-Gadget/vg-sim.gif
 [L1]:https://github.com/poucotm/Verilog-Gadget/blob/master/template/verilog_cplxm.v
 [L2]:https://github.com/poucotm/Verilog-Gadget/blob/master/Verilog%20Gadget.sublime-settings
 [L3]:https://github.com/poucotm/Verilog-Gadget/blob/master/template/verilog_header.v

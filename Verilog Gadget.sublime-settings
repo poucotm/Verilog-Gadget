@@ -54,8 +54,9 @@
 	/*  Simulation Template  ______________________________________
 	*/
 
-	// specify a template path (compressed file - zip,tgz,tar)
-	"simulation_template"  : "example",
+	// specify a your own template path (compressed file - zip,tgz,tar)
+	// there are 2 examples - example-modelsim, example-vcs
+	"simulation_template"  : "example-modelsim",
 	"simulation_directory" : "simtest"
 
 }
