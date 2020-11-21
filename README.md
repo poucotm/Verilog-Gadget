@@ -36,7 +36,7 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
  * You can specify a path of your template (`"simulation_template"`,`"simulation_directory`")
  * `'example-modelsim'` is a template for modelsim, `'example-vcs'` is a template for vcs
  * It automatically generates a testbench file for current view
- * It changes keywords in files of template (`{{TESTBENCH FILE}}`, `{{TESTBENCH NAME}}`, `{{MODULE FILE}}`, `{{MODULE NAME}}`,)
+ * It changes keywords in files of template (`{{TESTBENCH FILE}}`, `{{TESTBENCH NAME}}`, `{{MODULE FILE}}`, `{{MODULE NAME}}`,`{{MODULE PORTLIST}}`)
  * example)
 
 ![Image][G1]
