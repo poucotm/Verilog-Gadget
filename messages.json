@@ -12,5 +12,6 @@
     "v1.6.0"  : "changelog/v1.6.0.md",
     "v1.6.2"  : "changelog/v1.6.2.md",
     "v1.7.0"  : "changelog/v1.7.0.md",
-    "v1.8.0"  : "changelog/v1.8.0.md"
+    "v1.8.0"  : "changelog/v1.8.0.md",
+    "v1.9.0"  : "changelog/v1.9.0.md"
 }
