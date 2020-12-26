@@ -22,6 +22,12 @@
 	// default prefix for a instance name
 	"inst_prefix": "inst_",
 
+	// alignment (tab or space)
+	"tab_assignment": false,
+	"tab_port_declaration": true,
+	"tab_signal_declaration": true,
+	"tab_port_connection": false,
+
 	/*  Header / Snippet  _________________________________________
 	*/
 
