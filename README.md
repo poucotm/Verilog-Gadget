@@ -10,10 +10,10 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 #### Verilog Gadget: Instantiate Module (ctrl+shift+c)
 
- * It parses module ports in currently open file
- * It generates module's instance text
+ * It parses module ports for the currently open file
+ * It generates an instance text of the module
  * It copies generated text to clipboard
- * You can paste the text on where you want
+ * Then, you can paste the text to the desired location
  * Supports Verilog-1995, Verilog-2001 style ports and parameters
  * example)
 
@@ -21,9 +21,9 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 #### Verilog Gadget: Generate Testbench
 
- * It parses module ports in currently open file
- * It generates a simple testbench with module's instance and signals
- * Testbench will be generated as a systemverilog file
+ * It parses module ports for the currently open file
+ * It generates a simple testbench with an instance and signals of the module
+ * The testbench is created as a systemverilog file
  * Supports Verilog-1995, Verilog-2001 style ports and parameters
  * example)
 
@@ -31,47 +31,47 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 #### Verilog Gadget: Simulaton Template
 
- * It generates files for simulation based on a template
- * You can make a your own template as a compressed file (.zip,.tar,.tgz)
- * You can specify a path of your template (`"simulation_template"`,`"simulation_directory`")
- * `'example-modelsim'` is a template for modelsim, `'example-vcs'` is a template for vcs
- * It automatically generates a testbench file for current view
- * It changes keywords in files of template (`{{TESTBENCH FILE}}`, `{{TESTBENCH NAME}}`, `{{MODULE FILE}}`, `{{MODULE NAME}}`,`{{MODULE PORTLIST}}`)
+ * It creates files for simulation based on the template
+ * You can make your own template as a compressed file (.zip,.tar,.tgz)
+ * You can specify the path of your template (`"simulation_template"`,`"simulation_directory`")
+ * `'example-modelsim'` is the template for modelsim, `'example-vcs'` is the template for vcs
+ * It automatically generates the testbench files for the current view
+ * It changes keywords in files of the template (`{{TESTBENCH FILE}}`, `{{TESTBENCH NAME}}`, `{{MODULE FILE}}`, `{{MODULE NAME}}`,`{{MODULE PORTLIST}}`)
  * example)
 
 ![Image][G1]
 
 #### Verilog Gadget: Insert Header (ctrl+shift+insert)
 
- * You can insert your own header-description as your format from the file specified in settings
- * `{YEAR}` will be replaced as this year
- * `{DATE}` will be replaced as create date
- * `{TIME}` will be replaced as create time
- * `{RDATE}` will be replaced as revised date
- * `{RTIME}` will be replaced as revised time
- * `{FILE}` will be replaced as file name
- * `{TABS}` will be replaced as tab size
- * `{SUBLIME_VERSION}` will be replaced as current sublime text version
+ * You can insert your own header-description in a format from the file specified in settings
+ * `{YEAR}` is replaced as the current year
+ * `{DATE}` is replaced as the create date
+ * `{TIME}` is replaced as the create time
+ * `{RDATE}` is replaced as the revised date
+ * `{RTIME}` is replaced as the revised time
+ * `{FILE}` is replaced as the file name
+ * `{TABS}` is replaced as the tab size
+ * `{SUBLIME_VERSION}` is replaced as the current sublime text version
  * example) [__header example__][L3]
 
 ![Image][S8]
 
 #### Verilog Gadget: Repeat Code with Numbers (ctrl+f12)
 
- * Select codes to be repeated, it may include Python's format symbol like {...}
- * Type a range in the input panel as the following : [from]~[to],[↓step],[→step]
+ * Select codes you want to repeat, this may include Python's format symbol, such as {...}
+ * Enter a range in the input panel as the following : [from]~[to],[↓step],[→step]
 	  ``(e.g. 0~10 or 0~10,2 or 10~0,-1 or 0~5,1,1 ...)``
- * [↓step] means row step, default is 1, [→step] means column step, default is 0
- * The codes will be repeated with incremental or decremental numbers
+ * [↓step] means the row step, default is 1, [→step] means the column step, default is 0
+ * The code is repeated in incremental or decremental numbers
  * Python's format symbol supports variable formats : binary, hex, leading zeros, ...
- * To use '{' as is, you should type twice as '{{'
+ * To use '{' as it is, you must enter twice like '{{'
  * Refer to Python's format symbol here, [https://www.python.org/dev/peps/pep-3101/](https://www.python.org/dev/peps/pep-3101/)
- * For **sublime text 2 (python 2.x)**, you should insert index behind of ':' in curly brackets like `foo {0:5b} bar {1:3d}`
+ * For **sublime text 2 (python 2.x)**, you must put an index behind ':' in curly brackets like `foo {0:5b} bar {1:3d}`
  * example)
 
 ![Image][S3]
 
- * The index can be used in order to repeat the same number
+ * The index can be used to repeat the same number
  * example)
 
 ![Image][S6]
@@ -84,10 +84,10 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 #### Verilog Gadget: Alignment (ctrl+shift+x)
 
- * Select range to apply alignment
+ * Select a range to apply the alignment to
  * Press the shortcut key
- * Alignment is based on the longest length of left hand side in selection
- * Tabs will be replaced as spaces except for indent
+ * Alignment is based on the longest length of the left hand side in the selection
+ * Tabs are replaced as spaces except indentation
  * example)
 
 ![Image][S4]
