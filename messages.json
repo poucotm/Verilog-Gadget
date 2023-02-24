@@ -14,5 +14,6 @@
     "v1.7.0"  : "changelog/v1.7.0.md",
     "v1.8.0"  : "changelog/v1.8.0.md",
     "v1.11.0" : "changelog/v1.11.0.md",
-    "v1.12.0" : "changelog/v1.12.0.md"
+    "v1.12.0" : "changelog/v1.12.0.md",
+    "v2.0.0"  : "changelog/v1.12.0.md"
 }
