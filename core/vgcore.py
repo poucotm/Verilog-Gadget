@@ -271,7 +271,7 @@ def parse_module(text, call_from):
             rst_list.append(p)
     return module, ports_list, param_list, clk_list, rst_list
 
-def declare_param(paraml, ends=';'):
+def declare_param(paraml, ends=';', type=''):
     text = ''
     strl = []
     lmax = 0
@@ -288,10 +288,12 @@ def declare_param(paraml, ends=';'):
             lend = ';\n'
         else:
             lend = '' if i == len(strl) - 1 else ',\n'
-        if paraml[i][1]:
-            text += '\t' + paraml[i][0] + ' ' * sp + ' ' + paraml[i][1] + ' ' + paraml[i][2] + ' = ' + paraml[i][3] + lend
-        else:
-            text += '\t' + paraml[i][0] + ' ' * sp + ' ' + paraml[i][2] + ' = ' + paraml[i][3] + lend
+
+        if type == '' or (type != '' and paraml[i][0] == type):
+            if paraml[i][1]:
+                text += '\t' + paraml[i][0] + ' ' * sp + ' ' + paraml[i][1] + ' ' + paraml[i][2] + ' = ' + paraml[i][3] + lend
+            else:
+                text += '\t' + paraml[i][0] + ' ' * sp + ' ' + paraml[i][2] + ' = ' + paraml[i][3] + lend
     return text
 
 def declare_sigls(portsl, clkrstl, stype, ends=';'):
@@ -701,7 +703,8 @@ class VerilogGadgetModuleWrapper(sublime_plugin.TextCommand):
         else:
             wprtl = ports_list
         crstl = (clk_list + rst_list)
-        declp = declare_param(param_list, ',')
+        declp = declare_param(param_list, ',', 'parameter')
+        dlocp = declare_param(param_list, ';', 'localparam') + '\n'
         pstrs = '#(\n' + declp + '\n)\n' if declp else ''
         decls = declare_ports(wprtl, crstl, combi, '_p', ',')
         sstrs =  '(\n' + decls + '\n);\n\n' if decls else '();\n\n'
@@ -709,7 +712,7 @@ class VerilogGadgetModuleWrapper(sublime_plugin.TextCommand):
         i2reg = input_to_regs(wprtl, clk_list, rst_list, combi, '_p')
         minst = module_inst(module, ports_list, param_list, clk_list, [], [], prefx, False)
         mwcodes = """
-module """ + module + """_wrp """ + pstrs + sstrs + declr + i2reg + """
+module """ + module + """_wrp """ + pstrs + sstrs + dlocp + declr + i2reg + """
 """ + minst + """
 endmodule
 """
