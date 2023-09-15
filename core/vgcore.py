@@ -275,7 +275,11 @@ def declare_param(paraml, ends=';', type=''):
     text = ''
     strl = []
     lmax = 0
+    prml = []
     for pstr in paraml:
+        if type == '' or (type != '' and pstr[0] == type):
+            prml.append(pstr)
+    for pstr in prml:
         if len(pstr[1]) == 0:
             tmps = pstr[0] + ' ' + pstr[2]
         else:
@@ -288,12 +292,10 @@ def declare_param(paraml, ends=';', type=''):
             lend = ';\n'
         else:
             lend = '' if i == len(strl) - 1 else ',\n'
-
-        if type == '' or (type != '' and paraml[i][0] == type):
-            if paraml[i][1]:
-                text += '\t' + paraml[i][0] + ' ' * sp + ' ' + paraml[i][1] + ' ' + paraml[i][2] + ' = ' + paraml[i][3] + lend
-            else:
-                text += '\t' + paraml[i][0] + ' ' * sp + ' ' + paraml[i][2] + ' = ' + paraml[i][3] + lend
+        if prml[i][1]:
+            text += '\t' + prml[i][0] + ' ' * sp + ' ' + prml[i][1] + ' ' + prml[i][2] + ' = ' + prml[i][3] + lend
+        else:
+            text += '\t' + prml[i][0] + ' ' * sp + ' ' + prml[i][2] + ' = ' + prml[i][3] + lend
     return text
 
 def declare_sigls(portsl, clkrstl, stype, ends=';'):
