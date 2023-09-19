@@ -3,6 +3,7 @@
 	{ "keys": ["ctrl+shift+c"], "command": "verilog_gadget_module_inst" },
 	{ "keys": ["ctrl+f12"], "command": "verilog_gadget_repeat_code" },
 	{ "keys": ["ctrl+shift+x"], "command": "verilog_gadget_align" },
+	{ "keys": ["ctrl+shift+g"], "command": "verilog_gadget_xor_gate" },
 	{ "keys": ["ctrl+shift+z"], "command": "verilog_gadget_insert_snippet" },
 	{ "keys": ["ctrl+shift+v"], "command": "verilog_gadget_vcd_to_wavedrom" }
 ]

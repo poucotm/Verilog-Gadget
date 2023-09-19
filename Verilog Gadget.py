@@ -22,7 +22,7 @@ try:
     # import
     from .core import vgcore
     from .core.vgcore import (VerilogGadgetInsertSub, VerilogGadgetModuleInst, VerilogGadgetTbGen, VerilogGadgetTbGenRefImp, VerilogGadgetSimTemplate,
-        VerilogGadgetModuleWrapper, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetInsertSnippet,
+        VerilogGadgetModuleWrapper, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetXorGate, VerilogGadgetInsertSnippet,
         VerilogGadgetEventListener, VerilogGadgetVcdToWavedrom)
     import_ok = True
 except Exception:

@@ -798,6 +798,7 @@ class VerilogGadgetInsertHeader(sublime_plugin.TextCommand):
 
     def is_visible(self):
         return check_ext_cmd(self.view.file_name(), self.view.name(), 'Insert Header')
+
 CLIPBOARD = r"--CLIPBOARD--"
 
 class VerilogGadgetRepeatCode(sublime_plugin.TextCommand):
@@ -876,6 +877,7 @@ class VerilogGadgetInsertSub(sublime_plugin.TextCommand):
         text = args['text']
         selr = self.view.sel()[0]
         self.view.insert(edit, selr.end(), text)
+
 REGXEXC = r"\s*if[^\w]|\s*for[^\w]"
 REGXLHS = r".*?[\w\]\}](?=\s*\|=)|.*?[\w\]\}](?=\s*~=)|.*?[\w\]\}](?=\s*-=)|.*?[\w\]\}](?=\s*\+=)|.*?[\w\]\}](?=\s*<=)|.*?[\w\]\}](?=\s*=[^=])"
 REGXRHS = r"\|=.*|~=.*|-=.*|\+=.*|<=.*|=.*"
@@ -1086,6 +1088,51 @@ class VerilogGadgetAlign(sublime_plugin.TextCommand):
                 text += e[0] + lend
         return text, maxl
 
+SIGOBJ = re.compile(r'(?P<sig>\w+)', re.DOTALL)
+
+class VerilogGadgetXorGate(sublime_plugin.TextCommand):
+
+    def run(self, edit):
+        txts = ''
+        for tsel in self.view.sel():
+            regn = sublime.Region(self.view.line(tsel.begin()).begin(), self.view.line(tsel.end()).end())
+            txts += self.view.substr(regn) + '\n'
+        lhsl, rhsl = self.alignment(txts)
+        lhss = []
+        for e in lhsl:
+            mch = SIGOBJ.search(e)
+            if mch:
+                lhss.append(mch.group('sig'))
+        rhss = []
+        for e in rhsl:
+            mch = SIGOBJ.search(e)
+            if mch:
+                rhss.append(mch.group('sig'))
+        lxor = '{' + ', '.join(lhss) + '}'
+        rxor = '{' + ', '.join(rhss) + '}'
+        if len(lxor) + len(rxor) > 80:
+            txor =  '\tassign cgen = |(' + lxor + '\n'
+            txor += '\t              ^ ' + rxor + ');\n'
+        else:
+            txor =  '\tassign cgen = |(' + lxor + ' ^ ' + rxor + ');\n'
+        sublime.set_clipboard(txor)
+        disp_msg("Xor Gating : Copied to Clipboard")
+        return
+
+    def alignment(self, txts):
+        txtn = ""
+        litr = len(txts.splitlines())
+        lhsl = []
+        rhsl = []
+        for i, s in enumerate(txts.splitlines()):
+            lend = '' if i + 1 == litr else '\n'
+            if bool(re.match(REGXEXC, s)):
+                txtn += s + lend
+                continue
+            lhsl += re.compile(REGXLHS).findall(s)
+            rhsl += re.compile(REGXRHS).findall(s)
+        return lhsl, rhsl
+
 def loaded():
     global cachepath
     fpath = os.path.join(sublime.cache_path(), 'Verilog Gadget')
@@ -1238,6 +1285,7 @@ class VerilogGadgetSimTemplate(sublime_plugin.TextCommand):
 
     def is_visible(self):
         return check_ext_cmd(self.view.file_name(), self.view.name(), 'Simulation Template')
+
 VCD_VALUE = set(('0', '1', 'x', 'X', 'z', 'Z'))
 VCD_VALUE_CHANGE = set(('r', 'R', 'b', 'B'))
 
