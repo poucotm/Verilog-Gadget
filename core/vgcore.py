@@ -1088,7 +1088,7 @@ class VerilogGadgetAlign(sublime_plugin.TextCommand):
                 text += e[0] + lend
         return text, maxl
 
-SIGOBJ = re.compile(r'(?P<sig>\w+)', re.DOTALL)
+SIGOBJ = re.compile(r'(?P<sig>[\w\s\[\]\{\}\(\)\,\^\&\|\~\!\+\-\*\/\%\:]+)', re.DOTALL)
 
 class VerilogGadgetXorGate(sublime_plugin.TextCommand):
 
@@ -1102,19 +1102,20 @@ class VerilogGadgetXorGate(sublime_plugin.TextCommand):
         for e in lhsl:
             mch = SIGOBJ.search(e)
             if mch:
-                lhss.append(mch.group('sig'))
+                lhss.append(mch.group('sig').strip())
         rhss = []
         for e in rhsl:
             mch = SIGOBJ.search(e)
             if mch:
-                rhss.append(mch.group('sig'))
+                stxt = re.sub(r'^(<=|=)', '', mch.group('sig'))
+                rhss.append(stxt.strip())
         lxor = '{' + ', '.join(lhss) + '}'
         rxor = '{' + ', '.join(rhss) + '}'
         if len(lxor) + len(rxor) > 80:
-            txor =  '\tassign cgen = |(' + lxor + '\n'
-            txor += '\t              ^ ' + rxor + ');\n'
+            txor =  '\tassign cge = |(' + lxor + '\n'
+            txor += '\t             ^ ' + rxor + ');\n'
         else:
-            txor =  '\tassign cgen = |(' + lxor + ' ^ ' + rxor + ');\n'
+            txor =  '\tassign cge = |(' + lxor + ' ^ ' + rxor + ');\n'
         sublime.set_clipboard(txor)
         disp_msg("Xor Gating : Copied to Clipboard")
         return
