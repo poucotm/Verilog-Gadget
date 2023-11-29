@@ -1,6 +1,6 @@
 # Verilog Gadget for Sublime Text
 
-[![Package Control](https://packagecontrol.herokuapp.com/downloads/Verilog%20Gadget.svg?style=round-square)](https://packagecontrol.io/packages/Verilog%20Gadget)
+[![Package Control](https://img.shields.io/packagecontrol/dt/Verilog%20Gadget?logo=github&color=FF1919)][PKG]
 [![PayPal](https://img.shields.io/badge/paypal-donate-blue.svg)][PM]
 
 Use __*Verilog Gadget Commands*__ in __*command palette*__ (*ctrl+shift+p*) or __context menu__ to run.
@@ -141,3 +141,4 @@ When you have an issue, tell me through [https://github.com/poucotm/Verilog-Gadg
 [L4]:https://wavedrom.com
 [PP]:https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=89YVNDSC7DZHQ "PayPal"
 [PM]:https://www.paypal.me/poucotm/1.0 "PayPal"
+[PKG]:https://packagecontrol.io/packages/Verilog%20Gadget "Verilog Gadget"
