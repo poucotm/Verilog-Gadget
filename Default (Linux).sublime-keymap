@@ -6,6 +6,6 @@
 	{ "keys": ["ctrl+shift+g"], "command": "verilog_gadget_xor_gate" },
 	{ "keys": ["ctrl+alt+p"], "command": "verilog_gadget_insert_snippet" },
 	{ "keys": ["ctrl+alt+v"], "command": "verilog_gadget_vcd_to_wavedrom" },
-	{ "keys": ["ctrl+alt+up"],   "command": "verilog_gadget_etc", "args": {"cmd" : "hex2dec"} },
-	{ "keys": ["ctrl+alt+down"], "command": "verilog_gadget_etc", "args": {"cmd" : "dec2hex"} }
+	{ "keys": ["alt+shift+up"],   "command": "verilog_gadget_etc", "args": {"cmd" : "hex2dec"} },
+	{ "keys": ["alt+shift+down"], "command": "verilog_gadget_etc", "args": {"cmd" : "dec2hex"} }
 ]
