@@ -5,5 +5,7 @@
 	{ "keys": ["ctrl+shift+x"], "command": "verilog_gadget_align" },
 	{ "keys": ["ctrl+shift+g"], "command": "verilog_gadget_xor_gate" },
 	{ "keys": ["ctrl+shift+z"], "command": "verilog_gadget_insert_snippet" },
-	{ "keys": ["ctrl+shift+v"], "command": "verilog_gadget_vcd_to_wavedrom" }
+	{ "keys": ["ctrl+shift+v"], "command": "verilog_gadget_vcd_to_wavedrom" },
+	{ "keys": ["ctrl+shift+up"],   "command": "verilog_gadget_etc", "args": {"cmd" : "hex2dec"} },
+	{ "keys": ["ctrl+shift+down"], "command": "verilog_gadget_etc", "args": {"cmd" : "dec2hex"} }
 ]

@@ -1444,3 +1444,21 @@ class VerilogGadgetEventListener(sublime_plugin.EventListener):
             view.run_command("verilog_gadget_insert_header", {"args": {'cmd': 'update'}})
             view.settings().set('load_file_name', view.file_name())
         return
+
+class VerilogGadgetEtc(sublime_plugin.TextCommand):
+
+    def run(self, edit, **args):
+        if args['cmd'] == 'hex2dec':
+            selr = self.view.sel()[0]
+            stxt = self.view.substr(selr)
+            sdec = '{:d}'.format(int(stxt, 16))
+            self.view.replace(edit, selr, sdec)
+            msg = "Convert Digits HEX → DEC"
+        elif args['cmd'] == 'dec2hex':
+            selr = self.view.sel()[0]
+            stxt = self.view.substr(selr)
+            shex = '{:x}'.format(int(stxt))
+            self.view.replace(edit, selr, shex)
+            msg = "Convert Digits DEC → HEX"
+        disp_msg(msg)
+        return

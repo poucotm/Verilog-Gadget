@@ -23,7 +23,7 @@ try:
     from .core import vgcore
     from .core.vgcore import (VerilogGadgetInsertSub, VerilogGadgetModuleInst, VerilogGadgetTbGen, VerilogGadgetTbGenRefImp, VerilogGadgetSimTemplate,
         VerilogGadgetModuleWrapper, VerilogGadgetInsertHeader, VerilogGadgetRepeatCode, VerilogGadgetAlign, VerilogGadgetXorGate, VerilogGadgetInsertSnippet,
-        VerilogGadgetEventListener, VerilogGadgetVcdToWavedrom)
+        VerilogGadgetEventListener, VerilogGadgetVcdToWavedrom, VerilogGadgetEtc)
     import_ok = True
 except Exception:
     print ('VERILOG GADGET : ERROR ______________________________________')

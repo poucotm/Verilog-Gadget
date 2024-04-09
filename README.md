@@ -101,6 +101,11 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 ![Image][S7]
 
+#### Verilog Gadget: Convert Digits (HEX → DEC, DEC → HEX) (ctrl+alt+up, ctrl+alt+down)
+
+ * Select Digits and Press the key (ctrl+alt+↑) - 10 → 16
+ * Select Digits and Press the key (ctrl+alt+↓) - 16 → 10
+
 #### Verilog Gadget: VCD to WaveDrom (ctrl+alt+v)
 
  * [__WaveDrom__][L4] : digital timing diagram editor
