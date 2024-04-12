@@ -803,70 +803,101 @@ CLIPBOARD = r"--CLIPBOARD--"
 
 class VerilogGadgetRepeatCode(sublime_plugin.TextCommand):
 
-    def run(self, edit):
-        selr = self.view.sel()[0]
-        self.text = self.view.substr(selr)
-        self.view.window().show_input_panel(u"Enter a range [from]~[to],[↓step],[→step]", "", self.on_done, None, None)
+    def run(self, edit, **args):
+        if args['cmd'] == 'input':
+            self.n_sels = len(self.view.sel())
+            self.txtfrm = self.view.substr(self.view.sel()[0])
+            m = re.compile(r'{.*?:.*?}', re.DOTALL).search(self.txtfrm)
+            if not m:
+                self.txtfrm = '{:d}'
+            if self.n_sels == 1:
+                self.view.window().show_input_panel(u"Enter a range [from]~[to],[↓step],[→step]", "", self.on_done, None, None)
+            elif self.n_sels > 1:
+                self.view.window().show_input_panel(u"Enter a range [from],[↓step]", "", self.on_done, None, None)
+        elif args['cmd'] == 'insert':
+            r_txt = args['text']
+            for i, txtr in enumerate(self.view.sel()):
+                self.view.replace(edit, txtr, r_txt[i])
+        return
 
-    def on_done(self, user_input):
-        frm_err   = False
-        _range    = re.compile(r"[-+]?\d+").findall(user_input)
-        _step     = re.compile(r"(?<=,)\s*[-\d]+").findall(user_input)
-        range_len = 0
-        try:
-            if len(_range) >= 2:
-                sta_n = int(_range[0])
-                end_n = int(_range[1])
-                if sta_n <= end_n:
-                    end_n = end_n + 1
-                    rsp_n = 1
-                    csp_n = 0
+    def on_done(self, _user_):
+        if self.n_sels > 1:
+            m = re.compile(r'(?P<range>[-+]?\d+)\s*,\s*(?P<step>[-+]?\d+)').search(_user_)
+            if m:
+                sta_n = int(m.group('range'))
+                stp_n = int(m.group('step'))
+            else:
+                m = re.compile(r'(?P<range>[-+]?\d+)').search(_user_)
+                if m:
+                    sta_n = int(m.group('range'))
+                    stp_n = 1
                 else:
-                    end_n = end_n - 1
-                    rsp_n = -1
-                    csp_n = 0
-                if len(_step) > 0:
-                    rsp_n = int(_step[0])
-                    if len(_step) > 1:
-                        csp_n = int(_step[1])
-            else:
-                frm_err = True
-            range_len = len(range(sta_n, end_n, rsp_n))
-        except:
-            frm_err = True
-        if range_len < 1 or frm_err:
-            disp_error("Repeat Code : Range format error (" + user_input + ")")
-            return
-        try:
-            clb_l = re.compile(r"{\s*cb\s*}").findall(self.text)
-            if len(clb_l) > 0:
-                clb_s = sublime.get_clipboard().splitlines()
-                clb_f = True if len(clb_s) > 0 else False
-                t_txt = re.sub(re.compile(r"{\s*cb\s*}"), CLIPBOARD, self.text)
-            else:
-                clb_f = False
-                t_txt = self.text
-            tup_l = re.compile(r"(?<!{)\s*{\s*(?!{)").findall(t_txt)
-            tup_n = len(tup_l)
-            repeat_str = ""
-            cidx  = 0;
-            for i in range(sta_n, end_n, rsp_n):
-                prm_l = []
-                if clb_f:
-                    if i < len(clb_s):
-                        r_txt = t_txt.replace(CLIPBOARD, clb_s[cidx])
-                        cidx += 1
+                    disp_error("Repeat Code : Range format error (" + _user_ + ")")
+                    return
+            r_txt = []
+            for i, regn in enumerate(self.view.sel()):
+                nmb_n = sta_n + i * stp_n
+                r_txt.append(self.txtfrm.format(nmb_n))
+            self.view.run_command("verilog_gadget_repeat_code", {"cmd" : "insert", "text" : r_txt})
+        elif self.n_sels == 1:
+            _frmerr_ = False
+            _range_  = re.compile(r"[-+]?\d+").findall(_user_)
+            _step_   = re.compile(r"(?<=,)\s*[-\d]+").findall(_user_)
+            _rnglen_ = 0
+            try:
+                if len(_range_) >= 2:
+                    sta_n = int(_range_[0])
+                    end_n = int(_range_[1])
+                    if sta_n <= end_n:
+                        end_n = end_n + 1
+                        rsp_n = 1
+                        csp_n = 0
                     else:
-                        r_txt = t_txt.replace(CLIPBOARD, clb_s[-1])
+                        end_n = end_n - 1
+                        rsp_n = -1
+                        csp_n = 0
+                    if len(_step_) > 0:
+                        rsp_n = int(_step_[0])
+                        if len(_step_) > 1:
+                            csp_n = int(_step_[1])
                 else:
-                    r_txt = t_txt
-                for j in range(tup_n):
-                    prm_l.append(i + j * csp_n)
-                repeat_str = repeat_str + '\n' + r_txt.format(*prm_l)
-        except:
-            disp_error("Repeat Code : Format error\n\n" + self.text)
-            return
-        self.view.run_command("verilog_gadget_insert_sub", {"args": {'text': repeat_str}})
+                    _frmerr_ = True
+                _rnglen_ = len(range(sta_n, end_n, rsp_n))
+            except:
+                _frmerr_ = True
+            if _rnglen_ < 1 or _frmerr_:
+                disp_error("Repeat Code : Range format error (" + _user_ + ")")
+                return
+            try:
+                clb_l = re.compile(r"{\s*cb\s*}").findall(self.text)
+                if len(clb_l) > 0:
+                    clb_s = sublime.get_clipboard().splitlines()
+                    clb_f = True if len(clb_s) > 0 else False
+                    t_txt = re.sub(re.compile(r"{\s*cb\s*}"), CLIPBOARD, self.text)
+                else:
+                    clb_f = False
+                    t_txt = self.text
+                tup_l = re.compile(r"(?<!{)\s*{\s*(?!{)").findall(t_txt)
+                tup_n = len(tup_l)
+                _repeat_ = ""
+                cidx  = 0;
+                for i in range(sta_n, end_n, rsp_n):
+                    prm_l = []
+                    if clb_f:
+                        if i < len(clb_s):
+                            r_txt = t_txt.replace(CLIPBOARD, clb_s[cidx])
+                            cidx += 1
+                        else:
+                            r_txt = t_txt.replace(CLIPBOARD, clb_s[-1])
+                    else:
+                        r_txt = t_txt
+                    for j in range(tup_n):
+                        prm_l.append(i + j * csp_n)
+                    _repeat_ = _repeat_ + '\n' + r_txt.format(*prm_l)
+            except:
+                disp_error("Repeat Code : Format error\n\n" + self.text)
+                return
+            self.view.run_command("verilog_gadget_insert_sub", {"args": {'text': _repeat_}})
 
     def is_visible(self):
         return check_ext_cmd(self.view.file_name(), self.view.name(), 'Repeat Code with Numbers')

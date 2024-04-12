@@ -82,6 +82,18 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 ![Image][S5]
 
+ * The simplest way is added using multiple selection.
+ * Select multiple strings (or blanks) using `shift + l` or `ctrl + LButton`
+ * You can also select sparsely.
+ * example) [] ← selected position, set a range - start = 1, step = 2
+ ```systemverilog
+         abc <= [];      abc <= 1;
+         def <= [];      def <= 3;     
+         ghi <= [];  →   ghi <= 5;   
+         jkl <= [];      jkl <= 7;    
+         mno <= [];      mno <= 9;  
+```
+
 #### Verilog Gadget: Alignment (ctrl+shift+x)
 
  * Select a range to apply the alignment to
