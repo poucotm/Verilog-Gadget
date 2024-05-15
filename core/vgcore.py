@@ -808,8 +808,16 @@ class VerilogGadgetRepeatCode(sublime_plugin.TextCommand):
             self.n_sels = len(self.view.sel())
             self.txtfrm = self.view.substr(self.view.sel()[0])
             m = re.compile(r'{.*?:.*?}', re.DOTALL).search(self.txtfrm)
+            c = re.compile(r"{\s*cb\s*}").findall(self.txtfrm)
             if not m:
-                self.txtfrm = '{:d}'
+                if c:
+                    self.n_sels = 1
+                    clipbs = sublime.get_clipboard().splitlines()
+                    _user_ = '1~' + str(len(clipbs))
+                    self.on_done(_user_)
+                    return
+                else:
+                    self.txtfrm = '{:d}'
             if self.n_sels == 1:
                 self.view.window().show_input_panel(u"Enter a range [from]~[to],[↓step],[→step]", "", self.on_done, None, None)
             elif self.n_sels > 1:
@@ -869,14 +877,14 @@ class VerilogGadgetRepeatCode(sublime_plugin.TextCommand):
                 disp_error("Repeat Code : Range format error (" + _user_ + ")")
                 return
             try:
-                clb_l = re.compile(r"{\s*cb\s*}").findall(self.text)
+                clb_l = re.compile(r"{\s*cb\s*}").findall(self.txtfrm)
                 if len(clb_l) > 0:
                     clb_s = sublime.get_clipboard().splitlines()
                     clb_f = True if len(clb_s) > 0 else False
-                    t_txt = re.sub(re.compile(r"{\s*cb\s*}"), CLIPBOARD, self.text)
+                    t_txt = re.sub(re.compile(r"{\s*cb\s*}"), CLIPBOARD, self.txtfrm)
                 else:
                     clb_f = False
-                    t_txt = self.text
+                    t_txt = self.txtfrm
                 tup_l = re.compile(r"(?<!{)\s*{\s*(?!{)").findall(t_txt)
                 tup_n = len(tup_l)
                 _repeat_ = ""
@@ -895,7 +903,7 @@ class VerilogGadgetRepeatCode(sublime_plugin.TextCommand):
                         prm_l.append(i + j * csp_n)
                     _repeat_ = _repeat_ + '\n' + r_txt.format(*prm_l)
             except:
-                disp_error("Repeat Code : Format error\n\n" + self.text)
+                disp_error("Repeat Code : Format error\n\n" + self.txtfrm)
                 return
             self.view.run_command("verilog_gadget_insert_sub", {"args": {'text': _repeat_}})
 
