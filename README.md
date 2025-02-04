@@ -3,12 +3,12 @@
 [![Package Control](https://img.shields.io/packagecontrol/dt/Verilog%20Gadget?logo=github&color=FF1919)][PKG]
 [![PayPal](https://img.shields.io/badge/paypal-donate-blue.svg)][PM]
 
-Use __*Verilog Gadget Commands*__ in __*command palette*__ (*ctrl+shift+p*) or __context menu__ to run.
-The context menu only can be seen for `.v, .vh, .sv, .svh` file.
-(file extensions can be added or changed in settings). The theme is [__Guna__](https://packagecontrol.io/packages/Guna), which is used in examples.
-There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](https://packagecontrol.io/packages/SublimeLinter-contrib-verilator)
+Verilog Gadget is a plugin for Sublime Text 2 and 3 designed to enhance Verilog development by providing several convenient features.
+These commands can be accessed through the command palette (<code>Ctrl+Shift+P</code>) or the context menu within <code>.v</code>, <code>.vh</code>, <code>.sv</code>, and <code>.svh</code> files. File extensions can be customized in the settings. For optimal visual experience, the [Guna theme](https://packagecontrol.io/packages/Guna) is recommended. Additionally, for linting Verilog code, the [SublimeLinter-contrib-verilator](https://packagecontrol.io/packages/SublimeLinter-contrib-verilator) plugin can be utilized.
 
 #### Verilog Gadget: Instantiate Module (ctrl+shift+c)
+
+Automatically parses module ports in the current file and generates an instance text of the module, which is copied to the clipboard for easy pasting.
 
  * It parses module ports for the currently open file
  * It generates an instance text of the module
@@ -21,6 +21,8 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 #### Verilog Gadget: Generate Testbench
 
+Creates a simple testbench with an instance and signals of the module, supporting both Verilog-1995 and Verilog-2001 style ports and parameters.
+
  * It parses module ports for the currently open file
  * It generates a simple testbench with an instance and signals of the module
  * The testbench is created as a systemverilog file
@@ -30,6 +32,8 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 ![Image][S2]
 
 #### Verilog Gadget: Simulaton Template
+
+Generates files for simulation based on customizable templates, with support for tools like ModelSim and VCS.
 
  * It creates files for simulation based on the template
  * You can make your own template as a compressed file (.zip,.tar,.tgz)
@@ -42,6 +46,8 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 ![Image][G1]
 
 #### Verilog Gadget: Insert Header (ctrl+shift+insert)
+
+Allows insertion of a user-defined header description into files, with placeholders for current date, time, filename, and other details.
 
  * You can insert your own header-description in a format from the file specified in settings
  * `{YEAR}` is replaced as the current year
@@ -57,6 +63,8 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 ![Image][S8]
 
 #### Verilog Gadget: Repeat Code with Numbers (ctrl+f12)
+
+Enables repeating selected code with formatted incremental or decremental numbers, supporting Python's format symbols for various number formats.
 
  * Select codes you want to repeat, this may include Python's format symbol, such as {...}
  * Enter a range in the input panel as the following : [from]~[to],[↓step],[→step]
@@ -136,7 +144,7 @@ There's a linter plug-in for Verilog. [__SublimeLinter-contrib-verilator__](http
 
 [![Doate Image](https://raw.githubusercontent.com/poucotm/Links/master/image/PayPal/donate-paypal.png)][PM]
 
-Thank you for donating. It is helpful to continue to improve the plug-in.
+If you find Verilog Gadget helpful and would like to support its continued development, consider making a donation. Your contributions are appreciated and assist in the ongoing improvement of the plugin.
 
 ### Issues
 
