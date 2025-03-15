@@ -90,7 +90,7 @@ Enables repeating selected code with formatted incremental or decremental number
 
 ![Image][S5]
 
- * The simplest way is added using multiple selection.
+ * The simplest way is to add by using multiple selection.
  * Select multiple strings (or blanks) using `shift + l` or `ctrl + LButton`
  * You can also select sparsely.
  * example) [] ← selected position, set a range - start = 1, step = 2
