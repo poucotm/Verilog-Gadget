@@ -616,7 +616,7 @@ class VerilogGadgetTbGen(sublime_plugin.TextCommand):
 	logic """ + srstb + """;
 	initial begin
 		""" + srstb + """ <= '0;
-		repeat(10)@(posedge """ + clock + """);
+		repeat(5)@(posedge """ + clock + """);
 		""" + srstb + """ <= '1;
 	end\n"""
         clkrstl = clk_list + rst_list + [arstb, srstb, clock]
