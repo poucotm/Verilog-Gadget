@@ -664,7 +664,7 @@ endmodule
             v = sublime.active_window().new_file()
             v.set_name('tb_' + module + '.sv')
             v.set_scratch(True)
-            v.insert(edit, 0, tbcodes)
+            v.run_command("verilog_gadget_insert_sub", {"args": {'text': tbcodes}})
 
     def is_visible(self):
         return check_ext_cmd(self.view.file_name(), self.view.name(), 'Generate Testbench')
@@ -721,7 +721,7 @@ endmodule
         v = sublime.active_window().new_file()
         v.set_name(module + '_wrp.v')
         v.set_scratch(True)
-        v.insert(edit, 0, mwcodes)
+        v.run_command("verilog_gadget_insert_sub", {"args": {'text': mwcodes}})
 
     def is_visible(self):
         return check_ext_cmd(self.view.file_name(), self.view.name(), 'Module Wrapper')
