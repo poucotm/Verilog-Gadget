@@ -649,10 +649,12 @@ module tb_""" + module + """ (); /* this is automatically generated */
 		repeat(10)@(posedge """ + clock + """);
 		$finish;
 	end
+
 	// dump wave
 	initial begin
 		$display("random seed : %0d", $unsigned($get_initial_random_seed()));""" + str_dump + """
 	end
+
 endmodule
 """
         if args != None and args['cmd'] == 'file':
