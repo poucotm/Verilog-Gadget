@@ -134,6 +134,7 @@ def remove_comment_line_space(codes):
                 blnk = '\n' * (txt[1].count('\n'))
                 text = text.replace(txt[1], blnk)
         return text
+    codes = re.sub(re.compile(r'//\*.*?$', re.MULTILINE), '', codes)
     codes = remove_comments(r'/\*.*?\*/', codes)
     codes = re.sub(re.compile(r'//.*?$', re.MULTILINE), '', codes)
     codes = remove_comments(r'(@\s*?\(\s*?\*\s*?\))|(\(\*.*?\*\))', codes)
