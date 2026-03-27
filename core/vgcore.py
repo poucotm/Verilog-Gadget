@@ -406,7 +406,7 @@ def input_to_regs(portsl, clksl, rstsl, combi, postfix=''):
     return text
 
 def task_init(portsl, clkrstl):
-    text = '\n\ttask init();\n'
+    text = '\n\ttask init();\n\t\t`vdelay\n'
     strl = []
     lmax = 0
     for pstr in portsl:
@@ -425,7 +425,7 @@ def task_init(portsl, clkrstl):
 
 def task_drive(portsl, clkrstl, tclock):
     text =  '\n\ttask drive(int iter);\n'
-    text += '\t\tfor(int it = 0; it < iter; it++) begin\n'
+    text += '\t\tfor(int it = 0; it < iter; it++) begin\n\t\t\t`vdelay\n'
     strl = []
     lmax = 0
     for pstr in portsl:
@@ -569,8 +569,13 @@ class VerilogGadgetTbGen(sublime_plugin.TextCommand):
         if wtype == "fsdb":
             str_dump = """
 		if ( $test$plusargs("fsdb") ) begin
+		`ifndef VERILATOR
 			$fsdbDumpfile("tb_""" + module + """.fsdb");
 			$fsdbDumpvars(0, "tb_""" + module + """", "+mda", "+functions");
+		`else
+			$dumpfile("tb_""" + module + """.vcd");
+			$dumpvars(0, "tb_""" + module + """");
+		`endif
 		end"""
         elif wtype == "vpd":
             str_dump = """
@@ -641,6 +646,12 @@ class VerilogGadgetTbGen(sublime_plugin.TextCommand):
         tbcodes ="""
 `timescale 1ns/1ps
 module tb_""" + module + """ (); /* this is automatically generated */
+
+	`ifdef VERILATOR
+		`define vdelay	#0.1;
+	`else
+		`define vdelay
+	`endif
 """ + sclks + arsts + srsts + """
 	// (*NOTE*) replace reset, clock, others
 """ + declp + decls + minst + taski + taskd +"""
@@ -1479,6 +1490,10 @@ class VerilogGadgetEventListener(sublime_plugin.EventListener):
 
     def on_pre_save(self, view):
         vgs = get_prefs()
+        leu = vgs.get("auto_line_ending", '').lower()
+        if check_ext(view.file_name(), view.name()) and leu != "" and leu in ['unix', 'windows', 'cr']:
+            view.set_line_endings(leu)
+            view.set_encoding('utf-8')
         if not vgs.get("auto_update_header", True):
             return
         load_file = view.settings().get('load_file_name', '')
